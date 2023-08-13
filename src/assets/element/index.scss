@@ -1,0 +1,30 @@
+$base-primary: #337ab7;
+$base-success: #5cb85c;
+$base-warning: #f0ad4e;
+$base-danger: #d9534f;
+$base-error: #cf4444;
+
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'primary': (
+      // 主色
+      'base': $base-primary,
+    ),
+    'success': (
+      // 成功色
+      'base': $base-success,
+    ),
+    'warning': (
+      // 警告色
+      'base': $base-warning,
+    ),
+    'danger': (
+      // 危险色
+      'base': $base-danger,
+    ),
+    'error': (
+      // 错误色
+      'base': $base-error,
+    ),
+  )
+);
