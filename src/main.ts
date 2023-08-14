@@ -1,4 +1,6 @@
 import "@/assets/scss/index.scss"
+import "//at.alicdn.com/t/c/font_4209723_emjgk4t7vbw.js"
+import "@/assets/iconfont/icon.css"
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
