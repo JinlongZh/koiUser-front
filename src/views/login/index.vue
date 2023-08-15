@@ -58,7 +58,8 @@
                   </svg>
                 </template>
                 <template #suffix>
-                  <span v-if="mobileCodeTimer <= 0" class="getMobileCode" @click="getSmsCode(ruleFormRef)" style="cursor: pointer;">获取验证码</span>
+                  <span v-if="mobileCodeTimer <= 0" class="getMobileCode" @click="getSmsCode()"
+                        style="cursor: pointer;">获取验证码</span>
                   <span v-if="mobileCodeTimer > 0" class="getMobileCode">{{ mobileCodeTimer }}秒后可重新获取</span>
                 </template>
               </el-input>
@@ -89,8 +90,20 @@
 </template>
 
 <script setup lang="ts">
-import {reactive, ref} from "vue";
+import {onMounted, reactive, ref} from "vue";
+import {
+  getPassword,
+  getRememberMe,
+  getUsername,
+  removePassword,
+  removeRememberMe,
+  removeUsername, setPassword, setRememberMe,
+  setUsername
+} from "@/utils/auth";
 import type {FormInstance} from "element-plus";
+import {useRoute} from "vue-router";
+
+const route = useRoute();
 
 const mobileCodeTimer = ref<number>(0);
 let loginForm = reactive({
@@ -103,6 +116,13 @@ let loginForm = reactive({
   rememberMe: false,
 });
 const loading = ref<boolean>(false);
+let redirect = ref<string>();
+
+onMounted(() => {
+  redirect.value = route.query.redirect ? decodeURIComponent(<string>route.query.redirect) : undefined;
+  console.log(redirect.value)
+  getCookie();
+})
 
 const validatorPhone = (rule: any, value: any, callBack: any) => {
   const reg = /^1((34[0-8])|(8\d{2})|(([35][0-35-9]|4[579]|66|7[35678]|9[1389])\d{1}))\d{7}$/;
@@ -119,19 +139,48 @@ const LoginRules = {
   mobile: [{validator: validatorPhone, trigger: "blur"}],
 };
 
+const getCookie = () => {
+  const username = getUsername();
+  const password = getPassword();
+  const rememberMe = getRememberMe();
+
+  loginForm.username = username ? username : loginForm.username;
+  loginForm.password = password ? password : loginForm.password;
+  loginForm.rememberMe = rememberMe ? rememberMe : false;
+
+}
+
 const handleLogin = () => {
   // 处理登录逻辑
+  ruleFormRef.value.validate((valid) => {
+    if (valid) {
+      loading.value = true;
+      // 设置 Cookie
+      if (loginForm.rememberMe) {
+        setUsername(loginForm.username)
+        setPassword(loginForm.password)
+        setRememberMe(loginForm.rememberMe)
+      } else {
+        removeUsername()
+        removePassword()
+        removeRememberMe()
+      }
+      // 发起登陆
+      alert("发起登录")
+    }
+  });
+
 };
 
 const getCode = () => {
-
+  handleLogin();
 };
 
 const ruleFormRef = ref<FormInstance>();
-const getSmsCode = (ruleFormRef: FormInstance | undefined) => {
+const getSmsCode = () => {
   if (mobileCodeTimer.value > 0) return;
-  if (!ruleFormRef) return ;
-  ruleFormRef.validate(valid => {
+
+  ruleFormRef.value.validate((valid) => {
     if (!valid) return;
     mobileCodeTimer.value = 60;
     let msgTimer = setInterval(() => {
@@ -154,7 +203,7 @@ const getSmsCode = (ruleFormRef: FormInstance | undefined) => {
   width: 100%;
   height: 100%;
   background-color: $page-bg;
-  //background-image: ;
+  background-image: url("@/assets/images/bg.jpg");
   background-size: cover;
   // 定位
   position: absolute;
@@ -170,7 +219,7 @@ const getSmsCode = (ruleFormRef: FormInstance | undefined) => {
   .content {
     width: 400px;
     padding: 20px;
-    background-color: $white;
+    background-color: $page-bg;
     color: $black;
     border: 1px solid $gray-light;
     border-radius: 8px;
