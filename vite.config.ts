@@ -37,4 +37,12 @@ export default defineConfig({
       }
     }
   },
+  server: {
+    proxy: {
+      '/app-api': {
+        target: 'http://localhost:8303',
+        changeOrigin: true,
+      },
+    }
+  }
 })

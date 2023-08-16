@@ -13,7 +13,7 @@ export function getRefreshToken() {
     return localStorage.getItem(RefreshTokenKey)
 }
 
-export function setToken(token) {
+export function setToken(token: any) {
     localStorage.setItem(AccessTokenKey, token.accessToken)
     localStorage.setItem(RefreshTokenKey, token.refreshToken)
 }

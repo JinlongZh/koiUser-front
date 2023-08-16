@@ -97,11 +97,12 @@ import {
   getUsername,
   removePassword,
   removeRememberMe,
-  removeUsername, setPassword, setRememberMe,
+  removeUsername, setPassword, setRememberMe, setToken,
   setUsername
 } from "@/utils/auth";
 import type {FormInstance} from "element-plus";
 import {useRoute} from "vue-router";
+import {login} from "@/api/system/login/api";
 
 const route = useRoute();
 
@@ -152,7 +153,7 @@ const getCookie = () => {
 
 const handleLogin = () => {
   // 处理登录逻辑
-  ruleFormRef.value.validate((valid) => {
+  ruleFormRef.value.validate(async (valid) => {
     if (valid) {
       loading.value = true;
       // 设置 Cookie
@@ -166,11 +167,31 @@ const handleLogin = () => {
         removeRememberMe()
       }
       // 发起登陆
-      alert("发起登录")
+      if (loginForm.loginType == "uname") {
+        await unameLogin();
+      }
     }
   });
 
 };
+
+const unameLogin = async () => {
+  const params = {
+    mobile: loginForm.username,
+    password: loginForm.password
+  }
+  try {
+    await login(params).then(res => {
+      setToken(res.data);
+      ElMessage({
+        message: "登录成功",
+        type: "success"
+      })
+    });
+  } finally {
+    loading.value = false;
+  }
+}
 
 const getCode = () => {
   handleLogin();
