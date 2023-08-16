@@ -1,5 +1,6 @@
 import axios from "axios";
 import errorCode from "@/utils/errorCode";
+import { ElMessage } from 'element-plus'
 
 // 创建axios实例
 const service = axios.create({
@@ -39,9 +40,13 @@ service.interceptors.response.use(async (res) => {
         if (msg === '无效的刷新令牌') { // hard coding：忽略这个提示，直接登出
             console.log(msg)
         } else {
-            ElNotification({
+            // ElNotification({
+            //     type: 'error',
+            //     title: msg
+            // })
+            ElMessage({
                 type: 'error',
-                title: msg
+                message: msg
             })
         }
         return Promise.reject('error')

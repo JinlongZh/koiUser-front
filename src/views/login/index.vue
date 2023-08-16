@@ -101,10 +101,11 @@ import {
   setUsername
 } from "@/utils/auth";
 import type {FormInstance} from "element-plus";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {login} from "@/api/system/login/api";
 
 const route = useRoute();
+const router = useRouter();
 
 const mobileCodeTimer = ref<number>(0);
 let loginForm = reactive({
@@ -187,6 +188,7 @@ const unameLogin = async () => {
         message: "登录成功",
         type: "success"
       })
+      router.push("/");
     });
   } finally {
     loading.value = false;
