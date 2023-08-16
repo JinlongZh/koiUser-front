@@ -1,5 +1,8 @@
 <template>
   <router-view></router-view>
+
+  <!-- 弹出层 -->
+  <Tip />
 </template>
 
 <script setup lang="ts">
