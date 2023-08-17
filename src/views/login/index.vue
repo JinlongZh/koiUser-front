@@ -25,11 +25,16 @@
               </el-input>
             </el-form-item>
             <el-form-item prop="password">
-              <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码"
+              <el-input v-model="loginForm.password" :type="showPassword ? 'text' : 'password'" auto-complete="off" placeholder="密码"
                         @keyup.enter.native="getCode">
                 <template #prefix>
                   <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-mima"></use>
+                  </svg>
+                </template>
+                <template #suffix>
+                  <svg class="icon" aria-hidden="true" @click="toggleShowPassword" style="cursor: pointer">
+                    <use xlink:href="#icon-yanjing"></use>
                   </svg>
                 </template>
               </el-input>
@@ -112,6 +117,12 @@ const router = useRouter();
 const $process = inject<ProcessInterface>("$process")!;
 
 const mobileCodeTimer = ref<number>(0);
+
+const showPassword = ref<boolean>(false);
+const toggleShowPassword = () => {
+  showPassword.value = !showPassword.value;
+}
+
 let loginForm = reactive({
   loginType: "uname",
   username: "admin",
