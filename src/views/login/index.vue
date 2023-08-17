@@ -90,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, reactive, ref} from "vue";
+import {inject, onMounted, reactive, ref} from "vue";
 import {
   getPassword,
   getRememberMe,
@@ -103,9 +103,13 @@ import {
 import type {FormInstance} from "element-plus";
 import {useRoute, useRouter} from "vue-router";
 import {login} from "@/api/system/login/api";
+import {ProcessInterface} from "@/d.ts/modules/process";
+import {LoginResp} from "@/api/system/login/type";
 
 const route = useRoute();
 const router = useRouter();
+
+const $process = inject<ProcessInterface>("$process")!;
 
 const mobileCodeTimer = ref<number>(0);
 let loginForm = reactive({
@@ -183,16 +187,21 @@ const unameLogin = async () => {
   }
   try {
     await login(params).then(res => {
-      setToken(res.data);
-      ElMessage({
-        message: "登录成功",
-        type: "success"
-      })
-      router.push("/");
+      afterLoginSuccess(res);
     });
   } finally {
     loading.value = false;
   }
+}
+
+const afterLoginSuccess = (res: LoginResp) => {
+  setToken(res.data);
+  $process.tipShow.success("登录成功");
+  router.push({
+    path: redirect.value || "/"
+  }).catch(() => {
+    $process.tipShow.error("重定向失败");
+  });
 }
 
 const getCode = () => {
