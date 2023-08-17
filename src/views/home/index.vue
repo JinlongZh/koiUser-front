@@ -10,7 +10,7 @@ import {ProcessInterface} from "@/d.ts/plugins";
 const $process = inject<ProcessInterface>("$process")!;
 
 const abc = () => {
-  $process.tipShow.error("哈哈我成功了");
+  $process.tipShow.success("哈哈我成功了");
 }
 </script>
 

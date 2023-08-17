@@ -1,8 +1,8 @@
 const icon = {
-    success: "@/assets/success.png",
-    warn: "@/assets/warn.png",
-    info: "@/assets/info.png",
-    error: "@/assets/error.png",
+    success: "src/assets/icon/success.png",
+    warn: "src/assets/icon/warn.png",
+    info: "src/assets/icon/info.png",
+    error: "src/assets/icon/error.png",
 }
 
 const img = {
