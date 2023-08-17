@@ -1,6 +1,26 @@
 import axios from "axios";
 import errorCode from "@/utils/errorCode";
 import { ElMessage } from 'element-plus'
+import {getAccessToken} from '@/utils/auth'
+
+
+// 需要忽略的提示。忽略后，自动 Promise.reject('error')
+const ignoreMsgList = [
+    "无效的刷新令牌", // 刷新令牌被删除时，不用提示
+    "刷新令牌已过期" // 使用刷新令牌，刷新获取新的访问令牌时，结果因为过期失败，此时需要忽略。否则，会导致继续 401，无法跳转到登出界面
+]
+
+// 是否显示重新登录
+export let isRelogin = { show: false };
+
+// Axios 无感知刷新令牌，https://www.dashingdog.cn/article/11 与 https://segmentfault.com/a/1190000020210980
+// 请求队列
+let requestList = []
+// 是否正在刷新中
+let isRefreshToken = false
+
+axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
+
 
 // 创建axios实例
 const service = axios.create({
@@ -14,16 +34,26 @@ const service = axios.create({
 
 // 请求拦截器
 service.interceptors.request.use((config) => {
+    // 是否需要设置 token
+    const isToken = (config.headers || {}).isToken === false
+    if (getAccessToken() && !isToken) {
+        console.log("添加accessToken")
+        config.headers['AccessToken'] = 'Bearer ' + getAccessToken() // 让每个请求携带自定义token
+    }
     return config;
+}, error => {
+    console.log(error)
+    Promise.reject(error)
 })
-
 // 响应拦截器
 service.interceptors.response.use(async (res) => {
     // 未设置状态码则默认成功状态
     const code: number = res.data.code || 200;
     // 获取错误信息
     const msg: string = res.data.msg || errorCode[code] || errorCode['default']
-    if (code === 500) {
+    if (ignoreMsgList.indexOf(msg) !== -1) { // 如果是忽略的错误码，直接返回 msg 异常
+        return Promise.reject(msg)
+    } else if (code === 500) {
         ElMessage({
             message: msg,
             type: 'error'
@@ -40,10 +70,6 @@ service.interceptors.response.use(async (res) => {
         if (msg === '无效的刷新令牌') { // hard coding：忽略这个提示，直接登出
             console.log(msg)
         } else {
-            // ElNotification({
-            //     type: 'error',
-            //     title: msg
-            // })
             ElMessage({
                 type: 'error',
                 message: msg
