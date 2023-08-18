@@ -47,7 +47,15 @@ const Popup: PopupInterface = {
 
 }
 
-const Component: ComponentInterface = {}
+const Component: ComponentInterface = {
+    // 顶部导航栏
+    headerStatus: ref(true),
+    headerCheckLock: ref(true),
+    headerCheckSwitch(clientHeight, HTMLHeight) {
+        Component.headerCheckLock.value = HTMLHeight < clientHeight;
+    },
+
+}
 
 const Process: ProcessInterface = {
     ...Popup,

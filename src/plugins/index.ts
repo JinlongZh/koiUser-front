@@ -1,4 +1,5 @@
 import process from "@/modules/process";
+import window from "@/modules/window";
 import type { App } from "vue";
 
 const $process = {
@@ -7,4 +8,10 @@ const $process = {
     }
 };
 
-export { $process };
+const $window = {
+    install: (app: App) => {
+        app.provide('$window', window);
+    }
+};
+
+export { $process, $window };
