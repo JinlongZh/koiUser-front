@@ -8,11 +8,12 @@
 <script setup lang="ts">
 import {useRouter} from "vue-router";
 import {inject} from "vue";
-import {ProcessInterface, WindowInterface} from "@/d.ts/plugins";
+import {ProcessInterface} from "@/d.ts/plugins";
+import useWindow from "@/store/modules/window";
 
 const router = useRouter();
 const $process = inject<ProcessInterface>("$process")!;
-const $window = inject<WindowInterface>("$window")!;
+const $window = useWindow();
 
 // 空间初始化
 router.isReady().then(async () => {

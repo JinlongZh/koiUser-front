@@ -1,7 +1,7 @@
 <template>
   <div class="header">
-    <div class="space" @click="pageJump('/')">KOI用户中心</div>
-    <div class="left">
+    <div class="space" @click="pageJump('/')">用户中心</div>
+    <div class="right">
       <HeaderItem v-if="mpSwitch"/>
       <div class="menuBar" :style="{backgroundImage: 'url(' + menuBar + ')' }" @click="openSideBar" v-else></div>
       <div class="avatar" @click="avatarClick" :style="{ backgroundImage: 'url(' + avatar + ')' }"></div>
@@ -11,20 +11,21 @@
 
 <script setup lang="ts">
 import {useRouter} from "vue-router";
-import {WindowInterface, ProcessInterface} from "@/d.ts/plugins";
-import jQuery from "jquery";
+import {ProcessInterface} from "@/d.ts/plugins";
+import jQuery from 'jquery';
 import {inject, onMounted, ref, watch} from "vue";
 import {siteConfig} from "@/config/program";
 import useMouseWheel from "@/hooks/useMouseWheel";
 import resource from "@/config/resource";
+import useWindow from "@/store/modules/window";
 
 const router = useRouter();
-const $window = inject<WindowInterface>("$window")!;
+const $window = useWindow();
 const $process = inject<ProcessInterface>("$process")!;
 const menuBar = resource.menuBar;
 
 // true: 显示  false: 显示侧边栏
-let mpSwitch = ref(true);
+let mpSwitch = ref<boolean>(true);
 let lock = true; // 显示锁
 
 const pageJump = (path: string) => {
@@ -39,23 +40,24 @@ const avatarClick = () => {
   console.log("avatarClick");
 }
 
-// watch(
-//     () => $window.width.value,
-//     (value) => {
-//       mpSwitch.value = value > siteConfig.mpThreshold;
-//     },
-//     {immediate: true}
-// );
-//
-// watch(
-//     () => $window.scrollTop.value,
-//     (value) => {
-//       if (value == 0) {
-//         lock = true;
-//         jQuery(".header").css("top", "0px");
-//       }
-//     }
-// );
+watch(
+    () => $window.width,
+    (value) => {
+      mpSwitch.value = value > siteConfig.mpThreshold;
+      console.log(mpSwitch.value)
+    },
+    {immediate: true}
+);
+
+watch(
+    () => $window.scrollTop,
+    (value) => {
+      if (value == 0) {
+        lock = true;
+        jQuery(".header").css("top", "0px");
+      }
+    }
+);
 
 // 滚轮与滑动监听
 onMounted(() => {
@@ -80,6 +82,8 @@ onMounted(() => {
 @import "@/assets/scss/var.scss";
 
 .header {
+  display: flex;
+  justify-content: space-between;
   min-width: 370px;
   width: 100%;
   max-width: 2500px;
@@ -94,8 +98,6 @@ onMounted(() => {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
-  justify-content: space-between;
 
   .space {
     width: 140px;
@@ -106,7 +108,7 @@ onMounted(() => {
     cursor: pointer;
   }
 
-  .left {
+  .right {
     display: flex;
     justify-content: space-between;
 
