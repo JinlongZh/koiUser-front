@@ -137,7 +137,6 @@ let redirect = ref<string>();
 
 onMounted(() => {
   redirect.value = route.query.redirect ? decodeURIComponent(<string>route.query.redirect) : undefined;
-  console.log(redirect.value)
   getCookie();
 })
 

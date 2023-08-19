@@ -4,6 +4,7 @@
     <div class="content">
 
     </div>
+    <Footer/>
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import Header from "@/components/index/Header.vue";
 import {inject, onMounted} from "vue";
 import {ProcessInterface} from "@/d.ts/plugins";
 import useWindow from "@/store/modules/window";
+import Footer from "@/components/index/Footer.vue";
 
 const $process = inject<ProcessInterface>("$process")!;
 const $window = useWindow();
@@ -31,7 +33,7 @@ function DOMObserve() {
     // header形态监听
     $process.headerCheckSwitch($window.height.value, height);
     // footer形态更新
-    // $process.footerPositionSwitch($window.height.value, height);
+    $process.footerPositionSwitch($window.height.value, height);
   })
   mutationObserver.observe(dom, {
     childList: true,

@@ -37,4 +37,8 @@ export declare interface ComponentInterface {
     headerCheckLock: Ref<boolean>;
     headerCheckSwitch: (clientHeight: number, HTMLHeight: number) => void;
 
+    footerStatus: Ref<boolean>;
+    footerPosition: Ref<boolean>;
+    footerPositionSwitch: (clientHeight: number, HTMLHeight: number) => void;
+
 }

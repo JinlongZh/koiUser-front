@@ -1,6 +1,6 @@
 import resource from "./resource";
 import {pathConfig} from "@/config/program";
-import type {HeaderConfigType} from "@/d.ts/config/site";
+import type {HeaderConfigType, FooterConfigInterface} from "@/d.ts/config/site";
 
 
 /*
@@ -56,5 +56,17 @@ const headerConfig: HeaderConfigType = [
     }
 ];
 
+/*
+ ***************************************************************************************
+ *                                    footer
+ ***************************************************************************************
+ */
+const footerConfig: FooterConfigInterface = {
+    copyright: "©2023 By JinLonG",
+    theme: "koi",
+    techStack: "vue+spring",
+    zwfwCode: "xxxxxxxx"
+}
 
-export {tipType, headerConfig}
+
+export {tipType, headerConfig, footerConfig}

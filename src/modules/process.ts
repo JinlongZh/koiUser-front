@@ -55,6 +55,15 @@ const Component: ComponentInterface = {
         Component.headerCheckLock.value = HTMLHeight < clientHeight;
     },
 
+    // 底部组件
+    footerStatus: ref(true),
+    footerPosition: ref(false),
+    footerPositionSwitch(clientHeight, HTMLHeight) {
+        if (!document.querySelector(".footer")) return;
+        Component.footerPosition.value = clientHeight < HTMLHeight;
+
+    },
+
 }
 
 const Process: ProcessInterface = {

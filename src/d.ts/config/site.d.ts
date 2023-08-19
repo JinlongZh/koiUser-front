@@ -11,3 +11,10 @@ interface HeaderBarInterface {
         word: string;
     }>
 }
+
+export declare interface FooterConfigInterface {
+    copyright: string;
+    theme: string;
+    techStack: string;
+    zwfwCode: string;
+}

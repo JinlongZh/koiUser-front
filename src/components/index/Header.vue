@@ -44,7 +44,6 @@ watch(
     () => $window.width,
     (value) => {
       mpSwitch.value = value > siteConfig.mpThreshold;
-      console.log(mpSwitch.value)
     },
     {immediate: true}
 );

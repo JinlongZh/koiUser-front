@@ -14,6 +14,7 @@ declare module 'vue' {
     ElInput: typeof import('element-plus/es')['ElInput']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
+    Footer: typeof import('./src/components/index/Footer.vue')['default']
     Header: typeof import('./src/components/index/Header.vue')['default']
     HeaderItem: typeof import('./src/components/index/components/HeaderItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

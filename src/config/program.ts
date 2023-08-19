@@ -1,5 +1,5 @@
 import {publicPath} from "@/router/path";
-import {SiteConfigInterface} from "@/d.ts/config/program";
+import {SiteConfigInterface, UrlConfigInterface} from "@/d.ts/config/program";
 
 
 const siteConfig: SiteConfigInterface = {
@@ -18,6 +18,13 @@ const siteConfig: SiteConfigInterface = {
     sideBarShowStorage: "isSideBarShow"
 }
 
+const urlConfig: UrlConfigInterface = {
+    // siteUrl: process.env.VITE_SITE_URL!,
+    siteUrl: "xxx",
+    zwfwUrl: "https://beian.miit.gov.cn",
+    warehouseUrl: "https://github.com/JinLonGzh/koiUser-front",
+};
+
 const pathConfig = publicPath;
 
-export {siteConfig, pathConfig}
+export {siteConfig, pathConfig, urlConfig}
