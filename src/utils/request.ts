@@ -1,7 +1,7 @@
 import axios from "axios";
 import errorCode from "@/utils/errorCode";
-import { ElMessage } from 'element-plus'
-import {getAccessToken} from '@/utils/auth'
+import {ElMessage} from 'element-plus'
+import {getAccessToken, getRefreshToken} from '@/utils/auth'
 
 
 // 需要忽略的提示。忽略后，自动 Promise.reject('error')
@@ -11,7 +11,7 @@ const ignoreMsgList = [
 ]
 
 // 是否显示重新登录
-export let isRelogin = { show: false };
+export let isRelogin = {show: false};
 
 // Axios 无感知刷新令牌，https://www.dashingdog.cn/article/11 与 https://segmentfault.com/a/1190000020210980
 // 请求队列
@@ -36,8 +36,7 @@ const service = axios.create({
 service.interceptors.request.use((config) => {
     // 是否需要设置 token
     const isToken = (config.headers || {}).isToken === false
-    if (getAccessToken() && !isToken) {
-        console.log("添加accessToken")
+    if (getAccessToken() && getRefreshToken() && !isToken) {
         config.headers['AccessToken'] = 'Bearer ' + getAccessToken() // 让每个请求携带自定义token
     }
     return config;
@@ -81,7 +80,7 @@ service.interceptors.response.use(async (res) => {
     }
 }, (error: any) => {
     console.log('err' + error)
-    let { message }: { message: string } = error;
+    let {message}: { message: string } = error;
     if (message === "Network Error") {
         message = "后端接口连接异常";
     } else if (message.includes("timeout")) {

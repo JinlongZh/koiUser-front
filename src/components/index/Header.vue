@@ -4,7 +4,7 @@
     <div class="right">
       <HeaderItem v-if="mpSwitch"/>
       <div class="menuBar" :style="{backgroundImage: 'url(' + menuBar + ')' }" @click="openSideBar" v-else></div>
-      <div class="avatar" @click="avatarClick" :style="{ backgroundImage: 'url(' + avatar + ')' }"></div>
+      <div class="avatar" @click="avatarClick" :style="{ backgroundImage: 'url(' + $user.userInfo.avatar + ')' }"></div>
     </div>
   </div>
 </template>
@@ -18,11 +18,13 @@ import {siteConfig} from "@/config/program";
 import useMouseWheel from "@/hooks/useMouseWheel";
 import resource from "@/config/resource";
 import useWindow from "@/store/modules/window";
+import useUserStore from "@/store/modules/user";
 
 const router = useRouter();
 const $window = useWindow();
 const $process = inject<ProcessInterface>("$process")!;
 const menuBar = resource.menuBar;
+const $user = useUserStore();
 
 // true: 显示  false: 显示侧边栏
 let mpSwitch = ref<boolean>(true);

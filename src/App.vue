@@ -10,15 +10,35 @@ import {useRouter} from "vue-router";
 import {inject} from "vue";
 import {ProcessInterface} from "@/d.ts/plugins";
 import useWindow from "@/store/modules/window";
+import useUserStore from "@/store/modules/user";
+import {getUserInfo} from "@/api/system/user";
+import {getAccessToken, getRefreshToken} from "@/utils/auth";
 
 const router = useRouter();
 const $process = inject<ProcessInterface>("$process")!;
 const $window = useWindow();
+const $user = useUserStore();
 
 // 空间初始化
 router.isReady().then(async () => {
-  listenWindow.initAll();
+  Promise.all([user()]).then(async (res) => {
+    const [userInfo] = res;
+    $user.initUserInfo(userInfo.data);
+  }).catch(() => {
+
+  }).finally(() => {
+    listenWindow.initAll();
+  })
 });
+
+// 用户信息初始化
+const user = () => {
+  if (getAccessToken() && getRefreshToken()) {
+    return getUserInfo();
+  } else {
+    return "";
+  }
+}
 
 // 为组件提供浏览器数据
 let listenWindow = {
