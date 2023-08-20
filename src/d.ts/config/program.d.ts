@@ -1,7 +1,7 @@
 export declare interface SiteConfigInterface {
     tokenHeader: {
-        sToken: string;
-        lToken: string;
+        AccessToken: string;
+        RefreshToken: string;
     };
     tokenExpireTime: number;
     mpThreshold: number;

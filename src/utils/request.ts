@@ -1,7 +1,9 @@
 import axios from "axios";
 import errorCode from "@/utils/errorCode";
-import {ElMessage} from 'element-plus'
-import {getAccessToken, getRefreshToken} from '@/utils/auth'
+import {ElMessage, ElMessageBox} from 'element-plus'
+import {getAccessToken, getRefreshToken, setToken} from '@/utils/auth'
+import {siteConfig} from "@/config/program";
+import {refreshToken} from "@/api/system/login";
 
 
 // 需要忽略的提示。忽略后，自动 Promise.reject('error')
@@ -37,7 +39,7 @@ service.interceptors.request.use((config) => {
     // 是否需要设置 token
     const isToken = (config.headers || {}).isToken === false
     if (getAccessToken() && getRefreshToken() && !isToken) {
-        config.headers['AccessToken'] = 'Bearer ' + getAccessToken() // 让每个请求携带自定义token
+        config.headers[siteConfig.tokenHeader.AccessToken] = 'Bearer ' + getAccessToken() // 让每个请求携带自定义token
     }
     return config;
 }, error => {
@@ -52,6 +54,39 @@ service.interceptors.response.use(async (res) => {
     const msg: string = res.data.msg || errorCode[code] || errorCode['default']
     if (ignoreMsgList.indexOf(msg) !== -1) { // 如果是忽略的错误码，直接返回 msg 异常
         return Promise.reject(msg)
+    } else if (code === 401) {
+        // 如果未认证，并且未进行刷新令牌，说明可能是访问令牌过期了
+        if (!isRefreshToken) {
+            isRefreshToken = true;
+            // 1. 判断是否有刷新令牌
+            if (!getRefreshToken()) {
+                return handleAuthorized();
+            }
+            // 2. 进行刷新访问令牌
+            try {
+                const refreshTokenResp = await refreshToken(getRefreshToken());
+                // 2.1 刷新成功，则回放队列的请求 + 当前请求
+                setToken(refreshTokenResp.data);
+                requestList.forEach(cb => cb())
+                return service(res.config)
+            } catch (e) {// 为什么需要 catch 异常呢？刷新失败时，请求因为 Promise.reject 触发异常。
+                // 2.2 刷新失败，只回放队列的请求
+                requestList.forEach(cb => cb())
+                // 提示是否要登出。即不回放当前请求！不然会形成递归
+                return handleAuthorized();
+            } finally {
+                requestList = []
+                isRefreshToken = false
+            }
+        } else {
+            // 添加到队列，等待刷新获取到新的令牌
+            return new Promise(resolve => {
+                requestList.push(() => {
+                    res.config.headers[siteConfig.tokenHeader.RefreshToken] = 'Bearer ' + getAccessToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+                    resolve(service(res.config))
+                })
+            })
+        }
     } else if (code === 500) {
         ElMessage({
             message: msg,
@@ -95,5 +130,25 @@ service.interceptors.response.use(async (res) => {
     })
     return Promise.reject(error)
 })
+
+const handleAuthorized = () => {
+    if (!isRelogin.show) {
+        isRelogin.show = true;
+        ElMessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
+                confirmButtonText: '重新登录',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }
+        ).then(() => {
+            isRelogin.show = false;
+            // store.dispatch('LogOut').then(() => {
+            //     location.href = getPath('/index');
+            // })
+        }).catch(() => {
+            isRelogin.show = false;
+        });
+    }
+    return Promise.reject("无效的会话，或者会话已过期，请重新登录。")
+}
 
 export default service;

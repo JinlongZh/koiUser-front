@@ -4,7 +4,7 @@
     <div class="right">
       <HeaderItem v-if="mpSwitch"/>
       <div class="menuBar" :style="{backgroundImage: 'url(' + menuBar + ')' }" @click="openSideBar" v-else></div>
-      <div class="avatar" @click="avatarClick" :style="{ backgroundImage: 'url(' + $user.userInfo.avatar + ')' }"></div>
+      <div class="avatar" @click="avatarClick" :style="{ backgroundImage: 'url(' + $user.userInfo?.avatar + ')' }"></div>
     </div>
   </div>
 </template>
