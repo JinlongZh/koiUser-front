@@ -1,8 +1,14 @@
 <template>
-  <router-view></router-view>
+  <router-view v-slot="{ Component }">
+    <template v-if="Component">
+      <Suspense>
+        <component :is="Component"/>
+      </Suspense>
+    </template>
+  </router-view>
 
   <!-- 弹出层 -->
-  <Tip />
+  <Tip/>
 </template>
 
 <script setup lang="ts">
