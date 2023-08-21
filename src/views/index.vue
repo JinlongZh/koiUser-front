@@ -2,7 +2,11 @@
   <div class="index">
     <Header class="header" v-if="headerSwitch"/>
     <div class="content">
-
+      <router-view v-slot="{ Component }">
+        <keep-alive :include="keepAliveRoute">
+          <component class="component" :is="Component"/>
+        </keep-alive>
+      </router-view>
     </div>
     <Footer/>
   </div>
@@ -14,10 +18,12 @@ import {inject, onMounted} from "vue";
 import {ProcessInterface} from "@/d.ts/plugins";
 import useWindow from "@/store/modules/window";
 import Footer from "@/components/index/Footer.vue";
+import {siteConfig} from "@/config/program"
 
 const $process = inject<ProcessInterface>("$process")!;
 const $window = useWindow();
 const headerSwitch = $process.headerStatus.value;
+const keepAliveRoute = siteConfig.keepAliveRoute;
 
 onMounted(() => {
   DOMObserve();

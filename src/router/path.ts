@@ -1,3 +1,5 @@
+import type {RouteRecordRaw} from "vue-router";
+
 const publicPath = {
     home: "/",
     message: "/message",
@@ -10,5 +12,22 @@ const publicPath = {
     }
 }
 
+const common: Array<RouteRecordRaw> = [
+    {
+        path: "/error/:type",
+        name: "errorPage",
+        component: () => import("@/views/common/ErrorPage.vue"),
+    }
+]
 
-export { publicPath };
+const content: Array<RouteRecordRaw> = [
+    ...common,
+    {
+        path: "",
+        name: "home",
+        component: () => import("@/views/content/Home.vue")
+    }
+]
+
+
+export {publicPath, content};
