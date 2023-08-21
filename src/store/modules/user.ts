@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import type {UserInfo} from "@/d.ts/api/user";
 
 const useUserStore = defineStore("$user", () => {
@@ -11,11 +11,16 @@ const useUserStore = defineStore("$user", () => {
         userInfo.value = data;
     }
 
+    const isLoggedIn = computed(() => {
+        return Boolean(userInfo.value.id);
+    });
+
 
     return {
         userInfo,
         status,
         initUserInfo,
+        isLoggedIn,
     }
 })
 

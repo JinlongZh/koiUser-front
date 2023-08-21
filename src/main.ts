@@ -1,6 +1,6 @@
 import "@/assets/scss/index.scss"
 import 'element-plus/theme-chalk/src/index.scss'
-import "//at.alicdn.com/t/c/font_4209723_p0gd03sbioc.js"
+import "//at.alicdn.com/t/c/font_4209723_qxxsuar0nb.js"
 import "@/assets/iconfont/icon.css"
 
 import { $process } from "@/plugins/index.ts";

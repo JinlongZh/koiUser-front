@@ -4,7 +4,15 @@
     <div class="right">
       <HeaderItem v-if="mpSwitch"/>
       <div class="menuBar" :style="{backgroundImage: 'url(' + menuBar + ')' }" @click="openSideBar" v-else></div>
-      <div class="avatar" @click="avatarClick" :style="{ backgroundImage: 'url(' + $user.userInfo?.avatar + ')' }"></div>
+      <template v-if="$user.isLoggedIn">
+        <div class="avatar" @click="avatarClick" :style="{ backgroundImage: 'url(' + $user.userInfo?.avatar + ')' }"></div>
+      </template>
+      <div class="login-button" @click="openLogin" v-else>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-denglu"></use>
+        </svg>
+        <span> 登录</span>
+      </div>
     </div>
   </div>
 </template>
@@ -40,6 +48,10 @@ const openSideBar = () => {
 
 const avatarClick = () => {
   console.log("avatarClick");
+}
+
+const openLogin = () => {
+  router.push("/login");
 }
 
 watch(
@@ -130,6 +142,10 @@ onMounted(() => {
       box-shadow: 0 0 5px rgba($color: $black, $alpha: 0.7);
       -webkit-box-shadow: 0 0 5px rgba($color: $black, $alpha: 0.7);
       -moz-box-shadow: 0 0 5px rgba($color: $black, $alpha: 0.7);
+      cursor: pointer;
+    }
+
+    .login-button {
       cursor: pointer;
     }
   }
