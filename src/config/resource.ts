@@ -9,20 +9,16 @@ const icon = {
     friend: "src/assets/icon/friend.png",
     version: "src/assets/icon/version.png",
     about: "src/assets/icon/about.png",
-    menuBar: "src/assets/icon/menuBar.png"
+    menuBar: "src/assets/icon/menuBar.png",
+    userCenter: "src/assets/icon/userCenter.png",
+    logout: "src/assets/icon/logout.png",
 }
 
-const img = {
+const img = {}
 
-}
+const gif = {}
 
-const gif = {
-
-}
-
-const data = {
-
-}
+const data = {}
 
 const resource = {
     ...icon,

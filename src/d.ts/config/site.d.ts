@@ -1,6 +1,5 @@
-
-
 export declare type HeaderConfigType = Array<HeaderBarInterface>;
+
 interface HeaderBarInterface {
     path?: string;
     icon: string;

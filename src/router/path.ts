@@ -9,7 +9,8 @@ const publicPath = {
     errorPath: {
         route: "/error/errorRoute",
         context: "/error/errorContext"
-    }
+    },
+    userCenter: "/userCenter"
 }
 
 const common: Array<RouteRecordRaw> = [

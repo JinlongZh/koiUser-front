@@ -4,9 +4,20 @@
     <div class="right">
       <HeaderItem v-if="mpSwitch"/>
       <div class="menuBar" :style="{backgroundImage: 'url(' + menuBar + ')' }" @click="openSideBar" v-else></div>
-      <template v-if="$user.isLoggedIn">
-        <div class="avatar" @click="avatarClick" :style="{ backgroundImage: 'url(' + $user.userInfo?.avatar + ')' }"></div>
-      </template>
+      <div class="dropDown" v-if="$user.isLoggedIn">
+        <div class="avatar" @click="avatarClick"
+             :style="{ backgroundImage: 'url(' + $user.userInfo?.avatar + ')' }"></div>
+        <div class="dropDown-content">
+          <div class="child" @click="pageJump(publicPath.userCenter)">
+            <img :src=resource.userCenter alt="">
+            <div class="word">个人中心</div>
+          </div>
+          <div class="child" @click="logout">
+            <img :src=resource.logout alt="">
+            <div class="word">退出登录</div>
+          </div>
+        </div>
+      </div>
       <div class="login-button" @click="openLogin" v-else>
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-denglu"></use>
@@ -27,6 +38,7 @@ import useMouseWheel from "@/hooks/useMouseWheel";
 import resource from "@/config/resource";
 import useWindow from "@/store/modules/window";
 import useUserStore from "@/store/modules/user";
+import {publicPath} from "@/router/path";
 
 const router = useRouter();
 const $window = useWindow();
@@ -52,6 +64,10 @@ const avatarClick = () => {
 
 const openLogin = () => {
   router.push("/login");
+}
+
+const logout = () => {
+  console.log("退出登录")
 }
 
 watch(
@@ -133,16 +149,58 @@ onMounted(() => {
       cursor: pointer;
     }
 
-    .avatar {
-      width: 40px;
-      height: 40px;
-      background-size: 100% 100%;
-      border-radius: 50%;
-      transform: translateY(-10px);
-      box-shadow: 0 0 5px rgba($color: $black, $alpha: 0.7);
-      -webkit-box-shadow: 0 0 5px rgba($color: $black, $alpha: 0.7);
-      -moz-box-shadow: 0 0 5px rgba($color: $black, $alpha: 0.7);
+    .dropDown {
+      position: relative;
       cursor: pointer;
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        background-size: 100% 100%;
+        border-radius: 50%;
+        transform: translateY(-10px);
+        box-shadow: 0 0 5px rgba($black, 0.7);
+        -webkit-box-shadow: 0 0 5px rgba($black, 0.7);
+        -moz-box-shadow: 0 0 5px rgba($black, 0.7);
+        cursor: pointer;
+      }
+
+      .dropDown-content {
+        position: absolute;
+        top: calc(100% + 13px); /* 调整菜单的垂直位置 */
+        right: -20px; /* 调整菜单右对齐 */
+        width: 120px;
+        //background-color: $page-bg;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+        z-index: 999;
+
+        .child {
+          display: flex;
+          justify-content: space-between;
+          padding: 10px;
+          cursor: pointer;
+
+          img {
+            width: 16px;
+            height: 16px;
+            display: block;
+          }
+
+          .word {
+            line-height: 20px;
+            margin-left: 5px;
+          }
+        }
+      }
+
+      &:hover .dropDown-content {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
     }
 
     .login-button {
