@@ -14,7 +14,9 @@ const icon = {
     logout: "src/assets/icon/logout.png",
 }
 
-const img = {}
+const img = {
+    ssoPic: "src/assets/images/sso_pic.png"
+}
 
 const gif = {}
 
