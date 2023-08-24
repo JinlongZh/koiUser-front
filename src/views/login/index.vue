@@ -109,7 +109,7 @@ import type {FormInstance} from "element-plus";
 import {useRoute, useRouter} from "vue-router";
 import {login} from "@/api/system/login.ts";
 import {ProcessInterface} from "@/d.ts/modules/process";
-import {LoginResp} from "@/d.ts/api/login.d.ts";
+import {LoginResp} from "@/d.ts/api/system/login.d.ts";
 
 const route = useRoute();
 const router = useRouter();

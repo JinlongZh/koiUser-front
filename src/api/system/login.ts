@@ -1,5 +1,5 @@
 import service from "@/utils/request";
-import {LoginParams, LoginResp} from "@/d.ts/api/login.d.ts";
+import {LoginParams, LoginResp} from "@/d.ts/api/system/login.d.ts";
 
 /**
  * 使用手机 + 密码登录

@@ -4,7 +4,7 @@
       <!-- 配图 -->
       <div class="pic" :style="{backgroundImage: 'url(' + resource.ssoPic + ')' }"></div>
       <div class="right">
-        <span class="title">三方授权</span>
+        <span class="title">三方授权 ({{ client.name }})</span>
 
         <el-divider/>
 
@@ -45,6 +45,11 @@
 import Footer from "@/components/index/Footer.vue";
 import resource from "@/config/resource";
 import {onMounted, reactive, ref} from "vue";
+import {useRoute} from "vue-router";
+import {authorize, getAuthorizeInfo} from "@/api/system/oauth2";
+import {AuthorizeResp} from "@/d.ts/api/system/oauth2";
+
+const $route = useRoute()
 
 const loading = ref<boolean>(false);
 
@@ -58,12 +63,74 @@ const params = reactive({
   clientId: undefined,
   redirectUri: undefined,
   state: undefined,
-  scopes: ["user.read", "user.write"], // 优先从 query 参数获取；如果未传递，从后端获取
+  // responseType: "code",
+  // clientId: "koiuser-sso-demo-by-code",
+  // redirectUri: "https://127.0.0.1:18080",
+  // state: undefined,
+  scopes: [], // 优先从 query 参数获取；如果未传递，从后端获取
 });
+// 客户端信息
+const client = reactive({
+  name: "",
+  logo: "",
+})
 
 onMounted(() => {
+  // http://127.0.0.1:5173/sso?response_type=code&client_id=koiuser-sso-demo-by-code&redirect_uri=https://127.0.0.1:18080&state=1&scope=user.read%20user.write
+  // http://127.0.0.1:5173/sso?response_type=code&client_id=koiuser-sso-demo-by-code&redirect_uri=https://127.0.0.1:18080
+  params.responseType = $route.query.response_type
+  params.clientId = $route.query.client_id
+  params.redirectUri = $route.query.redirect_uri
+  params.state = $route.query.state
+  if ($route.query.scope) {
+    params.scopes = ($route.query.scope as string).split(" ");
+  }
+  // 如果有 scope 参数，先执行一次自动授权，看看是否之前都授权过了。
+  if (params.scopes.length > 0) {
+    doAuthorize(true, params.scopes, []).then(res => {
+      const href = res.data;
+      if (!href) {
+        console.log("自动授权未通过！");
+        return;
+      }
+      // location.href = href;
+      console.log(href)
+    })
+  }
 
+  // 获取授权页的基本信息
+  getAuthorizeInfo(params.clientId).then(res => {
+    client.name = res.data.client.name;
+    client.logo = res.data.client.logo;
+    // 解析 scope
+    let scopes = [];
+    // 1.1 如果 params.scope 非空，则过滤下返回的 scopes
+    if (params.scopes.length > 0) {
+      for (const scope of res.data.scopes) {
+        if (params.scopes.indexOf(scope.key) >= 0) {
+          scopes.push(scope)
+        }
+      }
+      // 1.2 如果 params.scope 为空，则使用返回的 scopes 设置它
+    } else {
+      scopes = res.data.scopes
+      for (const scope of scopes) {
+        params.scopes.push(scope.key)
+      }
+    }
+    // 生成已选中的 checkedScopes
+    for (const scope of scopes) {
+      if (scope.value) {
+        scopeForm.scopes.push(scope.key)
+      }
+    }
+  })
 })
+
+const doAuthorize = (autoApprove: boolean, checkedScopes: Array<string>, uncheckedScopes: Array<string>): Promise<AuthorizeResp> => {
+  return authorize(params.responseType, params.clientId, params.redirectUri, params.state,
+      autoApprove, checkedScopes, uncheckedScopes)
+};
 
 const handleAuthorize = (approved: boolean) => {
   console.log(approved)
