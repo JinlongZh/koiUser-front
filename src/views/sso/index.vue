@@ -34,8 +34,6 @@
         </div>
 
       </div>
-
-
     </div>
   </div>
   <Footer/>
@@ -63,10 +61,6 @@ const params = reactive({
   clientId: undefined,
   redirectUri: undefined,
   state: undefined,
-  // responseType: "code",
-  // clientId: "koiuser-sso-demo-by-code",
-  // redirectUri: "https://127.0.0.1:18080",
-  // state: undefined,
   scopes: [], // 优先从 query 参数获取；如果未传递，从后端获取
 });
 // 客户端信息
@@ -127,14 +121,36 @@ onMounted(() => {
   })
 })
 
+const handleAuthorize = (approved: boolean) => {
+  loading.value = true;
+  // 计算 checkedScopes + uncheckedScopes
+  let checkedScopes = [];
+  let uncheckedScopes = [];
+  if (approved) { // 同意授权，按照用户的选择
+    checkedScopes = scopeForm.scopes;
+    uncheckedScopes = params.scopes.filter(item => checkedScopes.indexOf(item) === -1);
+  } else { // 拒绝，则都是取消
+    checkedScopes = []
+    uncheckedScopes = params.scopes
+  }
+  // 提交授权的请求
+  doAuthorize(false, checkedScopes, uncheckedScopes).then(res => {
+    const href = res.data;
+    if (!href) {
+      return;
+    }
+    // location.href = href;
+    console.log(href);
+  }).finally(() => {
+    loading.value = false;
+  })
+}
+
 const doAuthorize = (autoApprove: boolean, checkedScopes: Array<string>, uncheckedScopes: Array<string>): Promise<AuthorizeResp> => {
   return authorize(params.responseType, params.clientId, params.redirectUri, params.state,
       autoApprove, checkedScopes, uncheckedScopes)
 };
 
-const handleAuthorize = (approved: boolean) => {
-  console.log(approved)
-}
 
 const formatScope = (scope: string) => {
   switch (scope) {
