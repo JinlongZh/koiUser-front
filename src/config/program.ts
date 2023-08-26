@@ -12,7 +12,7 @@ const siteConfig: SiteConfigInterface = {
     aesKey: "",
     aesIV: "",
     enterURL: "enterURL",
-    keepAliveRoute: ["Home"],
+    keepAliveRoute: [],
     avatarMaxSize: 5,
     avatarImgType: ["image/png", "image/jpg", "image/jpeg"],
     sideBarShowStorage: "isSideBarShow"

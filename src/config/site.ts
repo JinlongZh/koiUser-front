@@ -1,6 +1,6 @@
 import resource from "./resource";
 import {pathConfig} from "@/config/program";
-import type {HeaderConfigType, FooterConfigInterface} from "@/d.ts/config/site";
+import type {HeaderConfigType, FooterConfigInterface, SideMenuConfigType} from "@/d.ts/config/site";
 
 
 /*
@@ -58,6 +58,25 @@ const headerConfig: HeaderConfigType = [
 
 /*
  ***************************************************************************************
+ *                                    sideMenu
+ ***************************************************************************************
+ */
+
+const sideMenuConfig: SideMenuConfigType = [
+    {
+        path: pathConfig.userCenter_userInfo,
+        icon: resource.userInfo,
+        word: "个人简介"
+    },
+    {
+        path: pathConfig.userCenter_userInfo,
+        icon: resource.userInfo,
+        word: "个人简介"
+    },
+]
+
+/*
+ ***************************************************************************************
  *                                    footer
  ***************************************************************************************
  */
@@ -69,4 +88,4 @@ const footerConfig: FooterConfigInterface = {
 }
 
 
-export {tipType, headerConfig, footerConfig}
+export {tipType, headerConfig, sideMenuConfig, footerConfig}

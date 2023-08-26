@@ -11,6 +11,14 @@ interface HeaderBarInterface {
     }>
 }
 
+export declare type SideMenuConfigType = Array<SideMenuInterface>;
+
+interface SideMenuInterface {
+    path: string;
+    icon: string;
+    word: string;
+}
+
 export declare interface FooterConfigInterface {
     copyright: string;
     theme: string;

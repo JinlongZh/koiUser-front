@@ -4,7 +4,7 @@
       <!--顶部头像栏-->
       <UserCenterHeader/>
       <!--菜单栏-->
-      <SideMenu/>
+      <SideMenu :menus="sideMenuConfig"/>
     </div>
   </div>
 </template>
@@ -12,6 +12,7 @@
 <script setup lang="ts">
 import UserCenterHeader from "@/views/content/userCenter/components/UserCenterHeader.vue";
 import SideMenu from "@/components/general/menu/SideMenu.vue";
+import {sideMenuConfig} from "@/config/site";
 
 
 </script>

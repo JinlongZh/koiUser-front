@@ -13,7 +13,6 @@ const publicPath = {
     // 个人中心
     userCenter: "/userCenter",
     userCenter_userInfo: "/userCenter/userInfo",
-    userCenter_collection: "/userCenter/collectionList",
 }
 
 const common: Array<RouteRecordRaw> = [
@@ -34,7 +33,14 @@ const content: Array<RouteRecordRaw> = [
     {
         path: publicPath.userCenter,
         name: "userCenter",
-        component: () => import("@/views/content/userCenter/index.vue")
+        component: () => import("@/views/content/userCenter/index.vue"),
+        children: [
+            {
+                path: publicPath.userCenter_userInfo,
+                name: "userCenter_UserInfo",
+                component: () => import("@/views/content/userCenter/components/UserInfo.vue")
+            }
+        ]
     },
 ]
 
