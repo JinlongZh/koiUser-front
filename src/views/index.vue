@@ -54,6 +54,15 @@ function DOMObserve() {
 
 <style scoped lang="scss">
 .index {
+  background: #f6f7fb url(https://www.miyoushe.com/_nuxt/img/background.cd0a312.png) no-repeat 0 60px;
+  background-size: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+
   .content {
     width: 1200px;
     margin: 70px auto 0;

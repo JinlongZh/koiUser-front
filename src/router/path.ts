@@ -10,7 +10,7 @@ const publicPath = {
         route: "/error/errorRoute",
         context: "/error/errorContext"
     },
-    userCenter: "/userCenter"
+    userCenter: "/user-center"
 }
 
 const common: Array<RouteRecordRaw> = [
@@ -27,7 +27,12 @@ const content: Array<RouteRecordRaw> = [
         path: "",
         name: "home",
         component: () => import("@/views/content/Home.vue")
-    }
+    },
+    {
+        path: publicPath.userCenter,
+        name: "userCenter",
+        component: () => import("@/views/content/userCenter/index.vue")
+    },
 ]
 
 
