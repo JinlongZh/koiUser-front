@@ -10,7 +10,10 @@ const publicPath = {
         route: "/error/errorRoute",
         context: "/error/errorContext"
     },
-    userCenter: "/user-center"
+    // 个人中心
+    userCenter: "/userCenter",
+    userCenter_userInfo: "/userCenter/userInfo",
+    userCenter_collection: "/userCenter/collectionList",
 }
 
 const common: Array<RouteRecordRaw> = [

@@ -3,13 +3,15 @@
     <div class="layout">
       <!--顶部头像栏-->
       <UserCenterHeader/>
-
+      <!--菜单栏-->
+      <SideMenu/>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import UserCenterHeader from "@/views/content/userCenter/components/UserCenterHeader.vue";
+import SideMenu from "@/components/general/menu/SideMenu.vue";
 
 
 </script>

@@ -189,7 +189,7 @@ const formatScope = (scope: string) => {
     color: $black;
     border: 1px solid $gray-light;
     border-radius: 20px;
-    box-shadow: 0 2px 4px rgba($color: $black, $alpha: 0.7);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
     position: relative;
 
     .pic {
