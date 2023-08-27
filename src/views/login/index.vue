@@ -241,18 +241,14 @@ const getSmsCode = () => {
 @import "@/assets/scss/var.scss";
 
 .container {
-  // 元素
   width: 100%;
   height: 100%;
-  background-color: $page-bg;
   background-image: url("@/assets/images/bg.jpg");
   background-size: cover;
-  // 定位
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  // 文字
   font-size: 14px;
   font-family: Microsoft YaHei;
   font-weight: 400;
@@ -261,12 +257,12 @@ const getSmsCode = () => {
   .content {
     width: 500px;
     height: 400px;
-    padding: 20px;
-    background-color: $page-bg;
+    padding: 50px 30px;
     color: $black;
+    background-color: rgba($white, 0.6);
     border: 1px solid $gray-light;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba($color: $black, $alpha: 0.7);
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
 
     .form {
       box-sizing: border-box;

@@ -17,7 +17,7 @@ const icon = {
 }
 
 const img = {
-    ssoPic: "/src/assets/images/sso_pic.png"
+
 }
 
 const gif = {}

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="content">
       <!-- 配图 -->
-      <div class="pic" :style="{backgroundImage: 'url(' + resource.ssoPic + ')' }"></div>
+      <!--<div class="pic" :style="{backgroundImage: 'url(' + resource.ssoPic + ')' }"></div>-->
       <div class="right">
         <span class="title">三方授权 ({{ client.name }})</span>
 
@@ -35,13 +35,15 @@
 
       </div>
     </div>
+    <!-- footer -->
+    <div class="footer">
+      Copyright © 2023-2024 jinLonG.
+    </div>
   </div>
-  <Footer/>
+
 </template>
 
 <script setup lang="ts">
-import Footer from "@/components/index/Footer.vue";
-import resource from "@/config/resource";
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from "vue-router";
 import {authorize, getAuthorizeInfo} from "@/api/system/oauth2";
@@ -171,7 +173,7 @@ const formatScope = (scope: string) => {
 .container {
   width: 100%;
   height: 100%;
-  background-color: $page-bg;
+  background-image: url("@/assets/images/bg.jpg");
   background-size: cover;
   position: absolute;
   display: flex;
@@ -182,26 +184,18 @@ const formatScope = (scope: string) => {
   font-weight: 400;
 
   .content {
-    width: 600px;
+    width: 500px;
     height: 400px;
-    padding: 20px;
-    background-color: $page-bg;
+    padding: 0 20px;
+    background-color: rgba($white, 0.6);
     color: $black;
     border: 1px solid $gray-light;
     border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     position: relative;
+    display: flex;
+    justify-content: center;
 
-    .pic {
-      width: 200px;
-      height: 400px;
-      background-repeat: no-repeat;
-      background-size: cover;
-      border-radius: 20px 0 0 20px;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
 
     .right {
       width: 400px;
@@ -211,9 +205,7 @@ const formatScope = (scope: string) => {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      position: absolute;
-      top: 0;
-      left: 200px;
+
 
       .title {
         font-size: 20px;
@@ -235,7 +227,24 @@ const formatScope = (scope: string) => {
         }
       }
     }
+  }
 
+  .footer {
+    // 元素
+    height: 16px;
+    line-height: 16px;
+    font-size: 12px;
+    color: #8c8c8c;
+    // 定位
+    position: absolute;
+    bottom: 30px;
+
+    a,
+    a:hover,
+    a:active {
+      color: inherit;
+      text-decoration: none;
+    }
   }
 }
 
