@@ -40,7 +40,7 @@ const $user = useUserStore();
 
 <style scoped lang="scss">
 @import "@/assets/scss/var.scss";
-@import "@/assets/scss/userCerter.scss";
+@import "@/assets/scss/div";
 
 .user_center_header {
   padding: 20px 50px 24px;

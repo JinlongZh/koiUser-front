@@ -73,11 +73,6 @@ const sideMenuConfig: SideMenuConfigType = [
         icon: resource.userInfo,
         word: "个人简介"
     },
-    {
-        path: pathConfig.userCenter_userInfo,
-        icon: resource.userInfo,
-        word: "个人简介"
-    },
 ]
 
 /*

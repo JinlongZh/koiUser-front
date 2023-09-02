@@ -2,7 +2,7 @@
   <div class="side-menu">
     <!--左侧菜单-->
     <div class="container menu">
-      <div class="menu_header">个人中心</div>
+      <div class="menu_header">{{ name }}</div>
 
       <ul class="menu_list">
         <li v-for="(item, index) in menus" :key="index" @click="selMenu(item.path)">
@@ -23,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-
 import {onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
 import {SideMenuConfigType} from "@/d.ts/config/site";
@@ -32,7 +31,8 @@ const $router = useRouter();
 
 const activeIndex = ref<string>("/userCenter/userInfo");
 
-defineProps({
+const props = defineProps({
+  name: String,
   menus: {
     type: Array as () => SideMenuConfigType,
     required: true
@@ -40,6 +40,9 @@ defineProps({
 })
 
 onMounted(() => {
+  // 设置默认选中第一个菜单项
+  selMenu(props.menus[0].path);
+
   setInterval(() => {
     activeIndex.value = $router.currentRoute.value.path;
   }, 300);
@@ -54,7 +57,7 @@ const selMenu = (path: string) => {
 
 <style scoped lang="scss">
 @import "@/assets/scss/var.scss";
-@import "@/assets/scss/userCerter.scss";
+@import "@/assets/scss/div.scss";
 
 .side-menu {
   display: flex;
@@ -115,6 +118,7 @@ const selMenu = (path: string) => {
 
   /*右侧内容*/
   .content {
+    margin-left: 20px;
     width: 700px;
   }
 }

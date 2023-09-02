@@ -14,6 +14,8 @@ const publicPath = {
     // 个人中心
     userCenter: "/userCenter",
     userCenter_userInfo: "/userCenter/userInfo",
+    // 开放接口
+    interfaceList: "/interfaceList"
 }
 
 const common: Array<RouteRecordRaw> = [
@@ -34,7 +36,14 @@ const content: Array<RouteRecordRaw> = [
     {
         path: publicPath.interface,
         name: "interface",
-        component: () => import("@/views/content/interface/index.vue")
+        component: () => import("@/views/content/interface/index.vue"),
+        children: [
+            {
+                path: publicPath.interfaceList,
+                name: "interfaceList",
+                component: () => import("@/views/content/interface/components/InterfaceList.vue")
+            }
+        ]
     },
     {
         path: publicPath.userCenter,

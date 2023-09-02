@@ -4,7 +4,7 @@
       <!--顶部头像栏-->
       <UserCenterHeader/>
       <!--菜单栏-->
-      <SideMenu :menus="sideMenuConfig"/>
+      <SideMenu :menus="sideMenuConfig" name="个人中心"/>
     </div>
   </div>
 </template>
@@ -19,7 +19,7 @@ import {sideMenuConfig} from "@/config/site";
 
 <style scoped lang="scss">
 @import "@/assets/scss/var.scss";
-@import "@/assets/scss/userCerter.scss";
+@import "@/assets/scss/div";
 
 .user-center {
   width: 100%;

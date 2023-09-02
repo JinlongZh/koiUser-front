@@ -14,8 +14,10 @@ const icon = {
     // home
     home: "/src/assets/icon/home.png",
     interface: "/src/assets/icon/interface.png",
-    // userCenter
+    // 用户中心
     userInfo: "/src/assets/icon/userCenter/userInfo.png",
+    // 开放接口
+    interfaceList: "/src/assets/icon/list.png"
 }
 
 const img = {
