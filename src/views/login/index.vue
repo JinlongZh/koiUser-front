@@ -2,19 +2,30 @@
   <div class="container">
     <!-- 登录区域 -->
     <div class="content">
-      <el-tabs class="form" v-model="loginForm.loginType" style=" float:none;">
-        <el-tab-pane label="账号密码登录" name="uname">
-        </el-tab-pane>
-        <el-tab-pane label="短信验证码登录" name="sms">
-        </el-tab-pane>
-      </el-tabs>
+      <!-- 选项卡 -->
+      <div class="tabs">
+        <div
+            class="tab"
+            :class="{ active: loginForm.loginType === 'uname' }"
+            @click="loginForm.loginType = 'uname'"
+        >
+          密码登录
+        </div>
+        <div
+            class="tab"
+            :class="{ active: loginForm.loginType === 'sms' }"
+            @click="loginForm.loginType = 'sms'"
+        >
+          短信登录
+        </div>
+      </div>
 
       <!-- 表单 -->
       <div class="form-cont">
         <el-form :model="loginForm" :rules="LoginRules" class="login-form" ref="ruleFormRef">
 
           <!-- 账号密码登录 -->
-          <div v-if="loginForm.loginType == 'uname'">
+          <div class="uname" v-if="loginForm.loginType == 'uname'">
             <el-form-item prop="username">
               <el-input v-model="loginForm.username" type="text" placeholder="账号">
                 <template #prefix>
@@ -25,7 +36,8 @@
               </el-input>
             </el-form-item>
             <el-form-item prop="password">
-              <el-input v-model="loginForm.password" :type="showPassword ? 'text' : 'password'" auto-complete="off" placeholder="密码"
+              <el-input v-model="loginForm.password" :type="showPassword ? 'text' : 'password'" auto-complete="off"
+                        placeholder="密码"
                         @keyup.enter.native="getCode">
                 <template #prefix>
                   <svg class="icon" aria-hidden="true">
@@ -43,7 +55,7 @@
           </div>
 
           <!-- 短信验证码登录 -->
-          <div v-if="loginForm.loginType == 'sms'">
+          <div class="sms" v-if="loginForm.loginType == 'sms'">
             <el-form-item prop="mobile">
               <el-input v-model="loginForm.mobile" type="text" auto-complete="off" placeholder="请输入手机号">
                 <template #prefix>
@@ -79,7 +91,6 @@
               <span v-else>登 录 中...</span>
             </el-button>
           </el-form-item>
-
 
         </el-form>
       </div>
@@ -249,9 +260,9 @@ const getSmsCode = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 14px;
-  font-family: Microsoft YaHei;
-  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 600;
 
 
   .content {
@@ -260,38 +271,118 @@ const getSmsCode = () => {
     padding: 50px 30px;
     color: $black;
     background-color: rgba($white, 0.6);
-    border: 1px solid $gray-light;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    border: 2px solid $gray-light;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 
-    .form {
-      box-sizing: border-box;
-      width: 320px;
-      // - - - tab
-      :deep(.el-tabs__content) {
-        padding: 20px 0 0;
+    .tabs {
+      display: flex;
+      margin-bottom: 10px;
+
+      .tab {
+
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+        margin-right: 10px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &.active {
+          border-bottom: 2px solid #409eff;
+        }
+
+        &.active:before {
+          content: "";
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background-color: #409eff;
+        }
       }
+    }
 
-      :deep(.el-tabs__item) {
-        // 元素
-        width: 160px;
-        height: 56px;
-        padding: 0;
-        // 文字
-        line-height: 56px;
-        color: $normal;
+    .form-cont {
+      width: 100%;
+      height: 100%;
+      margin: 0 auto;
+
+      .login-form {
+        padding: 20px;
+
+        :deep(.el-form-item) {
+          margin-bottom: 15px;
+        }
+
+        // 密码登录
+        .uname {
+
+          :deep(el-input__wrapper) {
+            width: 100%;
+
+            :deep(.el-input__prefix) {
+              width: 30px;
+              height: 30px;
+              line-height: 30px;
+              text-align: center;
+              background-color: #ccc;
+              border-radius: 50%;
+              margin-right: 10px;
+            }
+
+            :deep(.el-input__inner) {
+              width: 100%;
+              height: 56px;
+              background: #f5f5f5;
+              border: 0;
+              border-radius: 28px;
+              text-align: center;
+              line-height: 19px;
+              color: #262626;
+            }
+
+            :deep(.el-input__suffix) {
+              cursor: pointer;
+            }
+          }
+
+          .el-checkbox {
+            margin: 0 0 25px 0;
+          }
+
+          .getMobileCode {
+            cursor: pointer;
+            color: blue;
+          }
+        }
+
+        // 短信登录
+        .sms {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .el-button {
+          width: 90%;
+          height: 38px;
+          padding: 10px;
+          cursor: pointer;
+          background-color: #409EFF;
+          color: #fff;
+          border: none;
+          border-radius: 20px;
+
+          &:hover {
+            background-color: #66b1ff;
+          }
+        }
+
       }
-
-      :deep(.el-tabs__item.is-active) {
-        font-weight: bold;
-        color: #2F53EB;
-      }
-
-      :deep(.el-tabs__active-bar) {
-        height: 3px;
-        border-radius: 2px;
-      }
-
     }
 
   }
