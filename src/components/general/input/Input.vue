@@ -4,7 +4,7 @@
     <input
         class="input"
         v-bind="$attrs"
-        :type="type"
+        :type="type || 'text'"
         :placeholder="placeholder"
         v-model="value"
     />
@@ -14,13 +14,11 @@
 <script setup lang="ts">
 import {ref, watch} from 'vue';
 
-const props = withDefaults(defineProps({
+const props = defineProps({
   type: String,
   label: String,
   placeholder: String,
   modelValue: String
-}), {
-  type: 'text'
 })
 
 const value = ref(props.modelValue)
@@ -39,16 +37,21 @@ watch(() => value.value, (newValue) => {
 <style scoped>
 .input-wrapper {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 400;
+
+  .input-label {
+    margin-right: 8px;
+
+  }
+
+  .input {
+    padding: 10px;
+    border: 1px solid #777;
+    border-radius: 4px;
+  }
 }
 
-.input-label {
-  margin-bottom: 8px;
-}
 
-.input {
-  padding: 10px;
-  border: 1px solid #777;
-  border-radius: 4px;
-}
 </style>
