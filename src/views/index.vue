@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import Header from "@/components/index/Header.vue";
-import {inject, onMounted} from "vue";
+import {inject, nextTick, onMounted} from "vue";
 import {ProcessInterface} from "@/d.ts/plugins";
 import useWindow from "@/store/modules/window";
 import Footer from "@/components/index/Footer.vue";
@@ -30,24 +30,26 @@ onMounted(() => {
 })
 
 // DOM监听
-function DOMObserve() {
-  let dom = document.querySelector("html")!;
-  let win: any = window;
-  let MutationObserver = win.MutationObserver || win.webkitMutationObserver || win.MozMutationObserver;
-  let mutationObserver = new MutationObserver((mutations: any) => {
-    let height = document.querySelector("html")!.offsetHeight;
-    // header形态监听
-    $process.headerCheckSwitch($window.height.value, height);
-    // footer形态更新
-    $process.footerPositionSwitch($window.height.value, height);
-  })
-  mutationObserver.observe(dom, {
-    childList: true,
-    attributes: true,
-    characterData: true,
-    subtree: false,
-    attributeOldValue: false,
-    characterDataOldValue: false
+const DOMObserve = () => {
+  nextTick(() => {
+    let dom = document.querySelector("html")!;
+    let win: any = window;
+    // let MutationObserver = win.MutationObserver || win.webkitMutationObserver || win.MozMutationObserver;
+    let mutationObserver = new MutationObserver((mutations: any) => {
+      let height = dom.offsetHeight;
+      // header形态监听
+      $process.headerCheckSwitch($window.height, height);
+      // footer形态更新
+      $process.footerPositionSwitch($window.height, height);
+    })
+    mutationObserver.observe(dom, {
+      childList: true,
+      attributes: true,
+      characterData: true,
+      subtree: true,
+      attributeOldValue: false,
+      characterDataOldValue: false
+    })
   })
 }
 </script>
@@ -56,12 +58,9 @@ function DOMObserve() {
 .index {
   background: #f6f7fb url(https://www.miyoushe.com/_nuxt/img/background.cd0a312.png) no-repeat 0 60px;
   background-size: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 
   .content {
     width: 1200px;
@@ -70,16 +69,6 @@ function DOMObserve() {
     //flex-direction: v-bind(sideCardPosition);
     justify-content: space-between;
 
-    .cardGroup {
-      width: 300px;
-    }
-
-    .component {
-      flex: 1;
-      min-width: 335px;
-      margin: 0 20px;
-      overflow: hidden;
-    }
   }
 }
 
@@ -97,9 +86,6 @@ function DOMObserve() {
   .content {
     width: 800px !important;
 
-    .cardGroup {
-      width: 280px !important;
-    }
   }
 }
 
@@ -108,11 +94,6 @@ function DOMObserve() {
     width: 100% !important;
     flex-direction: column-reverse !important;
 
-    .cardGroup {
-      width: 100% !important;
-      min-width: 350px;
-      margin-top: 20px;
-    }
 
     .component {
       width: calc(100% - 40px) !important;

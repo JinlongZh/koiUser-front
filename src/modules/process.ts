@@ -57,11 +57,10 @@ const Component: ComponentInterface = {
 
     // 底部组件
     footerStatus: ref(true),
-    footerPosition: ref(false),
+    footerPosition: ref(true),
     footerPositionSwitch(clientHeight, HTMLHeight) {
         if (!document.querySelector(".footer")) return;
         Component.footerPosition.value = clientHeight < HTMLHeight;
-
     },
 
 }

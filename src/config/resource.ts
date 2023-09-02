@@ -3,7 +3,6 @@ const icon = {
     warn: "/src/assets/icon/warn.png",
     info: "/src/assets/icon/info.png",
     error: "/src/assets/icon/error.png",
-    home: "/src/assets/icon/home.png",
     other: "/src/assets/icon/other.png",
     message: "/src/assets/icon/message.png",
     friend: "/src/assets/icon/friend.png",
@@ -12,6 +11,9 @@ const icon = {
     menuBar: "/src/assets/icon/menuBar.png",
     userCenter: "/src/assets/icon/userCenter.png",
     logout: "/src/assets/icon/logout.png",
+    // home
+    home: "/src/assets/icon/home.png",
+    interface: "/src/assets/icon/interface.png",
     // userCenter
     userInfo: "/src/assets/icon/userCenter/userInfo.png",
 }

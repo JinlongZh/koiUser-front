@@ -2,6 +2,7 @@ import type {RouteRecordRaw} from "vue-router";
 
 const publicPath = {
     home: "/",
+    interface: "/interface",
     message: "/message",
     friend: "/friend",
     version: "/version",
@@ -29,6 +30,11 @@ const content: Array<RouteRecordRaw> = [
         path: "",
         name: "home",
         component: () => import("@/views/content/Home.vue")
+    },
+    {
+        path: publicPath.interface,
+        name: "interface",
+        component: () => import("@/views/content/interface/index.vue")
     },
     {
         path: publicPath.userCenter,

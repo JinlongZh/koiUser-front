@@ -29,6 +29,11 @@ const headerConfig: HeaderConfigType = [
         word: "主页"
     },
     {
+        path: pathConfig.interface,
+        icon: resource.interface,
+        word: "接口"
+    },
+    {
         icon: resource.other,
         word: "其他",
         children: [
