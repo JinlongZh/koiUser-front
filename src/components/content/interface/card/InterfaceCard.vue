@@ -4,7 +4,7 @@
       <span class="interface-name title-600">{{ name }}</span>
     </div>
     <div class="content">
-      <div class="desc-content text">地方撒法法师法师放你家康师傅那是地方撒法法师法师放你家康师傅那是地方撒法法师法师放你家康师傅那是地方撒法法师法师放你家康师傅那是地方撒法法师法师放你家康师傅那是地方撒法法师法师放你家康师傅那是地方撒法法师法师放你家康师傅那是</div>
+      <div class="desc-content text">{{ description }}</div>
     </div>
   </div>
 </template>
