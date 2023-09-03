@@ -8,6 +8,6 @@ import request from "@/utils/request";
  * @param pageSize
  * @param name
  */
-export const getInterfaceInfoPage = (pageNo: number, pageSize: number, name: string) : Promise<PageResultInterfaceInfoResp> => {
+export const getInterfaceInfoPage = async (pageNo: number, pageSize: number, name: string) : Promise<PageResultInterfaceInfoResp> => {
     return request.get(`/interface/page?pageNo=${pageNo}&pageSize=${pageSize}&name=${name}`);
 }

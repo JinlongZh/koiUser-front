@@ -1,12 +1,17 @@
 <template>
   <div class="interface-card card">
     <div class="interface-header">
-      <span class="interface-name title">接口名字</span>
+      <span class="interface-name title">{{ name }}</span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+
+defineProps({
+  id: Number,
+  name: String,
+})
 
 </script>
 

@@ -18,8 +18,7 @@ export declare interface InterfaceInfo {
 
 export declare interface PageResultInterfaceInfoResp extends CommonResult {
     data: {
-        /*数据 */
-        list: Array<InterfaceInfo>,
+        list: Array<Partial<InterfaceInfo>>,
         total: number;
     };
 }

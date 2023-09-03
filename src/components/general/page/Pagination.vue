@@ -32,14 +32,11 @@ const totalPage = computed(() => { // 总页数
 const pageList = computed(() => { // 获取显示的页码数组
   return dealPageList(currentPage.value).filter(n => n !== 1 && n !== totalPage.value)
 })
-const emit = defineEmits(['change'])
+const emit = defineEmits(['pageChange'])
 watch(currentPage, (to: number): void => { // 通过更改当前页码，修改分页数据
                                            // loading,value = true
-  console.log('change:', to)
-  emit('change', {
-    page: to,
-    pageSize: props.pageSize
-  })
+  console.log('pageChange:', to)
+  emit('pageChange', to)
 })
 onMounted(() => {
   // 监听键盘Enter按键

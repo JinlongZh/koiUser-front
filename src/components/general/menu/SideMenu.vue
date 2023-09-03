@@ -27,7 +27,7 @@ import {onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
 import {SideMenuConfigType} from "@/d.ts/config/site";
 
-const $router = useRouter();
+const router = useRouter();
 
 const activeIndex = ref<string>("/userCenter/userInfo");
 
@@ -44,13 +44,16 @@ onMounted(() => {
   selMenu(props.menus[0].path);
 
   setInterval(() => {
-    activeIndex.value = $router.currentRoute.value.path;
+    activeIndex.value = router.currentRoute.value.path;
   }, 300);
 });
 
 const selMenu = (path: string) => {
   activeIndex.value = path;
-  $router.push({path: path});
+  router.push({
+    path: path,
+    query: router.currentRoute.value.query,
+  });
 };
 
 </script>
