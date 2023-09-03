@@ -40,7 +40,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/app-api': {
-        target: 'http://localhost:8303',
+        target: 'http://localhost:48080',
         changeOrigin: true,
       },
     }

@@ -31,6 +31,7 @@ declare module 'vue' {
     Header: typeof import('./src/components/index/Header.vue')['default']
     HeaderItem: typeof import('./src/components/index/components/HeaderItem.vue')['default']
     Input: typeof import('./src/components/general/input/Input.vue')['default']
+    InterfaceCard: typeof import('./src/components/general/card/InterfaceCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ScrollTitle: typeof import('./src/components/general/titile/ScrollTitle.vue')['default']
