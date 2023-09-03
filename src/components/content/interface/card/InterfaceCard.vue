@@ -4,7 +4,7 @@
       <span class="interface-name title-600">{{ name }}</span>
     </div>
     <div class="content">
-      <div class="desc text">{{ description }}</div>
+      <div class="desc-content text">地方撒法法师法师放你家康师傅那是地方撒法法师法师放你家康师傅那是地方撒法法师法师放你家康师傅那是地方撒法法师法师放你家康师傅那是地方撒法法师法师放你家康师傅那是地方撒法法师法师放你家康师傅那是地方撒法法师法师放你家康师傅那是</div>
     </div>
   </div>
 </template>
@@ -45,10 +45,19 @@ defineProps({
     height: 100%;
     padding: 10px;
 
-    .desc {
+    .desc-content {
+      line-height: 20px;
+      height: 60px;
+      margin-top: 8px;
+      -webkit-line-clamp: 3;
+
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
       overflow: hidden;
+      -o-text-overflow: ellipsis;
       text-overflow: ellipsis;
-      white-space: nowrap;
+      word-break: break-word;
+      word-wrap: break-word;
     }
   }
 }
