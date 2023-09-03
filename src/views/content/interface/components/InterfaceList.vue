@@ -5,11 +5,17 @@
     </div>
     <div class="content">
       <div class="list">
-        <div class="item" v-for="id in 8">
+        <div class="item" v-for="id in 10">
           <interface-card/>
         </div>
       </div>
     </div>
+    <Pagination
+        :total="2000"
+        :size="10"
+        :initPage="1"
+        @pageChange="pageChange"
+    />
   </div>
 </template>
 
@@ -18,6 +24,11 @@
 import {onMounted} from "vue";
 import {getInterfaceInfoPage} from "@/api/interfacer/interfaceInfo";
 import InterfaceCard from "@/components/general/card/InterfaceCard.vue";
+import Pagination from "@/components/general/page/Pagination.vue";
+
+const pageChange = (target: number) => {
+  console.log(target)
+}
 
 onMounted(() => {
   getInterfaceInfoPage(1, 10, "").then(result => {
