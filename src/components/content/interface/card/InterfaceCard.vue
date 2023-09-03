@@ -1,7 +1,10 @@
 <template>
   <div class="interface-card card">
     <div class="interface-header">
-      <span class="interface-name title">{{ name }}</span>
+      <span class="interface-name title-600">{{ name }}</span>
+    </div>
+    <div class="content">
+      <div class="desc text">{{ description }}</div>
     </div>
   </div>
 </template>
@@ -11,6 +14,7 @@
 defineProps({
   id: Number,
   name: String,
+  description: String,
 })
 
 </script>
@@ -21,6 +25,8 @@ defineProps({
 .interface-card {
   width: 300px;
   height: 150px;
+  display: flex;
+  flex-direction: column;
 
   .interface-header {
     display: flex;
@@ -30,7 +36,19 @@ defineProps({
     border-bottom: 1px solid #f0f0f0;
 
     .interface-name {
-      margin: 12px 0 8px;
+      margin: 12px 0 0;
+    }
+  }
+
+  .content {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+
+    .desc {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }

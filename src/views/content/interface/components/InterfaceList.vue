@@ -9,6 +9,7 @@
           <interface-card
               :id="item.id"
               :name="item.name"
+              :description="item.description"
           />
         </div>
       </div>
