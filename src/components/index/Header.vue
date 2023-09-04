@@ -126,6 +126,7 @@ onMounted(() => {
   z-index: 998;
   top: 0;
   left: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transform: translateX(-50%);
 
   .space {

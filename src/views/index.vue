@@ -64,7 +64,7 @@ const DOMObserve = () => {
 
   .content {
     width: 1200px;
-    margin: 70px auto 0;
+    margin: 60px auto 0;
     display: flex;
     //flex-direction: v-bind(sideCardPosition);
     justify-content: space-between;
