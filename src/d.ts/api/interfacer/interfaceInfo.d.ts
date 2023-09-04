@@ -6,12 +6,21 @@ export declare interface InterfaceInfo {
     description: string;
     host: string;
     url: string;
-    requestParams: string;
+    requestParamList: {
+        name: string;
+        required: number;
+        type: string;
+        describe: string;
+    }[];
+    responseParamList: {
+        name: string;
+        type: string;
+        describe: string;
+    }[];
     requestHeader: string;
     responseHeader: string;
     status: number
     method: string;
-    userId: number;
     createTime: Record<string, unknown>;
     updateTime: Record<string, unknown>;
 }
