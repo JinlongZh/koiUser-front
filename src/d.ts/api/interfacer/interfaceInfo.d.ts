@@ -31,3 +31,7 @@ export declare interface PageResultInterfaceInfoResp extends CommonResult {
         total: number;
     };
 }
+
+export declare interface InterfaceInfoResp extends CommonResult {
+    data: InterfaceInfo;
+}

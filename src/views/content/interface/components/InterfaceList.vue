@@ -48,7 +48,7 @@ let name = ref<string>("");
 
 const pageChange = (target: number) => {
   router.push({
-    path: "/interfaceList",
+    path: "/interface/list",
     query: {
       page: target.toString(),
     }
@@ -58,7 +58,7 @@ const pageChange = (target: number) => {
 watch(
     () => router.currentRoute.value.query,
     () => {
-      if(router.currentRoute.value.path != "/interfaceList") return;
+      if(router.currentRoute.value.path != "/interface/list") return;
       page.value = Number(router.currentRoute.value.query.page) || 1;
       getInterfaceList();
     }

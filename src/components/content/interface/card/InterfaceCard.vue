@@ -1,5 +1,5 @@
 <template>
-  <div class="interface-card card">
+  <div class="interface-card card" @click="jumpDetail(id)">
     <div class="interface-header">
       <span class="interface-name title-600">{{ name }}</span>
     </div>
@@ -11,11 +11,19 @@
 
 <script setup lang="ts">
 
+import {useRouter} from "vue-router";
+
+const router = useRouter();
+
 defineProps({
   id: Number,
   name: String,
   description: String,
 })
+
+const jumpDetail = (id: number) => {
+  window.open(router.resolve(`/interface/detail/${id}`).href, "_blank");
+}
 
 </script>
 

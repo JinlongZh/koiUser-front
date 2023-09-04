@@ -2,7 +2,6 @@ import type {RouteRecordRaw} from "vue-router";
 
 const publicPath = {
     home: "/",
-    interface: "/interface",
     message: "/message",
     friend: "/friend",
     version: "/version",
@@ -11,11 +10,12 @@ const publicPath = {
         route: "/error/errorRoute",
         context: "/error/errorContext"
     },
-    // 个人中心
+    // 用户中心
     userCenter: "/userCenter",
     userCenter_userInfo: "/userCenter/userInfo",
     // 开放接口
-    interfaceList: "/interfaceList"
+    interface: "/interface",
+    interfaceList: "/interface/list"
 }
 
 const common: Array<RouteRecordRaw> = [
@@ -28,27 +28,37 @@ const common: Array<RouteRecordRaw> = [
 
 const content: Array<RouteRecordRaw> = [
     ...common,
+    // 主页
     {
         path: "",
         name: "home",
         component: () => import("@/views/content/Home.vue")
     },
+    // 开放接口
     {
         path: publicPath.interface,
         name: "interface",
         component: () => import("@/views/content/interface/index.vue"),
+        redirect: publicPath.interfaceList,
         children: [
             {
                 path: publicPath.interfaceList,
                 name: "interfaceList",
                 component: () => import("@/views/content/interface/components/InterfaceList.vue")
-            }
+            },
         ]
     },
+    {
+        path: "/interface/detail/:id",
+        name: "interfaceDetail",
+        component: () => import("@/views/content/interface/InterfaceDetail.vue")
+    },
+    // 用户中心
     {
         path: publicPath.userCenter,
         name: "userCenter",
         component: () => import("@/views/content/userCenter/index.vue"),
+        redirect: publicPath.userCenter_userInfo,
         children: [
             {
                 path: publicPath.userCenter_userInfo,

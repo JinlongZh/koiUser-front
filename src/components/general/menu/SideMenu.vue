@@ -41,7 +41,7 @@ const props = defineProps({
 
 onMounted(() => {
   // 设置默认选中第一个菜单项
-  selMenu(props.menus[0].path);
+  // selMenu(props.menus[0].path);
 
   setInterval(() => {
     activeIndex.value = router.currentRoute.value.path;
