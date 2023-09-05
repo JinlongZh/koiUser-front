@@ -44,7 +44,7 @@ const $user = useUserStore();
 
 .user_center_header {
   padding: 20px 50px 24px;
-  margin-bottom: 20px;
+  margin: 20px 0;
   display: flex;
 
   .avatar {

@@ -30,6 +30,7 @@ declare module 'vue' {
     Footer: typeof import('./src/components/index/Footer.vue')['default']
     Header: typeof import('./src/components/index/Header.vue')['default']
     HeaderItem: typeof import('./src/components/index/components/HeaderItem.vue')['default']
+    HorizontalTable: typeof import('./src/components/general/table/HorizontalTable.vue')['default']
     Input: typeof import('./src/components/general/input/Input.vue')['default']
     InterfaceCard: typeof import('./src/components/content/interface/card/InterfaceCard.vue')['default']
     Pagination: typeof import('./src/components/general/page/Pagination.vue')['default']

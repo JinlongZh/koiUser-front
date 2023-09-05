@@ -19,7 +19,7 @@ export declare interface InterfaceInfo {
     }[];
     requestHeader: string;
     responseHeader: string;
-    status: number
+    status: number; //（0-关闭，1-开启）
     method: string;
     createTime: Record<string, unknown>;
     updateTime: Record<string, unknown>;
