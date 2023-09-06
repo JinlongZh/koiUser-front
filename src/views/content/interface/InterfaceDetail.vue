@@ -85,6 +85,9 @@
       </div>
     </div>
 
+    <ResultDisplay :result="responseData" />
+    <ResultDisplay :result="url" />
+
   </div>
 </template>
 
@@ -95,6 +98,10 @@ import {useRouter} from "vue-router";
 import type {InterfaceInfo} from "@/d.ts/api/interfacer/interfaceInfo";
 import HorizontalTable from "@/components/general/table/HorizontalTable.vue";
 import InterfaceInput from "@/components/general/input/InterfaceInput.vue";
+import ResultDisplay from "@/components/general/display/ResultDisplay.vue";
+
+const responseData = ref("{ 'name': 'John', 'age': 25 }");
+const url = ref("https://www.static.talkzjl.xyz/post/2023-05-01/b131062d702e050c9c9bee5c3718b328.png")
 
 const router = useRouter();
 

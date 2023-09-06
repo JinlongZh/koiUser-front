@@ -35,6 +35,7 @@ declare module 'vue' {
     InterfaceCard: typeof import('./src/components/content/interface/card/InterfaceCard.vue')['default']
     InterfaceInput: typeof import('./src/components/general/input/InterfaceInput.vue')['default']
     Pagination: typeof import('./src/components/general/page/Pagination.vue')['default']
+    ResultDisplay: typeof import('./src/components/general/display/ResultDisplay.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ScrollTitle: typeof import('./src/components/general/titile/ScrollTitle.vue')['default']
