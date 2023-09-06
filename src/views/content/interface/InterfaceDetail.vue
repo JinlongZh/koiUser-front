@@ -42,15 +42,21 @@
 
     <!--请求参数表格-->
     <div class="table-requestParam" v-if="interfaceInfo.requestParamList && interfaceInfo.requestParamList.length > 0">
-      <div>请求参数</div>
+      <div class="linep title-600">
+        请求参数
+      </div>
       <HorizontalTable
           :columnHeaders="RequestTableHeaders"
           :tableData="interfaceInfo.requestParamList"
       />
     </div>
+
     <!--响应参数表格-->
-    <div class="table-responseParam" v-if="interfaceInfo.responseParamList && interfaceInfo.responseParamList.length > 0">
-      <div>响应参数</div>
+    <div class="table-responseParam"
+         v-if="interfaceInfo.responseParamList && interfaceInfo.responseParamList.length > 0">
+      <div class="linep title-600">
+        响应参数
+      </div>
       <HorizontalTable
           :columnHeaders="ResponseTableHeaders"
           :tableData="interfaceInfo.responseParamList"
@@ -92,7 +98,7 @@ onMounted(() => {
 .interface-detail {
   width: 100%;
   min-height: 100vh;
-  padding: 0 80px;
+  padding: 0 80px 38px 80px;
   display: flex;
   flex-direction: column;
 
@@ -157,13 +163,19 @@ onMounted(() => {
     }
   }
 
+  .linep {
+    margin-bottom: 13px;
+  }
+
   .table-requestParam {
     width: 500px;
-    margin-bottom: 20px;
+    margin-bottom: 28px;
   }
 
   .table-responseParam {
     width: 375px;
   }
+
+
 }
 </style>
