@@ -76,8 +76,12 @@
           @input="handleInput"
       />
       <div class="button-list">
-        <button class="button-reset" @click="resetForm">清空</button>
-        <button class="button-sub" @click="submitForm">提交</button>
+        <button class="button-reset k-btn k-btn-default" @click="resetForm">
+          <span>清空</span>
+        </button>
+        <button class="button-sub k-btn k-btn-danger" @click="submitForm">
+          <span>发起调用</span>
+        </button>
       </div>
     </div>
 
@@ -247,11 +251,13 @@ const validateForm = () => {
       justify-content: space-between;
 
       .button-reset {
-
+        width: 60px;
+        height: 32px;
       }
 
       .button-sub {
-
+        width: 88px;
+        height: 32px;
       }
     }
   }
