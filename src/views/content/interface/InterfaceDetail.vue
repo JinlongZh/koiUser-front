@@ -62,15 +62,35 @@
           :tableData="interfaceInfo.responseParamList"
       />
     </div>
+
+    <div v-if="interfaceInfo.requestParamList && interfaceInfo.requestParamList.length > 0"
+         class="requestForm card"
+    >
+      <InterfaceInput
+          v-for="(param, index) in interfaceInfo.requestParamList"
+          :key="index"
+          :name="param.name"
+          :describe="param.describe"
+          :type="param.type"
+          :isRequired="param.required === 1"
+          @input="handleInput"
+      />
+      <div class="button-list">
+        <button class="button-reset" @click="resetForm">清空</button>
+        <button class="button-sub" @click="submitForm">提交</button>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import {getInterfaceInfo} from "@/api/interfacer/interfaceInfo";
 import {useRouter} from "vue-router";
 import type {InterfaceInfo} from "@/d.ts/api/interfacer/interfaceInfo";
 import HorizontalTable from "@/components/general/table/HorizontalTable.vue";
+import InterfaceInput from "@/components/general/input/InterfaceInput.vue";
 
 const router = useRouter();
 
@@ -89,6 +109,43 @@ const initInterfaceInfo = async () => {
 onMounted(() => {
   initInterfaceInfo();
 })
+
+// 收集请求参数
+const formValues = ref({});
+
+const handleInput = ({name, value}) => {
+  formValues.value[name] = value;
+};
+
+// 清空请求参数
+const resetForm = () => {
+  console.log("我不会做，请手动清空");
+};
+const submitForm = () => {
+  const isValid = validateForm();
+
+  if (isValid) {
+    // 执行表单提交的逻辑
+    // 使用 formValues.value 来访问所有输入框的值
+    console.log(formValues.value);
+  }
+};
+
+const validateForm = () => {
+  let isValid = true;
+
+  // 根据传入的
+  for (const param of interfaceInfo.value.requestParamList) {
+    if (param.required === 1) {
+      const value = formValues.value[param.name];
+      if (!value) {
+        isValid = false;
+      }
+    }
+  }
+
+  return isValid;
+};
 
 </script>
 
@@ -174,6 +231,29 @@ onMounted(() => {
 
   .table-responseParam {
     width: 375px;
+  }
+
+  // 请求参数输入框
+  .requestForm {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    padding: 38px;
+    margin-top: 28px;
+
+    .button-list {
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+
+      .button-reset {
+
+      }
+
+      .button-sub {
+
+      }
+    }
   }
 
 

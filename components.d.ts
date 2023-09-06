@@ -33,6 +33,7 @@ declare module 'vue' {
     HorizontalTable: typeof import('./src/components/general/table/HorizontalTable.vue')['default']
     Input: typeof import('./src/components/general/input/Input.vue')['default']
     InterfaceCard: typeof import('./src/components/content/interface/card/InterfaceCard.vue')['default']
+    InterfaceInput: typeof import('./src/components/general/input/InterfaceInput.vue')['default']
     Pagination: typeof import('./src/components/general/page/Pagination.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
