@@ -28,7 +28,7 @@ const jumpDetail = (id: number) => {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/scss/var.scss";
+@import "@/assets/scss/index.scss";
 
 .interface-card {
   width: 300px;

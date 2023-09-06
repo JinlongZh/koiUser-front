@@ -21,8 +21,7 @@ const menus = [
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/scss/var.scss";
-@import "@/assets/scss/div.scss";
+@import "@/assets/scss/index.scss";
 
 .interface {
   width: 100%;

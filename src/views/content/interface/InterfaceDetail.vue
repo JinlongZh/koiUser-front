@@ -150,7 +150,7 @@ const validateForm = () => {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/scss/var.scss";
+@import "@/assets/scss/index.scss";
 
 .interface-detail {
   width: 100%;

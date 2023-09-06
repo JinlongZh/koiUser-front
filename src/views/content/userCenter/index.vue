@@ -18,8 +18,7 @@ import {sideMenuConfig} from "@/config/site";
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/scss/var.scss";
-@import "@/assets/scss/div";
+@import "@/assets/scss/index.scss";
 
 .user-center {
   width: 100%;

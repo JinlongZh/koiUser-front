@@ -59,8 +59,7 @@ const selMenu = (path: string) => {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/scss/var.scss";
-@import "@/assets/scss/div.scss";
+@import "@/assets/scss/index.scss";
 
 .side-menu {
   display: flex;
