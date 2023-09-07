@@ -66,7 +66,11 @@
     <div v-if="interfaceInfo.requestParamList && interfaceInfo.requestParamList.length > 0"
          class="requestForm card"
     >
+      <div class="k-title k-title-default">
+        测试调用
+      </div>
       <InterfaceInput
+          style="margin-top: 10px"
           v-for="(param, index) in interfaceInfo.requestParamList"
           :key="index"
           :name="param.name"
@@ -253,7 +257,7 @@ const validateForm = () => {
     width: 500px;
     display: flex;
     flex-direction: column;
-    padding: 38px;
+    padding: 28px 38px;
     margin-top: 28px;
 
     .button-list {
