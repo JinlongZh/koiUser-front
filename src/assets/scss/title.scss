@@ -1,0 +1,61 @@
+.k-title {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 10px;
+
+  /* 默认样式 */
+  &.k-title-default {
+    color: #333;
+  }
+
+  /* 主要样式 */
+  &.k-title-primary {
+    color: #0052d9;
+  }
+
+  /* 危险样式 */
+  &.k-title-danger {
+    color: #ff3333;
+  }
+
+  /* 链接样式 */
+  &.k-title-link {
+    color: #0052d9;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #0066ff;
+    }
+  }
+
+  /* 小号标题 */
+  &.k-title-sm {
+    font-size: 14px;
+  }
+
+  /* 大号标题 */
+  &.k-title-lg {
+    font-size: 24px;
+  }
+
+  /* 图标标题 */
+  &.k-title-icon {
+    padding-left: 18px;
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 20px;
+      background-color: #0052d9;
+      border-radius: 2px;
+    }
+  }
+}

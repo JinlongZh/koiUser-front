@@ -42,7 +42,7 @@
 
     <!--请求参数表格-->
     <div class="table-requestParam" v-if="interfaceInfo.requestParamList && interfaceInfo.requestParamList.length > 0">
-      <div class="linep title-600">
+      <div class="k-title k-title-icon">
         请求参数
       </div>
       <HorizontalTable
@@ -54,7 +54,7 @@
     <!--响应参数表格-->
     <div class="table-responseParam"
          v-if="interfaceInfo.responseParamList && interfaceInfo.responseParamList.length > 0">
-      <div class="linep title-600">
+      <div class="k-title k-title-icon">
         响应参数
       </div>
       <HorizontalTable
@@ -85,23 +85,26 @@
       </div>
     </div>
 
-    <ResultDisplay :result="responseData" />
-    <ResultDisplay :result="url" />
+    <div class="response-content">
+      <div class="k-title k-title-icon">
+        响应数据
+      </div>
+      <ResultDisplay :result="responseData" />
+    </div>
 
   </div>
 </template>
 
 <script setup lang="ts">
 import {onMounted, reactive, ref} from "vue";
-import {getInterfaceInfo} from "@/api/interfacer/interfaceInfo";
+import {getInterfaceInfo, invokeInterfaceInfo} from "@/api/interfacer/interfaceInfo";
 import {useRouter} from "vue-router";
 import type {InterfaceInfo} from "@/d.ts/api/interfacer/interfaceInfo";
 import HorizontalTable from "@/components/general/table/HorizontalTable.vue";
 import InterfaceInput from "@/components/general/input/InterfaceInput.vue";
 import ResultDisplay from "@/components/general/display/ResultDisplay.vue";
 
-const responseData = ref("{ 'name': 'John', 'age': 25 }");
-const url = ref("https://www.static.talkzjl.xyz/post/2023-05-01/b131062d702e050c9c9bee5c3718b328.png")
+const responseData = ref();
 
 const router = useRouter();
 
@@ -136,9 +139,14 @@ const submitForm = () => {
   const isValid = validateForm();
 
   if (isValid) {
-    // 执行表单提交的逻辑
-    // 使用 formValues.value 来访问所有输入框的值
-    console.log(formValues.value);
+    const requestParams = Object.entries(formValues.value)
+        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+        .join('&');
+    // 发起调用
+    invokeInterfaceInfo(interfaceInfoId.value, requestParams).then(result => {
+      responseData.value = result.data;
+    })
+
   }
 };
 
@@ -231,10 +239,6 @@ const validateForm = () => {
     }
   }
 
-  .linep {
-    margin-bottom: 13px;
-  }
-
   .table-requestParam {
     width: 500px;
     margin-bottom: 28px;
@@ -267,6 +271,10 @@ const validateForm = () => {
         height: 32px;
       }
     }
+  }
+
+  .response-content {
+    margin-top: 38px;
   }
 
 

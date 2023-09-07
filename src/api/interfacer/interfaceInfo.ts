@@ -20,3 +20,17 @@ export const getInterfaceInfoPage = async (pageNo: number, pageSize: number, nam
 export const getInterfaceInfo = async (id: number): Promise<InterfaceInfoResp> => {
     return request.get(`/interface/get?id=${id}`);
 }
+
+/**
+ * 测试调用
+ * @param id
+ * @param requestParams
+ * @returns
+ */
+export const invokeInterfaceInfo = (id: number, requestParams: string): Promise<InvokeInterfaceInfoRes> => {
+    const invokeInterfaceInfoParams = {
+        id: id,
+        requestParams: requestParams,
+    }
+    return request.post(`/interface/invoke`, invokeInterfaceInfoParams);
+}
