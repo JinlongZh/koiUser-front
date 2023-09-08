@@ -31,6 +31,7 @@ declare module 'vue' {
     Header: typeof import('./src/components/index/Header.vue')['default']
     HeaderItem: typeof import('./src/components/index/components/HeaderItem.vue')['default']
     HorizontalTable: typeof import('./src/components/general/table/HorizontalTable.vue')['default']
+    Image: typeof import('./src/components/general/image/Image.vue')['default']
     Input: typeof import('./src/components/general/input/Input.vue')['default']
     InterfaceCard: typeof import('./src/components/content/interface/card/InterfaceCard.vue')['default']
     InterfaceInput: typeof import('./src/components/general/input/InterfaceInput.vue')['default']

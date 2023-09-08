@@ -16,6 +16,7 @@
     "jquery": "^3.7.0",
     "jsencrypt": "^3.3.2",
     "pinia": "^2.1.6",
+    "v3-img-preview": "^1.1.16",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
   },
