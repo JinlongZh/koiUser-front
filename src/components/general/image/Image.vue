@@ -1,12 +1,12 @@
 <template>
   <div class="image">
-    <img class="previewPic" v-lazy="url" @click.stop="handlePreview" />
+    <img class="previewPic" v-lazy="url" @click.stop="handlePreview"/>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, defineProps } from "vue";
-import { v3ImgPreviewFn } from "v3-img-preview";
+import {onMounted, ref, defineProps} from "vue";
+import {v3ImgPreviewFn} from "v3-img-preview";
 
 const props = defineProps({
   url: String,
@@ -68,11 +68,13 @@ onMounted(() => {
   border-radius: v-bind(radius);
   overflow: hidden;
   cursor: pointer;
+
   .previewPic {
     display: block;
     width: v-bind(imgWidth);
     height: v-bind(imgHeight);
     transform: translateX(v-bind(imgTransformX)) translateY(v-bind(imgTransformY));
+    z-index: 8888;
   }
 }
 

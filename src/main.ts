@@ -7,8 +7,10 @@ import { $process } from "@/plugins/index.ts";
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import resource from "@/config/resource";
 
 import App from './App.vue'
+import lazyPlugin from "vue3-lazy";
 import router from './router'
 
 const app = createApp(App)
@@ -20,6 +22,11 @@ plugins.forEach(plugin => {
 
 app.use(createPinia())
 app.use(router)
+// 懒加载
+app.use(lazyPlugin, {
+    loading: resource.loading,
+    error: resource.errorPage
+});
 
 
 app.mount('#app')

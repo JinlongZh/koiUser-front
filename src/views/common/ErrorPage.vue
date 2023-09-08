@@ -41,7 +41,6 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 88vh;
 
   .img {
     width: 500px;
