@@ -1,119 +1,5 @@
-<script setup lang="ts">
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
-interface Props { // 基于类型的声明
-  current?: number // 当前页数
-  pageSize?: number // 每页条数
-  total?: number // 数据总数
-  pageListNum?: number // 显示的页码数组长度
-  hideOnSinglePage?: boolean // 只有一页时是否隐藏分页
-  showQuickJumper?: boolean // 是否可以快速跳转至某页
-  showTotal?: boolean // 是否显示当前页数和数据总量
-  placement?: 'left'|'center'|'right' // 分页展示位置，靠左left，居中center，靠右right
-}
-const props = withDefaults(defineProps<Props>(), {
-  current: 1,
-  pageSize: 10,
-  total: 0,
-  pageListNum: 5,
-  hideOnSinglePage: false,
-  showQuickJumper: false,
-  showTotal: false,
-  placement: 'center'
-})
-const currentPage = ref(props.current) // 当前页数
-const jumpNumber = ref('') // 跳转的页码
-const forwardMore = ref(false) // 左省略号展示
-const backwardMore = ref(false) // 右省略号展示
-const forwardArrow = ref(false) // 左箭头展示
-const backwardArrow = ref(false) // 右箭头展示
-const totalPage = computed(() => { // 总页数
-  return Math.ceil(props.total / props.pageSize) // 向上取整
-})
-const pageList = computed(() => { // 获取显示的页码数组
-  return dealPageList(currentPage.value).filter(n => n !== 1 && n !== totalPage.value)
-})
-const emit = defineEmits(['pageChange'])
-watch(currentPage, (to: number): void => { // 通过更改当前页码，修改分页数据
-                                           // loading,value = true
-  console.log('pageChange:', to)
-  emit('pageChange', to)
-})
-onMounted(() => {
-  // 监听键盘Enter按键
-  document.onkeydown = (e: KeyboardEvent) => {
-    if (e && e.key === 'Enter') {
-      jumpPage()
-    }
-  }
-})
-onUnmounted(() => {
-  document.onkeydown = null
-})
-function dealPageList (curPage: number): number[] {
-  const resList = []
-  const offset = Math.floor(props.pageListNum / 2) // 向下取整
-  const pager = {
-    start: curPage - offset,
-    end: curPage + offset
-  }
-  if (pager.start < 1) {
-    pager.end = pager.end + (1 - pager.start)
-    pager.start = 1
-  }
-  if (pager.end > totalPage.value) {
-    pager.start = pager.start - (pager.end - totalPage.value)
-    pager.end = totalPage.value
-  }
-  if (pager.start < 1) {
-    pager.start = 1
-  }
-  if (pager.start > 1) {
-    forwardMore.value = true
-  } else {
-    forwardMore.value = false
-  }
-  if (pager.end < totalPage.value) {
-    backwardMore.value = true
-  } else {
-    backwardMore.value= false
-  }
-  // 生成要显示的页码数组
-  for (let i = pager.start; i <= pager.end; i++) {
-    resList.push(i)
-  }
-  return resList
-}
-function onForward (): void {
-  currentPage.value = currentPage.value - props.pageListNum > 0 ? currentPage.value - props.pageListNum : 1
-}
-function onBackward (): void {
-  currentPage.value = currentPage.value + props.pageListNum < totalPage.value ? currentPage.value + props.pageListNum : totalPage.value
-}
-function jumpPage (): void {
-  let num = Number(jumpNumber.value)
-  if (Number.isInteger(num)) {
-    if (num < 1) {
-      num = 1
-    }
-    if (num > totalPage.value) {
-      num = totalPage.value
-    }
-    changePage(num)
-  }
-  jumpNumber.value = '' // 清空跳转输入框
-}
-function changePage (pageNum: number): boolean | void {
-  if (pageNum === 0 || pageNum === totalPage.value + 1) {
-    return false
-  }
-  if (currentPage.value !== pageNum) {
-    // 点击的页码不是当前页码
-    currentPage.value = pageNum
-  }
-}
-</script>
 <template>
-  <div :class="[`m-pagination ${placement}`, { hidden: hideOnSinglePage && total<=pageSize }]">
+  <div :class="[`m-pagination ${placement}`, { hidden: hideOnSinglePage && total <= pageSize }]">
     <div class="m-pagination-wrap">
       <span class="mr8" v-if="showTotal">共 {{ totalPage }} 页 / {{ total }} 条</span>
       <span class="u-item" :class="{ disabled: currentPage === 1 }" @click="changePage(currentPage - 1)">
@@ -157,6 +43,131 @@ function changePage (pageNum: number): boolean | void {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import {ref, computed, watch, onMounted, onUnmounted, toRef} from 'vue'
+
+interface Props { // 基于类型的声明
+  current?: number // 当前页数
+  pageSize?: number // 每页条数
+  total?: number // 数据总数
+  pageListNum?: number // 显示的页码数组长度
+  hideOnSinglePage?: boolean // 只有一页时是否隐藏分页
+  showQuickJumper?: boolean // 是否可以快速跳转至某页
+  showTotal?: boolean // 是否显示当前页数和数据总量
+  placement?: 'left'|'center'|'right' // 分页展示位置，靠左left，居中center，靠右right
+}
+const props = withDefaults(defineProps<Props>(), {
+  current: 1,
+  pageSize: 10,
+  total: 0,
+  pageListNum: 5,
+  hideOnSinglePage: false,
+  showQuickJumper: false,
+  showTotal: false,
+  placement: 'center'
+})
+const emit = defineEmits(['pageChange'])
+
+const currentPage = ref(toRef(props, "current").value);
+const jumpNumber = ref('')
+const forwardMore = ref(false)
+const backwardMore = ref(false)
+const forwardArrow = ref(false)
+const backwardArrow = ref(false)
+
+const totalPage = computed(() => Math.ceil(props.total! / props.pageSize!))
+
+const pageList = computed(() => dealPageList(currentPage.value).filter(n => n !== 1 && n !== totalPage.value))
+
+watch(currentPage, (to: number): void => {
+  emit('pageChange', to)
+})
+
+onMounted(() => {
+  document.onkeydown = (e: KeyboardEvent) => {
+    if (e && e.key === 'Enter') {
+      jumpPage()
+    }
+  }
+})
+
+onUnmounted(() => {
+  document.onkeydown = null
+})
+
+function dealPageList(curPage: number): number[] {
+  const resList = []
+  const offset = Math.floor(props.pageListNum! / 2)
+  const pager = {
+    start: curPage - offset,
+    end: curPage + offset,
+  }
+
+  if (pager.start < 1) {
+    pager.end = pager.end + (1 - pager.start)
+    pager.start = 1
+  }
+
+  if (pager.end > totalPage.value) {
+    pager.start = pager.start - (pager.end - totalPage.value)
+    pager.end = totalPage.value
+  }
+
+  if (pager.start < 1) {
+    pager.start = 1
+  }
+
+  if (pager.start > 1) {
+    forwardMore.value = true
+  } else {
+    forwardMore.value = false
+  }
+
+  if (pager.end < totalPage.value) {
+    backwardMore.value = true
+  } else {
+    backwardMore.value = false
+  }
+
+  for (let i = pager.start; i <= pager.end; i++) {
+    resList.push(i)
+  }
+
+  return resList
+}
+
+function onForward(): void {
+  currentPage.value = currentPage.value - props.pageListNum! > 0 ? currentPage.value - props.pageListNum! : 1
+}
+
+function onBackward(): void {
+  currentPage.value = currentPage.value + props.pageListNum! < totalPage.value ? currentPage.value + props.pageListNum! : totalPage.value
+}
+
+function jumpPage(): void {
+  let num = Number(jumpNumber.value)
+  if (Number.isInteger(num)) {
+    if (num < 1) {
+      num = 1
+    }
+    if (num > totalPage.value) {
+      num = totalPage.value
+    }
+    changePage(num)
+  }
+  jumpNumber.value = ''
+}
+
+function changePage(pageNum: number): boolean | void {
+  if (pageNum === 0 || pageNum === totalPage.value + 1) {
+    return false
+  }
+  if (currentPage.value !== pageNum) {
+    currentPage.value = pageNum
+  }
+}
+</script>
 
 
 <style lang="scss" scoped>

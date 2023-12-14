@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 
-import {onMounted, ref, watch} from "vue";
+import {onBeforeMount, onMounted, ref, watch} from "vue";
 import {getInterfaceInfoPage} from "@/api/interfacer/interfaceInfo";
 import InterfaceCard from "@/components/content/interface/card/InterfaceCard.vue";
 import Pagination from "@/components/general/page/Pagination.vue";
@@ -64,14 +64,14 @@ watch(
     }
 )
 
-onMounted(() => {
+onBeforeMount(() => {
   initData();
 })
 
 const initData = () => {
   // 刷新时停留在之前的分页上
-  page.value = Number(<string>router.currentRoute.value.query.page) || 1;
-  getInterfaceList();
+  page.value = Number(router.currentRoute.value.query.page) || 1;
+  getInterfaceList(); // 确保在初始化时加载分页数据
 }
 
 const getInterfaceList = async () => {
