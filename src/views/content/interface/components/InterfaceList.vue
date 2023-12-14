@@ -10,6 +10,7 @@
               :id="item.id"
               :name="item.name"
               :description="item.description"
+              :create-time="item.createTime"
           />
         </div>
       </div>
