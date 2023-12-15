@@ -45,6 +45,11 @@ const Popup: PopupInterface = {
         }
     },
 
+    // 页面跳转加载页面
+    loadStatus: ref(true),
+    loadShow() { Popup.loadStatus.value = true; },
+    loadHide() { Popup.loadStatus.value = false; },
+
 }
 
 const Component: ComponentInterface = {

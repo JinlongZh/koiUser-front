@@ -36,6 +36,7 @@ declare module 'vue' {
     Input: typeof import('./src/components/general/input/Input.vue')['default']
     InterfaceCard: typeof import('./src/components/content/interface/card/InterfaceCard.vue')['default']
     InterfaceInput: typeof import('./src/components/general/input/InterfaceInput.vue')['default']
+    Load: typeof import('./src/components/popup/Load.vue')['default']
     Pagination: typeof import('./src/components/general/page/Pagination.vue')['default']
     ResultDisplay: typeof import('./src/components/general/display/ResultDisplay.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
@@ -43,6 +44,7 @@ declare module 'vue' {
     ScrollTitle: typeof import('./src/components/general/titile/ScrollTitle.vue')['default']
     SideMenu: typeof import('./src/components/general/menu/SideMenu.vue')['default']
     Tip: typeof import('./src/components/popup/Tip.vue')['default']
+    Wait: typeof import('./src/components/popup/Wait.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']

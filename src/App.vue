@@ -9,26 +9,33 @@
 
   <!-- 弹出层 -->
   <Tip/>
+  <Load />
+  <Wait />
 </template>
 
 <script setup lang="ts">
 import {useRouter} from "vue-router";
-import {inject} from "vue";
+import {inject, ref} from "vue";
 import {ProcessInterface} from "@/d.ts/plugins";
 import useWindow from "@/store/modules/window";
 import useUserStore from "@/store/modules/user";
 import {getUserInfo} from "@/api/system/user";
 import {getAccessToken, getRefreshToken} from "@/utils/auth";
+import { Tip, Wait, Load } from "@/components/popup";
 
 const router = useRouter();
 const $process = inject<ProcessInterface>("$process")!;
 const $window = useWindow();
 const $user = useUserStore();
 
+let isShow = ref(false);
+
 // 空间初始化
 router.isReady().then(async () => {
   Promise.all([user()]).then(async (res) => {
     const [userInfo] = res;
+
+    closeLoad(); // 关闭加载层
     $user.initUserInfo(userInfo.data);
   }).catch(() => {
 
@@ -57,6 +64,12 @@ let listenWindow = {
 }
 window.addEventListener("resize", listenWindow.initSize);
 window.addEventListener("scroll", listenWindow.initDistance);
+
+// 关闭遮罩层
+const closeLoad = () => {
+  isShow.value = true;
+  $process.loadHide();
+}
 
 </script>
 

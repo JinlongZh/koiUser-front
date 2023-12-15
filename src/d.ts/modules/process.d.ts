@@ -16,6 +16,10 @@ export declare interface PopupInterface {
     tipList: UnwrapNestedRefs<{msg: string, type: number}>;
     tipShow: TipShowInterface;
 
+    loadStatus: Ref<boolean>;
+    loadShow: () => void;
+    loadHide: () => void;
+
 }
 
 interface TipShowInterface {
