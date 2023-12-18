@@ -1,10 +1,8 @@
 <template>
-  <div class="wait">
-    <div class="mask" v-if="waitSwitch">
-      <div :class="{ circle: waitTypeSwitch, error: !waitTypeSwitch }"></div>
-    </div>
-    <slot v-else/>
+  <div class="mask" v-if="waitSwitch">
+    <div :class="{ circle: waitTypeSwitch, error: !waitTypeSwitch }"></div>
   </div>
+  <slot v-else/>
 </template>
 
 <script setup lang="ts">
