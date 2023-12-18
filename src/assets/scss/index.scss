@@ -5,17 +5,27 @@
 @import "@/assets/scss/var.scss";
 
 body {
-  padding:0;
-  margin:0;
+  padding: 0;
+  margin: 0;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 }
 
-div{
-  box-sizing:border-box;
+div {
+  box-sizing: border-box;
 }
+
+a, button, img {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 
 #v3-img-preview-container-id .v-images-wrap {
   z-index: 1100;
@@ -27,4 +37,8 @@ div{
 
 #v3-img-preview-container-id .arrow, #v3-img-preview-container-id .v3-img-preview-toolbar, #v3-img-preview-container-id .close-btn {
   z-index: 1101;
+}
+
+.separator {
+  margin: 0 6px;
 }

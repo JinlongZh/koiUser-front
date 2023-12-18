@@ -37,17 +37,29 @@
           </div>
         </div>
       </div>
-
-
     </div>
     <div class="right-container">
-
+     <div
+         v-for="(item, index) of 6"
+     >
+       <ArticleItem :index="index"/>
+     </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 
+import {computed} from "vue";
+import ArticleItem from "@/components/content/article/ArticleItem.vue";
+
+const isRight = computed((index: number) => {
+  if (index % 2 === 0) {
+    return "article-cover left-radius";
+  } else {
+    return "article-cover right-radius";
+  }
+})
 
 </script>
 
@@ -56,7 +68,6 @@
 
 .home {
   width: 100%;
-  height: 100px;
   display: flex;
   justify-content: space-between;
 
@@ -78,6 +89,7 @@
         position: sticky;
         display: flex;
         flex-direction: column;
+        margin-top: 20px;
         align-items: center;
         text-align: center;
         color: #4c4948;
@@ -167,19 +179,11 @@
 
   .right-container {
     flex: 3;
-    height: 100px;
-    background-color: green;
+    padding: 0 1.25rem 1.5rem;
 
-    .article-card {
-      display: flex;
-      align-items: center;
-      height: 280px;
-      width: 100%;
-      margin-top: 20px;
-    }
+
   }
 }
-
 
 
 </style>

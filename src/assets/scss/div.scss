@@ -4,16 +4,16 @@
 }
 
 .card {
-  display: block;
   max-width: 100%;
   outline: none;
   text-decoration: none;
   overflow-wrap: break-word;
-  position: relative;
   white-space: normal;
   will-change: box-shadow;
   border-radius: 8px;
   box-shadow: 0 4px 8px 6px rgba(7, 17, 27, .06);
+  -webkit-box-shadow: 0 4px 8px 6px rgba(7, 17, 27, .06);
+  -moz-box-shadow: 0 4px 8px 6px rgba(7, 17, 27, .06);
 
   &.t-shadow {
     transition: box-shadow 0.3s ease;
