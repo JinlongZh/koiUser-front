@@ -3,8 +3,10 @@ import 'element-plus/theme-chalk/src/index.scss'
 import "//at.alicdn.com/t/c/font_4209723_3886gu2r0se.js"
 import "@/assets/iconfont/icon.css"
 import "@/assets/css/iconfont.css";
+import "virtual:svg-icons-register"
 
 import { $process } from "@/plugins/index.ts";
+import initSvgIcon from "@/assets/icons/index"
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -31,3 +33,5 @@ app.use(lazyPlugin, {
 
 
 app.mount('#app')
+
+app.use(initSvgIcon)

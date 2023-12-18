@@ -4,12 +4,23 @@
 }
 
 .card {
-  background-color: #fff;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease-in-out;
+  display: block;
+  max-width: 100%;
+  outline: none;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  position: relative;
+  white-space: normal;
+  will-change: box-shadow;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px 6px rgba(7, 17, 27, .06);
 
-  &:hover {
-    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.1);
+  &.t-shadow {
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 8px 16px 12px rgba(7, 17, 27, 0.1);
+    }
   }
 }
+

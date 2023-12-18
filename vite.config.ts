@@ -6,6 +6,7 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 import path from "path";
+import {createSvgIconsPlugin} from "vite-plugin-svg-icons";
 
 export default defineConfig({
   plugins: [
@@ -20,6 +21,14 @@ export default defineConfig({
         importStyle: 'sass'
       })],
     }),
+    // 注册所有的svg文件生成svg雪碧图
+    createSvgIconsPlugin({
+      iconDirs: [path.resolve(process.cwd(), "src/assets/icons/svg")], // icon存放的目录
+      symbolId: "icon-[name]", // symbol的id
+      inject: "body-last", // 插入的位置
+      customDomId: "__svg__icons__dom__" // svg的id
+    })
+
   ],
   resolve: {
     // src文件夹配置别名

@@ -3,7 +3,7 @@
     <div class="left-container">
       <div class="blog-wrapper">
         <!-- 博主信息 -->
-        <div class="author-wrapper">
+        <div class="blog-card author-wrapper card t-shadow">
           <div class="avatar">
             <img src="@/assets/images/bg.jpg" alt="Avatar">
           </div>
@@ -21,29 +21,23 @@
           </a>
           <!-- 社交信息 -->
           <div class="card-info-social">
-            <a
-                class="iconfont icongithub"
-                style="font-size: 30px;"
-            ></a>
-            <a
-                class="iconfont icongitee-fill-round"
-                style="font-size: 30px;"
-            ></a>
-            <a
-                class="iconfont iconfanhuidingbu"
-                style="font-size: 30px;"
-            ></a>
-            <a
-                class="iconfont iconqq"
-                style="font-size: 30px;"
-            ></a>
+            <svg-icon icon-class="github" class="social-svgIcon"/>
+            <svg-icon icon-class="gitee" class="social-svgIcon"/>
+            <svg-icon icon-class="qq" class="social-svgIcon"/>
+          </div>
+        </div>
+        <!--网站信息-->
+        <div class="blog-card notice-wrapper card t-shadow">
+          <div class="web-info-title">
+            <svg-icon icon-class="gonggao" style="width: 1.25rem; height: 1.25rem; margin-right: 8px"/>
+            公告
+          </div>
+          <div style="font-size:0.875rem">
+            静坐于万花筒，在绚烂中寻找那唯一的本源
           </div>
         </div>
       </div>
 
-      <div>
-        daf
-      </div>
 
     </div>
     <div class="right-container">
@@ -54,10 +48,7 @@
 
 <script setup lang="ts">
 
-import {ref} from "vue";
-import SvgIcon from "@/components/general/icon/SvgIcon.vue";
 
-const picList = ref(["/src/assets/images/bg.jpg", "/src/assets/images/bg.jpg"]);
 </script>
 
 <style scoped lang="scss">
@@ -74,18 +65,21 @@ const picList = ref(["/src/assets/images/bg.jpg", "/src/assets/images/bg.jpg"]);
     display: flex;
     flex-direction: column;
 
+    .blog-card {
+      line-height: 2;
+      padding: 1.25rem 1.5rem;
+      margin-right: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
     .blog-wrapper {
+
       .author-wrapper {
         position: sticky;
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-right: 15px;
-        padding: 20px 24px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px 6px rgba(7, 17, 27, .06);
         text-align: center;
-        line-height: 2;
         color: #4c4948;
 
         .avatar {
@@ -154,7 +148,18 @@ const picList = ref(["/src/assets/images/bg.jpg", "/src/assets/images/bg.jpg"]);
           justify-content: space-around;
           line-height: 40px;
           margin: 6px 0 -6px;
+
+          .social-svgIcon {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-right: 1rem;
+          }
         }
+      }
+
+      .notice-wrapper {
+        position: sticky;
+        color: #4c4948;
       }
     }
 
@@ -164,13 +169,17 @@ const picList = ref(["/src/assets/images/bg.jpg", "/src/assets/images/bg.jpg"]);
     flex: 3;
     height: 100px;
     background-color: green;
+
+    .article-card {
+      display: flex;
+      align-items: center;
+      height: 280px;
+      width: 100%;
+      margin-top: 20px;
+    }
   }
 }
 
-.svgIcon {
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-right: 1rem;
-}
+
 
 </style>
