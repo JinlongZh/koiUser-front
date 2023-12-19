@@ -1,4 +1,4 @@
-import type {CommonResult} from "@/d.ts/api/common";
+import type {CommonResult} from "@/d.ts/api";
 
 export declare interface InterfaceInfo {
     id: number;

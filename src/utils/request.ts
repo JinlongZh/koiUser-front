@@ -5,6 +5,8 @@ import {getAccessToken, getRefreshToken, setToken} from '@/utils/auth'
 import {siteConfig} from "@/config/program";
 import {refreshToken} from "@/api/system/login";
 import progress from "@/utils/nprogress";
+import {UrlReqType} from "@/config/constant";
+import urlRequest from "@/utils/urlHelp"
 
 
 // 需要忽略的提示。忽略后，自动 Promise.reject('error')
@@ -156,4 +158,22 @@ const handleAuthorized = () => {
     return Promise.reject("无效的会话，或者会话已过期，请重新登录。")
 }
 
+const get: GetType = (url, req, type = UrlReqType.param) => {
+    return service.get(urlRequest[type](url, req));
+}
+
+const post: PostType = (url, req) => {
+    return service.post(url, req);
+}
+
+const put: PutType = (url, req) => {
+    return service.put(url, req);
+}
+
+const del: DelType = (url, req, type = UrlReqType.param) => {
+    return service.delete(urlRequest[type](url, req));
+}
+
+
 export default service;
+export { get, post, put, del };

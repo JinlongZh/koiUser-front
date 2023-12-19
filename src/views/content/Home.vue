@@ -39,40 +39,63 @@
       </div>
     </div>
     <div class="right-container">
-     <div
-         v-for="(item, index) of 6"
-     >
-       <ArticleItem :index="index"/>
-       <talk-item
-        id="index"
-        content="😲 md-editor-v3
-
-Markdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier."
-        :pic-list="picList"
-        create-time="2023-2-17"
-        :views="23"
-        :comments="23"
-       />
-     </div>
+      <Wait :show="show" height="400px">
+        <home-list :homeListData="homeListData"/>
+      </Wait>
+      <Pagination
+          :total="total"
+          :page-size="pageSize"
+          :current="page"
+          :hide-on-single-page="true"
+          :show-total="true"
+          @pageChange="pageChange"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 
-const picList = ref(["https://img.xiaopaocampus.cn/stc_xp/images/avatarimg/1700587310421/pictureFileName.jpg", "https://img.xiaopaocampus.cn/stc_xp/images/avatarimg/1699703079761/pictureFileName.jpeg"]);
+import api from "@/api";
+import {onBeforeMount, reactive, ref} from "vue";
+import {Wait} from "@/components/popup";
+import HomeList from "@/components/content/home/HomeList.vue";
+import {useRouter} from "vue-router";
+import Pagination from "@/components/general/page/Pagination.vue";
 
-import {computed, ref} from "vue";
-import ArticleItem from "@/components/content/article/ArticleItem.vue";
-import TalkItem from "@/components/content/talk/TalkItem.vue";
+const router = useRouter();
 
-const isRight = computed((index: number) => {
-  if (index % 2 === 0) {
-    return "article-cover left-radius";
-  } else {
-    return "article-cover right-radius";
-  }
+let show = ref(true);
+let homeListData = reactive([]);
+let page = ref(1);
+let pageSize = ref(8);
+let total = ref(0)
+
+const getHomeList = async () => {
+  await api.pageHomeList({
+    pageNo: page.value,
+    pageSize: pageSize.value
+  }).then((result) => {
+    homeListData = result.data.list;
+    total.value = result.data.total;
+    show.value = false;
+  })
+}
+
+const pageChange = (target: number) => {
+  router.push({
+    path: "/",
+    query: {
+      page: target
+    }
+  });
+}
+
+onBeforeMount(() => {
+  page.value = router.currentRoute.value.query.page ? Number(router.currentRoute.value.query.page) : 1;
+  getHomeList();
 })
+
 
 </script>
 
@@ -193,7 +216,8 @@ const isRight = computed((index: number) => {
   .right-container {
     flex: 3;
     padding: 0 1.25rem 1.5rem;
-
+    display: flex;
+    flex-direction: column;
 
   }
 }

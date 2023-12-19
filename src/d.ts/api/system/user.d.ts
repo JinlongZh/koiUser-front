@@ -1,4 +1,4 @@
-import {CommonResult} from "@/d.ts/api/common.d.ts";
+import {CommonResult} from "@/d.ts/api";
 
 export declare interface UserInfoResp extends CommonResult {
     data: Partial<UserInfo>;

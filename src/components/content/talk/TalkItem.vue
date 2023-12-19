@@ -3,21 +3,27 @@
     <div class="talkContent">
       <talk-md :content="props.content" :commentId="props.id"/>
     </div>
-    <div class="imgList" v-if="props.picList.length">
-      <div class="talkImg" v-for="item in props.picList" :key="item">
-        <Image :imgArray="props.picList" :url="item" size="97px"/>
+    <div class="imgList" v-if="props.imageList.length">
+      <div class="talkImg" v-for="item in props.imageList" :key="item">
+        <Image :imgArray="props.imageList" :url="item" size="97px"/>
       </div>
     </div>
     <div class="talkFoot">
-      <!-- 发表时间 -->
-      <div class="talk-time">
-        <span class="talk-top">
+      <div class="left">
+        <!-- 是否置顶 -->
+        <span v-if="props.talkTop">
+          <span style="color:#ff7242">
             <svg-icon icon-class="zhiding" style="width: 1rem; height: 1rem; "/>置顶
+          </span>
+          <span class="separator">|</span>
         </span>
-        {{ props.createTime }}
+        <!-- 发表时间 -->
+        <div class="talk-time">
+          {{ props.createTime }}
+        </div>
       </div>
       <div class="data">
-        <div class="views">阅读:{{ props.views }}</div>
+        <div class="views">阅读：{{ props.viewCount }}</div>
       </div>
     </div>
   </div>
@@ -27,7 +33,7 @@
 import Image from "@/components/general/image/Image.vue";
 import TalkMd from "@/components/content/talk/TalkMd.vue";
 
-const props = defineProps(["id", "content", "picList", "views", "comments", "createTime"]);
+const props = defineProps(["id", "content", "imageList", "talkTop", "viewCount", "createTime"]);
 
 
 </script>
@@ -41,7 +47,7 @@ const props = defineProps(["id", "content", "picList", "views", "comments", "cre
   padding: 8px 40px;
   font-size: 14px; // 字体
   background: rgba(255, 255, 255, 0.1);
-
+  cursor: pointer;
 
   .talkContent {
     margin-top: 8px;
@@ -57,7 +63,7 @@ const props = defineProps(["id", "content", "picList", "views", "comments", "cre
     margin-top: 8px;
 
     .talkImg {
-      margin-right: 5px;
+      margin-right: 12px;
       margin-bottom: 5px;
     }
   }
@@ -72,12 +78,9 @@ const props = defineProps(["id", "content", "picList", "views", "comments", "cre
     font-size: 95%;
     color: #999;
 
-    .talk-time {
-
-      .talk-top {
-        color: #ff7242;
-        margin-left: 10px;
-      }
+    .left {
+      display: flex;
+      justify-content: center;
     }
 
     .data {

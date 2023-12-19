@@ -32,6 +32,8 @@ declare module 'vue' {
     Footer: typeof import('./src/components/index/Footer.vue')['default']
     Header: typeof import('./src/components/index/Header.vue')['default']
     HeaderItem: typeof import('./src/components/index/components/HeaderItem.vue')['default']
+    HomeItem: typeof import('./src/components/content/home/HomeItem.vue')['default']
+    HomeList: typeof import('./src/components/content/home/HomeList.vue')['default']
     HorizontalTable: typeof import('./src/components/general/table/HorizontalTable.vue')['default']
     IconSvg: typeof import('./src/components/general/icon/iconSvg.vue')['default']
     Image: typeof import('./src/components/general/image/Image.vue')['default']

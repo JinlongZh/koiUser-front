@@ -1,4 +1,4 @@
-import type {CommonResult} from "@/d.ts/api/common";
+import type {CommonResult} from "@/d.ts/api";
 
 // 授权信息 Response
 export declare interface AuthorizeInfoResp extends CommonResult{

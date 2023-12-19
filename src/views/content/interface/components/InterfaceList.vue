@@ -20,7 +20,7 @@
 
     <Pagination
         :total="total"
-        :page-size="10"
+        :page-size="pageSize"
         :current="page"
         :hide-on-single-page="true"
         :show-total="true"
