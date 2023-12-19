@@ -11,15 +11,19 @@
   white-space: normal;
   will-change: box-shadow;
   border-radius: 8px;
-  box-shadow: 0 4px 8px 6px rgba(7, 17, 27, .06);
-  -webkit-box-shadow: 0 4px 8px 6px rgba(7, 17, 27, .06);
-  -moz-box-shadow: 0 4px 8px 6px rgba(7, 17, 27, .06);
+  box-shadow: 0 4px 8px 6px rgba(7, 17, 27, .06),
+  inset 0 0 0 1px rgba(7, 17, 27, .1);
+  -webkit-box-shadow: 0 4px 8px 6px rgba(7, 17, 27, .06),
+  inset 0 0 0 1px rgba(7, 17, 27, .1);
+  -moz-box-shadow: 0 4px 8px 6px rgba(7, 17, 27, .06),
+  inset 0 0 0 1px rgba(7, 17, 27, .1);
 
   &.t-shadow {
     transition: box-shadow 0.3s ease;
 
     &:hover {
-      box-shadow: 0 8px 16px 12px rgba(7, 17, 27, 0.1);
+      box-shadow: 0 8px 16px 12px rgba(7, 17, 27, 0.1),
+      inset 0 0 0 1px rgba(7, 17, 27, .1);
     }
   }
 }

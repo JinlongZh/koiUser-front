@@ -43,6 +43,16 @@
          v-for="(item, index) of 6"
      >
        <ArticleItem :index="index"/>
+       <talk-item
+        id="index"
+        content="😲 md-editor-v3
+
+Markdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier."
+        :pic-list="picList"
+        create-time="2023-2-17"
+        :views="23"
+        :comments="23"
+       />
      </div>
     </div>
   </div>
@@ -50,8 +60,11 @@
 
 <script setup lang="ts">
 
-import {computed} from "vue";
+const picList = ref(["https://img.xiaopaocampus.cn/stc_xp/images/avatarimg/1700587310421/pictureFileName.jpg", "https://img.xiaopaocampus.cn/stc_xp/images/avatarimg/1699703079761/pictureFileName.jpeg"]);
+
+import {computed, ref} from "vue";
 import ArticleItem from "@/components/content/article/ArticleItem.vue";
+import TalkItem from "@/components/content/talk/TalkItem.vue";
 
 const isRight = computed((index: number) => {
   if (index % 2 === 0) {

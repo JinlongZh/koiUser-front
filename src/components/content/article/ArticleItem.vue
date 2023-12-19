@@ -25,6 +25,11 @@
         都市传说是日本动漫中常常出现的话题。故事就从乡下来到东京读高中的龙之峰帝人开始，从一个又一个的都市传说展开，向我们展示了一出出引人心弦的精彩剧目。
         无头骑士异闻录是一部优秀的群像剧。它的演出十分出色，并没有向其他动画一样主要以主角龙之峰帝人的视角来展开叙述，反而穿插了大量其他角色为视角展开的情节，配合大量的以第三人称展开的解说，不仅没有让人枯燥乏味，反而情节一波三折。乡下来的少年龙之峰帝人，主角的好友外向开朗的纪田正臣，文静腼腆的园原杏里，言辞轻佻的情报贩子折原临也，性格暴躁且力量惊人的平和岛静雄……这些毫无关系的角色，却因各种各样的原因被卷入一个个的事件中。前期毫无交集的角色，却因各种意外或人为推动而有所纠缠，也让前期看似毫无关系的事件有了一条贯通始终的主线，这种展开让人大呼过瘾。
       </div>
+      <div class="articleFooter">
+        <div class="data">
+          <div class="views">阅读:34</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -69,7 +74,7 @@ const cover = ref(`url(https://img.xiaopaocampus.cn/stc_xp/images/avatarimg/1699
 
   .article-wrapper {
     width: 55%;
-    padding: 10px;
+    padding: 10px 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -92,30 +97,25 @@ const cover = ref(`url(https://img.xiaopaocampus.cn/stc_xp/images/avatarimg/1699
     .article-content {
       line-height: 2;
       overflow: hidden;
+      color: #4c4948;
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
     }
 
-    .introduce {
-      margin: 10px 0;
-      text-indent: 28px;
-      line-height: 18px;
-    }
 
-    .footer {
-      height: 20px;
-      line-height: 20px;
-      display: flex;
-      justify-content: space-between;
+    .articleFooter {
+      width: 100%;
+      margin-top: 10px;
+      padding-top: 5px;
+      line-height: 30px;
+      font-size: 95%;
+      color: #999;
 
       .data {
         display: flex;
-
-        div {
-          margin-left: 10px;
-        }
+        flex-direction: row-reverse;
       }
     }
   }

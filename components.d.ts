@@ -46,6 +46,8 @@ declare module 'vue' {
     ScrollTitle: typeof import('./src/components/general/titile/ScrollTitle.vue')['default']
     SideMenu: typeof import('./src/components/general/menu/SideMenu.vue')['default']
     SvgIcon: typeof import('./src/components/general/icon/SvgIcon.vue')['default']
+    TalkItem: typeof import('./src/components/content/talk/TalkItem.vue')['default']
+    TalkMd: typeof import('./src/components/content/talk/TalkMd.vue')['default']
     Tip: typeof import('./src/components/popup/Tip.vue')['default']
     Wait: typeof import('./src/components/popup/Wait.vue')['default']
   }
