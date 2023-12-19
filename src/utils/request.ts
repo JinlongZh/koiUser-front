@@ -4,6 +4,7 @@ import {ElMessage, ElMessageBox} from 'element-plus'
 import {getAccessToken, getRefreshToken, setToken} from '@/utils/auth'
 import {siteConfig} from "@/config/program";
 import {refreshToken} from "@/api/system/login";
+import progress from "@/utils/nprogress";
 
 
 // 需要忽略的提示。忽略后，自动 Promise.reject('error')
@@ -36,6 +37,8 @@ const service = axios.create({
 
 // 请求拦截器
 service.interceptors.request.use((config) => {
+    // 开启加载条
+    progress.startNProgress();
     // 是否需要设置 token
     const isToken = (config.headers || {}).isToken === false
     if (getAccessToken() && getRefreshToken() && !isToken) {
@@ -48,6 +51,8 @@ service.interceptors.request.use((config) => {
 })
 // 响应拦截器
 service.interceptors.response.use(async (res) => {
+    // 关闭加载条
+    progress.closeNProgress();
     // 未设置状态码则默认成功状态
     const code: number = res.data.code || 200;
     // 获取错误信息
