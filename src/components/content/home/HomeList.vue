@@ -11,11 +11,8 @@ import HomeItem from "@/components/content/home/HomeItem.vue";
 
 const props = defineProps(["homeListData"]);
 
-console.log(props.homeListData)
 </script>
 
 <style scoped lang="scss">
-.homeList {
-  margin-top: 20px;
-}
+
 </style>

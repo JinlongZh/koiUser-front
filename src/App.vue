@@ -34,12 +34,11 @@ let isShow = ref(false);
 router.isReady().then(async () => {
   Promise.all([user()]).then(async (res) => {
     const [userInfo] = res;
-
-    closeLoad(); // 关闭加载层
     $user.initUserInfo(userInfo.data);
   }).catch(() => {
 
   }).finally(() => {
+    closeLoad(); // 关闭加载层
     listenWindow.initAll();
   })
 });

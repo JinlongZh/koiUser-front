@@ -45,7 +45,7 @@
       <Pagination
           :total="total"
           :page-size="pageSize"
-          :current="page"
+          :current="pageNo"
           :hide-on-single-page="false"
           :show-total="true"
           @pageChange="pageChange"
@@ -57,7 +57,7 @@
 <script setup lang="ts">
 
 import api from "@/api";
-import {onBeforeMount, reactive, ref} from "vue";
+import {onBeforeMount, reactive, ref, watch} from "vue";
 import {Wait} from "@/components/popup";
 import HomeList from "@/components/content/home/HomeList.vue";
 import {useRouter} from "vue-router";
@@ -67,17 +67,17 @@ const router = useRouter();
 
 let show = ref(true);
 let homeListData = reactive([]);
-let page = ref(1);
+let pageNo = ref(1);
 let pageSize = ref(8);
 let total = ref(0)
 
 const getHomeList = async () => {
   await api.pageHomeList({
-    pageNo: page.value,
+    pageNo: pageNo.value,
     pageSize: pageSize.value
-  }).then((result) => {
-    homeListData = result.data.list;
-    total.value = result.data.total;
+  }).then(({data}) => {
+    homeListData = data.list;
+    total.value = data.total;
     show.value = false;
   })
 }
@@ -89,10 +89,20 @@ const pageChange = (target: number) => {
       page: target
     }
   });
+  pageNo.value = target;
+  // 展示加载动画
+  show.value = true;
 }
 
+watch(
+    () => pageNo.value,
+    () => {
+      getHomeList();
+    }
+)
+
 onBeforeMount(() => {
-  page.value = router.currentRoute.value.query.page ? Number(router.currentRoute.value.query.page) : 1;
+  pageNo.value = router.currentRoute.value.query.page ? Number(router.currentRoute.value.query.page) : 1;
   getHomeList();
 })
 
@@ -106,6 +116,7 @@ onBeforeMount(() => {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  min-height: 101vh; // 解决 footer 组件的缺陷
 
   .left-container {
     flex: 1;

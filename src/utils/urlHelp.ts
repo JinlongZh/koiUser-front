@@ -3,14 +3,26 @@ import type {BuildGetUrlType, BuildMixGetUrlType} from "@/d.ts/api/utils/request
 
 let buildParamUrl: BuildGetUrlType = (baseUrl, req) => {
     if (req == null) return baseUrl;
+
     let url = baseUrl + "?";
     let propertyList = Object.keys(req);
+
     for (let i = 0; i < propertyList.length; i++) {
-        url += propertyList[i] + "=" + req[propertyList[i]];
-        if (i != propertyList.length - 1) url += "&";
+        const propertyName = propertyList[i];
+        const propertyValue = req[propertyName];
+
+        // 检查属性值是否为 null
+        if (propertyValue !== null && propertyValue !== undefined) {
+            url += propertyName + "=" + propertyValue;
+            // 检查是否是最后一个属性
+            if (i !== propertyList.length - 1 && req[propertyList[i + 1]] !== null && req[propertyList[i + 1]] !== undefined) {
+                url += "&";
+            }
+        }
     }
     return url;
 };
+
 
 let buildPathUrl: BuildGetUrlType = (url, req) => {
     if (req == null) return url;

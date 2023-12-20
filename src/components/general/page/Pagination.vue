@@ -163,7 +163,10 @@ function changePage(pageNum: number): boolean | void {
   if (pageNum === 0 || pageNum === totalPage.value + 1) {
     return false
   }
-  if (currentPage.value !== pageNum) {
+
+  if (pageNum > totalPage.value) {
+    currentPage.value = totalPage.value
+  } else if (currentPage.value !== pageNum) {
     currentPage.value = pageNum
   }
 }

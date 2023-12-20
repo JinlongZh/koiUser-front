@@ -1,4 +1,5 @@
 import type {UrlReqType} from "@/config/constant";
+import type {CommonResult} from "@/d.ts/api";
 
 
 export declare type AddHeaderType = (existent?: any) => any;
@@ -11,10 +12,10 @@ interface MixGetUrlReqInterface {
     param: any;
 }
 
-export declare type GetType = (url: string, req?: any, type?: UrlReqType) => Promise<RespInterface>;
+export declare type GetType = (url: string, req?: any, type?: UrlReqType) => Promise<CommonResult>;
 
-export declare type PostType = (url: string, req?: any) => Promise<RespInterface>;
+export declare type PostType = (url: string, req?: any) => Promise<CommonResult>;
 
-export declare type PutType = (url: string, req?: any) => Promise<RespInterface>;
+export declare type PutType = (url: string, req?: any) => Promise<CommonResult>;
 
-export declare type DelType = (url: string, req?: any, type?: UrlReqType) => Promise<RespInterface>;
+export declare type DelType = (url: string, req?: any, type?: UrlReqType) => Promise<CommonResult>;
