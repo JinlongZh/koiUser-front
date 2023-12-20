@@ -78,7 +78,7 @@ const pageJump = (path: string) => {
       }
 
       &:hover .list {
-        width: 60px;
+        width: 100%;
         height: auto;
         opacity: 1;
       }

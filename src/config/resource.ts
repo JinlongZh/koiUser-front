@@ -1,23 +1,25 @@
 const icon = {
-    success: "/src/assets/icon/success.png",
-    warn: "/src/assets/icon/warn.png",
-    info: "/src/assets/icon/info.png",
-    error: "/src/assets/icon/error.png",
-    other: "/src/assets/icon/other.png",
-    message: "/src/assets/icon/message.png",
-    friend: "/src/assets/icon/friend.png",
-    version: "/src/assets/icon/version.png",
-    about: "/src/assets/icon/about.png",
-    menuBar: "/src/assets/icon/menuBar.png",
-    userCenter: "/src/assets/icon/userCenter.png",
-    logout: "/src/assets/icon/logout.png",
+    success: "/src/assets/icons/png/success.png",
+    warn: "/src/assets/icons/png/warn.png",
+    info: "/src/assets/icons/png/info.png",
+    error: "/src/assets/icons/png/error.png",
+    other: "/src/assets/icons/png/other.png",
+    message: "/src/assets/icons/png/message.png",
+    friend: "/src/assets/icons/png/friend.png",
+    version: "/src/assets/icons/png/version.png",
+    about: "/src/assets/icons/png/about.png",
+    menuBar: "/src/assets/icons/png/menuBar.png",
+    userCenter: "/src/assets/icons/png/userCenter.png",
+    logout: "/src/assets/icons/png/logout.png",
     // home
-    home: "/src/assets/icon/home.png",
-    interface: "/src/assets/icon/interface.png",
+    home: "/src/assets/icons/png/home.png",
+    interface: "/src/assets/icons/png/interface.png",
+    article: "/src/assets/icons/png/article.png",
+    talk: "/src/assets/icons/png/talk.png",
     // 用户中心
-    userInfo: "/src/assets/icon/userCenter/userInfo.png",
+    userInfo: "/src/assets/icons/png/userCenter/userInfo.png",
     // 开放接口
-    interfaceList: "/src/assets/icon/list.png"
+    interfaceList: "/src/assets/icons/png/list.png"
 }
 
 const img = {

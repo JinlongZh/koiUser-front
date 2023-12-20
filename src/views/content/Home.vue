@@ -46,7 +46,7 @@
           :total="total"
           :page-size="pageSize"
           :current="page"
-          :hide-on-single-page="true"
+          :hide-on-single-page="false"
           :show-total="true"
           @pageChange="pageChange"
       />

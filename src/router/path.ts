@@ -15,7 +15,11 @@ const publicPath = {
     userCenter_userInfo: "/userCenter/userInfo",
     // 开放接口
     interface: "/interface",
-    interfaceList: "/interface/list"
+    interfaceList: "/interface/list",
+    // blog
+    article: "/article",
+    talk: "/talk",
+
 }
 
 const common: Array<RouteRecordRaw> = [
@@ -33,6 +37,18 @@ const content: Array<RouteRecordRaw> = [
         path: "",
         name: "home",
         component: () => import("@/views/content/Home.vue")
+    },
+    // 文章
+    {
+        path: publicPath.article,
+        name: "article",
+        component: () => import("@/views/content/article/Article.vue")
+    },
+    // 说说
+    {
+        path: publicPath.talk,
+        name: "talk",
+        component: () => import("@/views/content/talk/Talk.vue")
     },
     // 开放接口
     {

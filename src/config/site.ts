@@ -29,6 +29,16 @@ const headerConfig: HeaderConfigType = [
         word: "主页"
     },
     {
+        path: pathConfig.article,
+        icon: resource.article,
+        word: "文章"
+    },
+    {
+        path: pathConfig.talk,
+        icon: resource.talk,
+        word: "说说"
+    },
+    {
         path: pathConfig.interface,
         icon: resource.interface,
         word: "接口"
