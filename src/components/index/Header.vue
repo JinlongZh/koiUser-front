@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="space" @click="pageJump('/')">用户中心</div>
+    <div class="space" @click="pageJump('/')">KOI-SPACE</div>
     <div class="right">
       <HeaderItem v-if="mpSwitch"/>
       <div class="menuBar" :style="{backgroundImage: 'url(' + menuBar + ')' }" @click="openSideBar" v-else></div>

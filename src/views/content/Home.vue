@@ -136,7 +136,6 @@ onBeforeMount(() => {
         position: sticky;
         display: flex;
         flex-direction: column;
-        margin-top: 20px;
         align-items: center;
         text-align: center;
         color: #4c4948;

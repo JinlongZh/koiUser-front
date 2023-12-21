@@ -2,8 +2,8 @@
   <div class="talkMd">
     <MdPreview
         v-model="content"
-        :editorId="commentId"
-        showCodeRowNumber="true"
+        :editorId="id"
+        :showCodeRowNumber="true"
     />
   </div>
 </template>
@@ -14,6 +14,8 @@ import { MdPreview  } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 
 const props = defineProps(["content", "commentId"]);
+
+const id = "talkId" + props.commentId;
 
 const content = ref(props.content);
 

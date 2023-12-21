@@ -1,6 +1,6 @@
 <template>
-  <div class="animeList">
-    <div class="animeItem" v-for="(item, index) in articleListData" :key="item">
+  <div class="articleList">
+    <div class="articleItem" v-for="(item, index) in articleListData" :key="item">
       <article-item :data="item" :index="index" @click="jumpDetail(item.id)" />
     </div>
   </div>
@@ -16,7 +16,7 @@ const router = useRouter();
 const props = defineProps(["articleListData"])
 
 const jumpDetail = (id: number) => {
-  window.open(router.resolve(`/article/details/${id}`).href, "_blank");
+  window.open(router.resolve(`/article/detail/${id}`).href, "_blank");
 };
 </script>
 

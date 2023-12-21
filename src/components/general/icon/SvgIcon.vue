@@ -18,7 +18,6 @@ const props = defineProps({
 })
 
 const iconName = computed(() => {
-  console.log(`#icon-${props.iconClass}`);
   return `#icon-${props.iconClass}`
 })
 const svgClass = computed(() => {

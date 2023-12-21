@@ -140,7 +140,6 @@ watch(
       padding: 1.25rem 1.5rem;
       margin-right: 1.25rem;
       margin-bottom: 1.5rem;
-      margin-top: 20px;
     }
 
     .category-wrapper {

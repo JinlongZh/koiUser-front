@@ -41,15 +41,37 @@ const content: Array<RouteRecordRaw> = [
     // 文章
     {
         path: publicPath.article,
-        name: "article",
-        component: () => import("@/views/content/article/Article.vue")
+        children: [
+            {
+                path: "",
+                name: "article",
+                component: () => import("@/views/content/article/Article.vue")
+            },
+            {
+                path: "detail/:id",
+                name: "articleDetail",
+                component: () => import("@/views/content/article/ArticleDetail.vue")
+            },
+        ]
     },
+
     // 说说
     {
         path: publicPath.talk,
-        name: "talk",
-        component: () => import("@/views/content/talk/Talk.vue")
+        children: [
+            {
+                path: "",
+                name: "talk",
+                component: () => import("@/views/content/talk/Talk.vue")
+            },
+            {
+                path: "detail/:id",
+                name: "talkDetail",
+                component: () => import("@/views/content/talk/TalkDetail.vue")
+            },
+        ]
     },
+
     // 开放接口
     {
         path: publicPath.interface,

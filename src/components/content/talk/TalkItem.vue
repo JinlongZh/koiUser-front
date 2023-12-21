@@ -43,7 +43,7 @@ const props = defineProps(["id", "content", "imageList", "talkTop", "viewCount",
 
 .talkItem {
   width: calc(100% - 5px);
-  margin: 2px auto 20px;
+  margin: 0 auto 20px;
   padding: 8px 40px;
   font-size: 14px; // 字体
   background: rgba(255, 255, 255, 0.1);

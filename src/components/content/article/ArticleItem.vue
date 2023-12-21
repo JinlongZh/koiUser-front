@@ -16,10 +16,8 @@
         {{ data.createTime }}
         <span class="separator">|</span>
         <!--文章分类-->
-        <router-link :to="'/categories/' + data.categoryId">
-          <svg-icon icon-class="category" style="width: 1rem; height: 1rem; "/>
-          {{ data.categoryName }}
-        </router-link>
+        <svg-icon icon-class="category" style="width: 1rem; height: 1rem; "/>
+        {{ data.categoryName }}
       </div>
       <div class="article-content">
         {{ data.articleContent }}
@@ -35,20 +33,21 @@
 
 <script setup lang="ts">
 
-import {computed, ref} from "vue";
+import {computed} from "vue";
+import SvgIcon from "@/components/general/icon/SvgIcon.vue";
 
 const {data, index} = defineProps(['data', 'index']);
 const direction = computed(() => index % 2 === 0 ? 'row' : 'row-reverse');
 
-// const cover = computed(() => `url(${data.value.cover})`);
-const cover = ref(`url(https://img.xiaopaocampus.cn/stc_xp/images/avatarimg/1699703079761/pictureFileName.jpeg)`);
+const cover = computed(() => `url(${data.articleCover})`);
+
 </script>
 
 <style scoped lang="scss">
 .articleItem {
   width: calc(100% - 5px);
   height: 280px;
-  margin: 20px auto;
+  margin: 0 auto 20px;
   border-radius: 5px;
   display: flex;
   font-size: 14px; // 字体

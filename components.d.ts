@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ArticleDetail: typeof import('./src/views/content/article/ArticleDetail.vue')['default']
     ArticleItem: typeof import('./src/components/content/article/ArticleItem.vue')['default']
     ArticleList: typeof import('./src/components/content/article/ArticleList.vue')['default']
     ButtonBlue: typeof import('./src/components/general/button/ButtonBlue.vue')['default']
@@ -50,6 +51,7 @@ declare module 'vue' {
     SideMenu: typeof import('./src/components/general/menu/SideMenu.vue')['default']
     SvgIcon: typeof import('./src/components/general/icon/SvgIcon.vue')['default']
     TalkItem: typeof import('./src/components/content/talk/TalkItem.vue')['default']
+    TalkList: typeof import('./src/components/content/talk/TalkList.vue')['default']
     TalkMd: typeof import('./src/components/content/talk/TalkMd.vue')['default']
     Tip: typeof import('./src/components/popup/Tip.vue')['default']
     Wait: typeof import('./src/components/popup/Wait.vue')['default']

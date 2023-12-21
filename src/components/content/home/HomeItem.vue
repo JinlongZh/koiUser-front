@@ -3,23 +3,35 @@
       v-if="data.type === 1"
       :data="props.data.homeListDTO"
       :index="1"
+      @click="jumpArticle(data.homeListDTO.id)"
   />
   <talk-item
       v-if="data.type === 2"
-      :id="data.id"
+      :id="data.homeListDTO.id"
       :content="data.homeListDTO.content"
       :imageList="data.homeListDTO.imageList"
       :talkTop="data.homeListDTO.talkTop"
       :viewCount="data.homeListDTO.viewCount"
       :createTime="data.homeListDTO.createTime"
+      @click="jumpTalk(data.homeListDTO.id)"
   />
 </template>
 
 <script setup lang="ts">
 import ArticleItem from "@/components/content/article/ArticleItem.vue";
 import TalkItem from "@/components/content/talk/TalkItem.vue";
+import {useRouter} from "vue-router";
 
 const props = defineProps(["data"]);
+const router = useRouter();
+
+const jumpArticle = (id: number) => {
+  window.open(router.resolve(`/article/detail/${id}`).href, "_blank");
+}
+
+const jumpTalk = (id: number) => {
+  window.open(router.resolve(`/talk/detail/${id}`).href, "_blank");
+}
 
 </script>
 
