@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="category-content">
-          <div class="category-item" v-for="item of categoryList" @click="selectCategory(item.id)">
+          <div class="category-item" :class="{'active': item.id === categoryQueryId}" v-for="item of categoryList" @click="selectCategory(item.id)">
             <div class="category-name">
               {{ item?.categoryName }}
             </div>
@@ -122,6 +122,8 @@ watch(
 </script>
 
 <style scoped lang="scss">
+@import "@/assets/scss/index.scss";
+
 .article-container {
   display: flex;
   width: 100%;
@@ -155,11 +157,24 @@ watch(
         margin-top: 10px;
 
         .category-item {
-          height: 20px;
+          height: 2rem;
           display: flex;
           justify-content: space-between;
-          margin-bottom: 15px;
+          align-items: center;
           cursor: pointer;
+          transition: 0.5s;
+
+          &:hover {
+            color: $white;
+            background: rgb(73, 177, 245);
+            padding: 0 5%;
+          }
+
+          &.active {
+            color: $white;
+            background: rgb(255, 144, 66);
+            padding: 0 5%;
+          }
         }
       }
 
