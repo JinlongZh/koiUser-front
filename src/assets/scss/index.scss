@@ -26,6 +26,12 @@ a {
   color: inherit;
 }
 
+textarea {
+  box-sizing: border-box;
+  color: inherit;
+  border-style: none;
+}
+
 
 #v3-img-preview-container-id .v-images-wrap {
   z-index: 1100;

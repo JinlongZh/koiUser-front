@@ -29,7 +29,7 @@
         <!--网站信息-->
         <div class="blog-card notice-wrapper card t-shadow">
           <div class="web-info-title">
-            <svg-icon icon-class="gonggao" style="width: 1.25rem; height: 1.25rem; margin-right: 8px"/>
+            <svg-icon icon-class="gonggao" class="icon" />
             公告
           </div>
           <div style="font-size:0.875rem">

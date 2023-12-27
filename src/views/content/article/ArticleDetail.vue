@@ -3,7 +3,7 @@
     <div class="left-container">
       <div class="article-catalog blog-card card t-shadow">
         <div class="web-info-title">
-          <svg-icon icon-class="mulu" style="width: 1.25rem; height: 1.25rem; margin-right: 8px"/>
+          <svg-icon icon-class="mulu" class="icon" />
           目录
         </div>
         <MdCatalog :editorId="id" :scrollElement="scrollElement"/>

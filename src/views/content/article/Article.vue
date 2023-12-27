@@ -5,7 +5,7 @@
       <div class="category-wrapper blog-card card t-shadow">
         <div class="category-header">
           <div class="web-info-title">
-            <svg-icon icon-class="category" style="width: 1.25rem; height: 1.25rem; margin-right: 8px"/>
+            <svg-icon icon-class="category" class="icon" />
             分类
           </div>
           <div>
