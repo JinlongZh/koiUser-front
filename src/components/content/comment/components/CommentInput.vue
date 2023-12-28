@@ -45,7 +45,7 @@ const publish = () => {
     if (suffix === '.gif') {
       return `<img src="${faceObject[str]}" width="60" height="60" style="padding: 0 1px"/>`;
     } else {
-      return `<img src="${faceObject[str]}" width="22" height="20" style="padding: 0 1px"/>`;
+      return `<img src="${faceObject[str]}" width="22" height="22" style="padding: 0 1px"/>`;
     }
   });
   console.log(commentContent.value);

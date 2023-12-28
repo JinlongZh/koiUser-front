@@ -65,7 +65,7 @@
               <!-- 回复内容 -->
               <p class="comment-content">
                 <!-- 回复用户名 -->
-                <template v-if="reply.replyUserId !== item.userId">
+                <template v-if="reply.replyUserId != null && reply.replyUserId !== item.userId">
                   <span>@{{ reply.replyNickname }}，</span>
                 </template>
                 <span v-html="reply.commentContent"/>
@@ -74,7 +74,6 @@
           </div>
           <!-- 回复数量 -->
           <div
-              class="mb-3"
               style="font-size:0.75rem;color:#6d757a"
               v-show="item.replyCount > 3"
               ref="check"
@@ -256,6 +255,7 @@ onMounted(() => {
           font-size: 0.875rem;
           line-height: 1.75;
           padding-bottom: 0.625rem;
+          margin-bottom: 1.25rem
         }
 
         .reply-item {
