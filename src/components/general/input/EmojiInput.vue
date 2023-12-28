@@ -2,6 +2,7 @@
   <div class="emoji-input">
     <textarea
         class="emoji-textarea"
+        id="emoji-textarea"
         placeholder="登录后才可以发表评论哦..."
         v-model="text"
         @blur="changeValue"
@@ -33,10 +34,16 @@ let text = ref("");
 let chooseEmoji = ref(false);
 
 const changeValue = () => {
-  emit("changeValue", text)
+  emit("changeValue", text.value);
 }
 
 const addEmoji = (key: number) => {
+  // 添加表情就获取焦点，不然添加表情后不触发@blur事件
+  let inputBox = document.getElementById("emoji-textarea");
+  if (document.activeElement !== inputBox) {
+    //获取焦点
+    inputBox.focus();
+  }
   text.value += key;
 }
 
