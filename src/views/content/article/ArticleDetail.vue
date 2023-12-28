@@ -3,10 +3,10 @@
     <div class="left-container">
       <div class="article-catalog blog-card card t-shadow">
         <div class="web-info-title">
-          <svg-icon icon-class="mulu" class="icon" />
+          <svg-icon icon-class="mulu" class="icon"/>
           目录
         </div>
-        <MdCatalog :editorId="id" :scrollElement="scrollElement"/>
+        <MdCatalog :editorId="editorId" :scrollElement="scrollElement"/>
       </div>
     </div>
     <div class="right-container card t-shadow">
@@ -46,8 +46,13 @@
         阅读时长: {{ readTime }} 分钟
       </div>
       <div class="article-content ">
-        <MdPreview :editorId="id" v-model="articleDetail.articleContent" previewTheme="vuepress"/>
+        <MdPreview :editorId="editorId" v-model="articleDetail.articleContent" previewTheme="vuepress"/>
       </div>
+      <!--评论-->
+      <Comment
+          :commentType="CommentApiType.article"
+          :topic-id="articleId"
+      />
     </div>
   </div>
 </template>
@@ -55,10 +60,12 @@
 <script setup lang="ts">
 
 import SvgIcon from "@/components/general/icon/SvgIcon.vue";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {MdPreview, MdCatalog} from 'md-editor-v3';
 import api from "@/api";
 import {useRouter} from "vue-router";
+import Comment from "@/components/content/comment/Comment.vue";
+import {CommentApiType} from "@/config/constant";
 
 const router = useRouter();
 
@@ -87,6 +94,11 @@ const deleteHTMLTag = (content: string) => {
       .replace(/[|]*\n/, "")
       .replace(/&npsp;/gi, "");
 }
+
+const editorId = computed((): string => {
+  let str = "article" + articleId.value
+  return str.replace(/\W/g, "");
+})
 
 onMounted(() => {
   getArticleDetail();
@@ -123,7 +135,7 @@ onMounted(() => {
 
   .right-container {
     flex: 3;
-    padding: 0 1.25rem 1.5rem;
+    padding: 0 2.5rem 3rem;
     margin: 0 0 2.5rem 1.25rem;
     display: flex;
     flex-direction: column;
@@ -146,7 +158,6 @@ onMounted(() => {
     .article-content {
       width: 100%;
       max-width: 100%;
-      padding: 0 1.25rem 1.5rem;
 
       :deep(.md-editor-previewOnly) {
         img {

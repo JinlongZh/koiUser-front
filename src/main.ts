@@ -35,3 +35,15 @@ app.use(lazyPlugin, {
 app.mount('#app')
 
 app.use(initSvgIcon)
+
+// Vue.filter("date", function(value) {
+//     return dayjs(value).format("YYYY-MM-DD");
+// });
+//
+// Vue.filter("year", function(value) {
+//     return dayjs(value).format("YYYY");
+// });
+//
+// Vue.filter("hour", function(value) {
+//     return dayjs(value).format("YYYY-MM-DD HH:mm:ss");
+// });
