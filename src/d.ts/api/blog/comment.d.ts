@@ -22,10 +22,10 @@ interface CommentItemInterface {
     commentContent: string;
     createTime: Record<string, unknown>;
     replyCount: number;
-    replyList: Partial<Array<ReplyList>>
+    replyList: Partial<Array<ReplyInterface>>
 }
 
-interface ReplyList {
+interface ReplyInterface {
     id: number;
     parentId: number;
     userId: number;

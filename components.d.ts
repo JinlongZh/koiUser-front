@@ -50,6 +50,7 @@ declare module 'vue' {
     Load: typeof import('./src/components/popup/Load.vue')['default']
     Pagination: typeof import('./src/components/general/page/Pagination.vue')['default']
     Paging: typeof import('./src/components/general/page/Paging.vue')['default']
+    ReplyInput: typeof import('./src/components/content/comment/components/ReplyInput.vue')['default']
     ResultDisplay: typeof import('./src/components/general/display/ResultDisplay.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

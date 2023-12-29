@@ -41,7 +41,7 @@ const addEmoji = (key: number) => {
   // 添加表情就获取焦点，不然添加表情后不触发@blur事件
   let inputBox = document.getElementById("emoji-textarea");
   if (document.activeElement !== inputBox) {
-    //获取焦点
+    // 获取焦点
     inputBox.focus();
   }
   text.value += key;
@@ -59,9 +59,9 @@ const handleChooseEmoji = () => {
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
   border: 1px solid rgba(144, 147, 153, .31);
   border-radius: 4px;
+  background: #fff url("@/assets/images/commentBack.webp") no-repeat 100% 100%;
 
   .emoji-textarea {
     width: 100%;
@@ -71,24 +71,13 @@ const handleChooseEmoji = () => {
     min-height: 122px;
     resize: none;
     border-radius: 4px;
-    background: #fff url("@/assets/images/commentBack.webp") no-repeat 100% 100%;
+    mix-blend-mode: multiply;
   }
 
   .emoji-container {
     margin: 10px;
     display: flex;
     align-items: center;
-
-    .emoji-btn {
-      cursor: pointer;
-      font-size: 1.3rem;
-    }
-
-    .emoji-btn-active {
-      cursor: pointer;
-      font-size: 1.3rem;
-      color: #66b1ff;
-    }
   }
 }
 </style>

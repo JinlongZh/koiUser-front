@@ -74,7 +74,7 @@
           </div>
           <!-- 回复数量 -->
           <div
-              style="font-size:0.75rem;color:#6d757a"
+              style="font-size:0.75rem;color:#6d757a;margin-bottom:12px"
               v-show="item.replyCount > 3"
               ref="check"
           >
@@ -91,7 +91,7 @@
           <!-- 回复分页 -->
           <div
               class="mb-3"
-              style="font-size:0.75rem;color:#222;display:none"
+              style="font-size:0.75rem;color:#222;display:none;margin-bottom:12px"
               ref="paging"
           >
             <span style="padding-right:10px">
@@ -105,6 +105,8 @@
                 @changeReplyCurrent="changeReplyCurrent"
             />
           </div>
+          <!-- 回复框 -->
+          <ReplyInput ref="reply" @reloadReply="reloadReply"/>
         </div>
 
       </div>
@@ -118,18 +120,22 @@ import SvgIcon from "@/components/general/icon/SvgIcon.vue";
 import CommentInput from "@/components/content/comment/components/CommentInput.vue";
 import {onMounted, provide, ref} from "vue";
 import api from "@/api";
-import type {CommentItemInterface} from "@/d.ts/api/blog/comment";
+import type {CommentItemInterface, Reply, ReplyInterface} from "@/d.ts/api/blog/comment";
 import Paging from "@/components/general/page/Paging.vue";
+import ReplyInput from "@/components/content/comment/components/ReplyInput.vue";
 
 const props = defineProps(["commentType", "topicId"]);
 
 provide("commentType", props.commentType);
 provide("topicId", props.topicId);
 
-let commentList = ref<Array<CommentItemInterface>>([]);
-let commentCount = ref(0);
+//refs
 const check = ref();
 const paging = ref();
+const reply = ref();
+
+let commentList = ref<Array<CommentItemInterface>>([]);
+let commentCount = ref(0);
 
 const listComment = async () => {
   await api.listComment({
@@ -143,9 +149,20 @@ const listComment = async () => {
   })
 }
 
-const replyComment = (index: number, item: CommentItemInterface) => {
-  console.log(index)
-  console.log(item.id)
+const replyComment = (index: number, item: CommentItemInterface | ReplyInterface) => {
+  reply.value.forEach(item => {
+    item.$el.style.display = "none";
+  });
+  // 通过dom对组件暴露的值传值
+  reply.value[index].commentContent = "";
+  reply.value[index].nickname = item.nickname;
+  reply.value[index].replyUserId = item.userId;
+  reply.value[index].parentId = commentList.value[index].id;
+  reply.value[index].chooseEmoji = false;
+  reply.value[index].index = index;
+  reply.value[index].$el.style.display = "block";
+  // 定位到回复框
+  reply.value[index].focusTextarea();
 }
 
 const checkReplies = (index: number, item: CommentItemInterface) => {
@@ -171,6 +188,10 @@ const changeReplyCurrent = (current: number, index: number, commentId: number) =
   }).then(({data}) => {
     commentList.value[index].replyList = data;
   })
+}
+
+const reloadReply = () => {
+
 }
 
 onMounted(() => {
@@ -205,6 +226,8 @@ onMounted(() => {
   .comment-area {
     .comment-item {
       display: flex;
+      padding-top: 23px;
+      box-sizing: content-box;
 
       .comment-avatar {
         width: 40px;
@@ -216,7 +239,7 @@ onMounted(() => {
       .comment-meta {
         width: 100%;
         margin-left: 0.7rem;
-        border-bottom: 1px dashed #f5f5f5;
+        border-bottom: 1px solid rgba(144, 147, 153, .31);
 
         .comment-user {
           font-size: 14px;
@@ -255,7 +278,6 @@ onMounted(() => {
           font-size: 0.875rem;
           line-height: 1.75;
           padding-bottom: 0.625rem;
-          margin-bottom: 1.25rem
         }
 
         .reply-item {

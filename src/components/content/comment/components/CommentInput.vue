@@ -13,7 +13,7 @@ import EmojiInput from "@/components/general/input/EmojiInput.vue";
 import {inject, ref} from "vue";
 import type {ProcessInterface} from "@/d.ts/modules/process";
 import useUserStore from "@/store/modules/user";
-import EmojiObject from "@/assets/images/emoji/emoji"
+import EmojiObject from "@/assets/images/emoji/emoji";
 
 const $process = inject<ProcessInterface>("$process")!;
 const $user = useUserStore();
