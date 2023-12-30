@@ -1,5 +1,5 @@
 import type {CommentInterface} from "@/d.ts/api/blog/comment";
-import {get} from "@/utils/request";
+import {get, post} from "@/utils/request";
 
 export const commentInterface: CommentInterface = {
     listComment: async (req) => {
@@ -7,6 +7,9 @@ export const commentInterface: CommentInterface = {
     },
     pageCommentReply: async(req) => {
         return await get("/blog/comment/reply/page", req);
+    },
+    insertComment: async (req) => {
+        return await post("/blog/comment/add", req);
     }
 
 }

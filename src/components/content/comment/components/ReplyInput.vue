@@ -33,12 +33,15 @@ import Emoji from "@/components/general/emoji/Emoji.vue";
 import {ProcessInterface} from "@/d.ts/modules/process";
 import useUserStore from "@/store/modules/user";
 import EmojiObject from "@/assets/images/emoji/emoji";
+import {useRoute} from "vue-router";
+import api from "@/api";
 
 // refs
 const reply = ref();
 const replyTextarea = ref();
 
 const emit = defineEmits(["reloadReply"]);
+const route = useRoute();
 const $process = inject<ProcessInterface>("$process")!;
 const $user = useUserStore();
 
@@ -81,7 +84,17 @@ const insertReply = () => {
       return `<img src="${faceObject[str]}" width="22" height="22" style="padding: 0 1px"/>`;
     }
   });
-  console.log(commentContent.value);
+
+  let req = {
+    commentContent: commentContent.value,
+    parentId: parentId.value,
+    replyUserId: replyUserId.value
+  }
+  commentContent.value = "";
+  api.insertComment(req).then(({data}) => {
+    $process.tipShow.success("回复成功");
+    emit("reloadReply", index.value);
+  })
 }
 
 const addEmoji = (text: number) => {

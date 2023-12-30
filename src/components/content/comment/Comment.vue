@@ -132,6 +132,7 @@ provide("topicId", props.topicId);
 //refs
 const check = ref();
 const paging = ref();
+const page = ref();
 const reply = ref();
 
 let commentList = ref<Array<CommentItemInterface>>([]);
@@ -180,6 +181,24 @@ const checkReplies = (index: number, item: CommentItemInterface) => {
   })
 }
 
+const reloadReply = (index: number) => {
+  api.pageCommentReply({
+    pageNo: page.value[index].current,
+    PageSize: 5,
+    commentId: commentList.value[index].id
+  }).then(({ data }) => {
+    console.log(data)
+    commentList.value[index].replyCount++;
+    //回复大于5条展示分页
+    if (commentList.value[index].replyCount > 5) {
+      paging.value[index].style.display = "flex";
+    }
+    check.value[index].style.display = "none";
+    reply.value[index].$el.style.display = "none";
+    commentList.value[index].replyList = data;
+  })
+}
+
 const changeReplyCurrent = (current: number, index: number, commentId: number) => {
   api.pageCommentReply({
     pageNo: current,
@@ -188,10 +207,6 @@ const changeReplyCurrent = (current: number, index: number, commentId: number) =
   }).then(({data}) => {
     commentList.value[index].replyList = data;
   })
-}
-
-const reloadReply = () => {
-
 }
 
 onMounted(() => {
