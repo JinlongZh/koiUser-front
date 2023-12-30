@@ -4,7 +4,7 @@
       <svg-icon icon-class="comment" class="icon"/>
       <span>评论</span>
     </div>
-    <CommentInput/>
+    <CommentInput @reloadComment="listComment"/>
     <!--评论内容区-->
     <div class="comment-area" v-if="commentCount > 0">
       <div class="comment-title">{{ commentCount }} 评论</div>

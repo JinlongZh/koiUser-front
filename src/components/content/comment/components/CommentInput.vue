@@ -1,26 +1,48 @@
 <template>
-  <div class="comment-input">
-    <EmojiInput @changeValue="changeValue"/>
-    <div class="publish-box">
-      <button class="k-btn k-btn-primary" @click="publish">发表</button>
+  <div class="comment-input-wrapper">
+    <textarea
+        class="comment-textarea"
+        v-model="commentContent"
+        placeholder="留下点什么吧..."
+    />
+    <div class="emoji-container">
+      <span
+          :class="chooseEmoji ? 'emoji-btn-active' : 'emoji-btn'"
+          @click="chooseEmoji = !chooseEmoji"
+      >
+        <i class="iconfont iconbiaoqing"/>
+      </span>
+      <div class="publish-box">
+        <button class="k-btn k-btn-primary" @click="insertComment">发表</button>
+      </div>
     </div>
+    <Emoji
+        :chooseEmoji="chooseEmoji"
+        @addEmoji="addEmoji"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 
-import EmojiInput from "@/components/general/input/EmojiInput.vue";
 import {inject, ref} from "vue";
 import type {ProcessInterface} from "@/d.ts/modules/process";
 import useUserStore from "@/store/modules/user";
 import EmojiObject from "@/assets/images/emoji/emoji";
+import Emoji from "@/components/general/emoji/Emoji.vue";
+import {useRoute} from "vue-router";
+import {CommentApiType} from "@/config/constant";
+import api from "@/api";
 
 const $process = inject<ProcessInterface>("$process")!;
 const $user = useUserStore();
+const route = useRoute();
+const emit = defineEmits(["reloadComment"]);
 
-let commentContent = ref<string>("");
+const commentContent = ref<string>("");
+const chooseEmoji = ref(false);
 
-const publish = () => {
+const insertComment = () => {
   // 判断登录
   if (!$user.isLoggedIn) {
     $process.tipShow.warn("请先登录");
@@ -48,11 +70,22 @@ const publish = () => {
       return `<img src="${faceObject[str]}" width="22" height="22" style="padding: 0 1px"/>`;
     }
   });
-  console.log(commentContent.value);
+  const path = route.path;
+  const arr = path.split("/");
+  let req = {
+    type: CommentApiType[arr[1]],
+    topicId: arr[3],
+    commentContent: commentContent.value
+  }
+  commentContent.value = "";
+  api.insertComment(req).then(({ data }) => {
+    $process.tipShow.success("评论成功");
+    emit("reloadComment");
+  })
 }
 
-const changeValue = (text: string) => {
-  commentContent.value = text;
+const addEmoji = (key: number) => {
+  commentContent.value += key;
 }
 
 
@@ -61,12 +94,20 @@ const changeValue = (text: string) => {
 <style scoped lang="scss">
 @import "@/assets/scss/index.scss";
 
-.comment-input {
-  .publish-box {
+.comment-input-wrapper {
+  border: 1px solid #90939950;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 15px 0;
+
+  .emoji-container {
+    margin: 10px 0;
     display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
-    margin-right: 5px;
+    align-items: center;
+
+    .publish-box {
+      margin-left: auto;
+    }
   }
 }
 </style>

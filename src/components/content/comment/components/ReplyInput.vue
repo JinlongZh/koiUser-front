@@ -2,7 +2,7 @@
   <div class="reply-input-wrapper" style="display: none" ref="reply">
     <textarea
         ref="replyTextarea"
-        class="reply-textarea"
+        class="comment-textarea"
         :placeholder="'回复 @' +  nickname + ': '"
         auto-grow
         v-model="commentContent"
@@ -125,17 +125,6 @@ defineExpose({
   border-radius: 4px;
   padding: 10px;
   margin: 15px 0;
-
-  .reply-textarea {
-    font-size: 0.875rem;
-    color: #555 !important;
-    outline: none;
-    padding: 10px 5px;
-    min-height: 88px;
-    resize: none;
-    width: 100%;
-    border-radius: 4px;
-  }
 
   .emoji-container {
     margin: 10px 0;
