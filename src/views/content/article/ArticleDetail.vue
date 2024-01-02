@@ -46,7 +46,11 @@
         阅读时长: {{ readTime }} 分钟
       </div>
       <div class="article-content ">
-        <MdPreview :editorId="editorId" v-model="articleDetail.articleContent" previewTheme="vuepress"/>
+        <MdPreview
+            :editorId="editorId"
+            v-model="articleDetail.articleContent"
+            previewTheme="vuepress"
+        />
       </div>
       <!--评论-->
       <Comment
@@ -74,7 +78,6 @@ let articleDetail = ref<any>({});
 let wordNum = ref(0);
 let readTime = ref(0);
 
-const id = 'preview-only';
 const scrollElement = document.documentElement;
 
 const getArticleDetail = async () => {

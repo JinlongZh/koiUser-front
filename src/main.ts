@@ -4,6 +4,7 @@ import "//at.alicdn.com/t/c/font_4209723_3886gu2r0se.js"
 import "@/assets/iconfont/icon.css"
 import "@/assets/css/iconfont.css";
 import "virtual:svg-icons-register"
+import 'md-editor-v3/lib/preview.css'; // md-editor-v3
 
 import { $process } from "@/plugins/index.ts";
 import initSvgIcon from "@/assets/icons/index"

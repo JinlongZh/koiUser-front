@@ -13,7 +13,10 @@ import { ref } from "vue";
 import { MdPreview  } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 
-const props = defineProps(["content", "commentId"]);
+const props = defineProps({
+  commentId: [Number, String],
+  content: String
+});
 
 const id = "talkId" + props.commentId;
 

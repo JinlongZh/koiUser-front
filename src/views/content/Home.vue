@@ -131,9 +131,10 @@ onBeforeMount(() => {
     }
 
     .blog-wrapper {
+      position: sticky;
+      top: 30px;
 
       .author-wrapper {
-        position: sticky;
         display: flex;
         flex-direction: column;
         align-items: center;

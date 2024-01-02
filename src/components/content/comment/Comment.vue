@@ -108,8 +108,11 @@
           <!-- 回复框 -->
           <ReplyInput ref="reply" @reloadReply="reloadReply"/>
         </div>
-
       </div>
+    </div>
+    <!-- 没有评论提示 -->
+    <div v-else style="padding:1.25rem;text-align:center">
+      来发评论吧~
     </div>
   </div>
 </template>
@@ -222,6 +225,7 @@ onMounted(() => {
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin: 30px 0;
 
   .comment-title {
     display: flex;

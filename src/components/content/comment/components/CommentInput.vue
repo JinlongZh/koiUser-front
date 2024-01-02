@@ -41,6 +41,9 @@ const emit = defineEmits(["reloadComment"]);
 
 const commentContent = ref<string>("");
 const chooseEmoji = ref(false);
+const commentType = inject<CommentApiType>("commentType");
+const topicId = inject<number>("topicId");
+
 
 const insertComment = () => {
   // 判断登录
@@ -70,16 +73,16 @@ const insertComment = () => {
       return `<img src="${faceObject[str]}" width="22" height="22" style="padding: 0 1px"/>`;
     }
   });
-  const path = route.path;
-  const arr = path.split("/");
+
   let req = {
-    type: CommentApiType[arr[1]],
-    topicId: arr[3],
+    type: commentType,
+    topicId: topicId,
     commentContent: commentContent.value
   }
   commentContent.value = "";
   api.insertComment(req).then(({ data }) => {
     $process.tipShow.success("评论成功");
+    chooseEmoji.value = false;
     emit("reloadComment");
   })
 }
@@ -96,6 +99,7 @@ const addEmoji = (key: number) => {
 
 .comment-input-wrapper {
   border: 1px solid #90939950;
+  background-color: #fff;
   border-radius: 4px;
   padding: 10px;
   margin: 15px 0;

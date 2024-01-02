@@ -33,7 +33,20 @@
 import Image from "@/components/general/image/Image.vue";
 import TalkMd from "@/components/content/talk/TalkMd.vue";
 
-const props = defineProps(["id", "content", "imageList", "talkTop", "viewCount", "createTime"]);
+const props = defineProps({
+  id: [String, Number],
+  content: String,
+  imageList: {
+    type: Array,
+    default: () => []
+  },
+  talkTop: Number,
+  viewCount: {
+    type: Number,
+    default: 0
+  },
+  createTime: String
+});
 
 
 </script>
