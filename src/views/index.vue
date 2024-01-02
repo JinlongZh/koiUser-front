@@ -56,7 +56,7 @@ const DOMObserve = () => {
 
 <style scoped lang="scss">
 .index {
-  background: #f6f7fb url(https://www.miyoushe.com/_nuxt/img/background.cd0a312.png) no-repeat 0 60px;
+  background: linear-gradient( 90deg, rgba(247, 149, 51, 0.1) 0, rgba(243, 112, 85, 0.1) 15%, rgba(239, 78, 123, 0.1) 30%, rgba(161, 102, 171, 0.1) 44%, rgba(80, 115, 184, 0.1) 58%, rgba(16, 152, 173, 0.1) 72%, rgba(7, 179, 155, 0.1) 86%, rgba(109, 186, 130, 0.1) 100% );
   background-size: 100%;
   min-height: 100vh;
   display: flex;

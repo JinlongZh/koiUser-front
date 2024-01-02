@@ -59,7 +59,6 @@ const props = defineProps({
   margin: 0 auto 20px;
   padding: 8px 40px;
   font-size: 14px; // 字体
-  background: rgba(255, 255, 255, 0.1);
   cursor: pointer;
 
   .talkContent {
