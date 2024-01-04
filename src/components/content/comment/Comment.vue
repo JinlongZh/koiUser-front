@@ -109,6 +109,13 @@
           <ReplyInput ref="reply" @reloadReply="reloadReply"/>
         </div>
       </div>
+      <!-- 加载按钮 -->
+      <div class="load-wrapper">
+        <button class="k-btn k-btn-primary" v-if="commentCount > commentList.length" @click="listComment">加载更多...</button>
+      </div>
+      <div v-if="commentCount <= commentList.length" style="padding:1.25rem;text-align:center">
+        已经到底了~
+      </div>
     </div>
     <!-- 没有评论提示 -->
     <div v-else style="padding:1.25rem;text-align:center">
@@ -140,15 +147,17 @@ const reply = ref();
 
 let commentList = ref<Array<CommentItemInterface>>([]);
 let commentCount = ref(0);
+const current = ref(0);
 
 const listComment = async () => {
+  current.value++;
   await api.listComment({
-    pageNo: 1,
+    pageNo: current.value,
     pageSize: 10,
     commentType: props.commentType,
     topicId: props.topicId
   }).then(({data}) => {
-    commentList.value = data.list;
+    commentList.value.push(...data.list);
     commentCount.value = data.total;
   })
 }
@@ -308,6 +317,12 @@ onMounted(() => {
           }
         }
       }
+    }
+    .load-wrapper {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }
