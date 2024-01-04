@@ -112,7 +112,7 @@ onMounted(() => {
 .details-container {
   display: flex;
   width: 100%;
-  min-height: 161vh; // 解决 footer 组件的缺陷
+  min-height: 101vh; // 解决 footer 组件的缺陷
   justify-content: space-between;
 
   .left-container {

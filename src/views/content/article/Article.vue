@@ -146,6 +146,8 @@ watch(
       width: 100%;
       display: flex;
       flex-direction: column;
+      position: sticky;
+      top: 30px;
 
       .category-header {
         display: flex;
