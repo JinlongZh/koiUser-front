@@ -61,6 +61,7 @@ declare module 'vue' {
     TalkList: typeof import('./src/components/content/talk/TalkList.vue')['default']
     TalkMd: typeof import('./src/components/content/talk/TalkMd.vue')['default']
     Tip: typeof import('./src/components/popup/Tip.vue')['default']
+    Tools: typeof import('./src/components/Tools.vue')['default']
     Wait: typeof import('./src/components/popup/Wait.vue')['default']
   }
   export interface ComponentCustomProperties {

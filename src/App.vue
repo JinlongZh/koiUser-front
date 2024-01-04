@@ -11,6 +11,7 @@
   <Tip/>
   <Load />
   <Wait />
+  <Tools />
 </template>
 
 <script setup lang="ts">
@@ -22,6 +23,7 @@ import useUserStore from "@/store/modules/user";
 import {getUserInfo} from "@/api/system/user";
 import {getAccessToken, getRefreshToken} from "@/utils/auth";
 import { Tip, Wait, Load } from "@/components/popup";
+import Tools from "@/components/Tools.vue";
 
 const router = useRouter();
 const $process = inject<ProcessInterface>("$process")!;
