@@ -11,7 +11,7 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
   },
   "dependencies": {
-    "axios": "^1.4.0",
+    "axios": "1.6.0",
     "element-plus": "^2.3.9",
     "jquery": "^3.7.0",
     "jsencrypt": "^3.3.2",
@@ -38,7 +38,7 @@
     "typescript": "~5.1.6",
     "unplugin-auto-import": "^0.16.6",
     "unplugin-vue-components": "^0.25.1",
-    "vite": "^4.4.6",
+    "vite": "5.0.5",
     "vite-plugin-svg-icons": "^2.0.1",
     "vitest": "^0.33.0",
     "vue-tsc": "^1.8.6"

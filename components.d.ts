@@ -44,7 +44,6 @@ declare module 'vue' {
     HorizontalTable: typeof import('./src/components/general/table/HorizontalTable.vue')['default']
     IconSvg: typeof import('./src/components/general/icon/iconSvg.vue')['default']
     Image: typeof import('./src/components/general/image/Image.vue')['default']
-    Input: typeof import('./src/components/general/input/Input.vue')['default']
     InterfaceCard: typeof import('./src/components/content/interface/card/InterfaceCard.vue')['default']
     InterfaceInput: typeof import('./src/components/general/input/InterfaceInput.vue')['default']
     Load: typeof import('./src/components/popup/Load.vue')['default']
