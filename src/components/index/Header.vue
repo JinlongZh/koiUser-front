@@ -171,8 +171,10 @@ onMounted(() => {
         top: calc(100% + 13px); /* 调整菜单的垂直位置 */
         right: -20px; /* 调整菜单右对齐 */
         width: 120px;
-        //background-color: $page-bg;
         opacity: 0;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px 6px rgba(7, 17, 27, .06);
         visibility: hidden;
         transform: translateY(-10px);
         transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
@@ -183,6 +185,10 @@ onMounted(() => {
           justify-content: space-between;
           padding: 10px;
           cursor: pointer;
+
+          &:hover {
+            background-color:  #80c8f8;
+          }
 
           img {
             width: 16px;
