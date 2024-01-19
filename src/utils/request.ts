@@ -7,7 +7,7 @@ import {refreshToken} from "@/api/system/login";
 import progress from "@/utils/nprogress";
 import {UrlReqType} from "@/config/constant";
 import urlRequest from "@/utils/urlHelp"
-import type {DelType, GetType, PostType, PutType} from "@/d.ts/api/utils/request";
+import type {DelType, GetType, PostType, PutType} from "@/d.ts/utils/request";
 
 
 // 需要忽略的提示。忽略后，自动 Promise.reject('error')

@@ -1,4 +1,4 @@
-import type {BuildGetUrlType, BuildMixGetUrlType} from "@/d.ts/api/utils/request";
+import type {BuildGetUrlType, BuildMixGetUrlType} from "@/d.ts/utils/request";
 
 
 let buildParamUrl: BuildGetUrlType = (baseUrl, req) => {
