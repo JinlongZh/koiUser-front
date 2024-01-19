@@ -9,8 +9,9 @@
         <div class="link">
           <img :src="item.icon"/>
           <div class="word">{{ item.word }}</div>
+          <svg-icon icon-class="downBold" style="margin-left: 5px;margin-top: 5px" class="icon" />
         </div>
-        <div class="list">
+        <div class="list card">
           <div class="child" v-for="child in item.children" :key="child.word" @click="pageJump(child.path)">
             <img :src="child.icon"/>
             <div class="word">{{ child.word }}</div>
@@ -41,7 +42,6 @@ const pageJump = (path: string) => {
   display: flex;
 
   .barItem {
-    width: 60px;
     margin-right: 20px;
 
     .option, .link, .child {
@@ -63,13 +63,37 @@ const pageJump = (path: string) => {
 
     .option {
       cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+
+      &:after {
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        z-index: 1;
+        width: 0;
+        height: 2px;
+        background-color: #80c8f8;
+        content: "";
+        transition: width 0.3s ease-in-out;
+      }
+
+      &:hover::after {
+        width: 100%;
+      }
+      &:hover {
+        color:  #80c8f8;
+      }
     }
 
     .dropDown {
       position: relative;
-      cursor: default;
+      cursor: pointer;
 
       .list {
+        position: absolute;
+        top: 100%;
+        left: 0;
         width: 0;
         height: 0;
         overflow: hidden;
@@ -84,8 +108,11 @@ const pageJump = (path: string) => {
       }
 
       .child {
-        margin-top: 20px;
+        height: 40px;
         cursor: pointer;
+        &:hover {
+          background-color:  #80c8f8;
+        }
       }
     }
   }
