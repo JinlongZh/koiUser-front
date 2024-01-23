@@ -119,7 +119,7 @@ onBeforeMount(() => {
   min-height: 101vh; // 解决 footer 组件的缺陷
 
   .left-container {
-    flex: 1;
+    width: 25%;
     display: flex;
     flex-direction: column;
 
@@ -225,7 +225,7 @@ onBeforeMount(() => {
   }
 
   .right-container {
-    flex: 3;
+    width: 75%;
     padding: 0 1.25rem 1.5rem;
     display: flex;
     flex-direction: column;

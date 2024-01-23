@@ -116,7 +116,7 @@ onMounted(() => {
   justify-content: space-between;
 
   .left-container {
-    flex: 1;
+    width: 25%;
     display: flex;
     flex-direction: column;
 
@@ -129,15 +129,17 @@ onMounted(() => {
 
     .article-catalog {
       width: 100%;
+      max-height: 600px;
       display: flex;
       flex-direction: column;
       position: sticky;
       top: 30px;
+      overflow-y: auto;
     }
   }
 
   .right-container {
-    flex: 3;
+    width: 75%;
     padding: 0 2.5rem 3rem;
     margin: 0 0 2.5rem 1.25rem;
     display: flex;
