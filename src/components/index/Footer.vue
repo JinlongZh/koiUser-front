@@ -1,26 +1,25 @@
 <template>
   <div class="footer" :class="{ static: positionSwitch, fixed: !positionSwitch }">
-    <div>Copyright © 2023-2024 jinLonG.</div>
-    <div><span class="theme"
-               @click="jumpPage(warehouseUrl)">主题 {{ footerConfig.theme }} | {{ footerConfig.techStack }}</span></div>
-    <div><span class="zwfw" @click="jumpPage(zwfwUrl)">{{ footerConfig.zwfwCode }}</span></div>
+    <div>
+      © {{ $filters.year(websiteStore.websiteCreateTime) }} -
+      {{ new Date().getFullYear() }} By
+      {{ websiteStore.websiteAuthor }}
+    </div>
+    <a href="https://beian.miit.gov.cn/" target="_blank">
+      {{ websiteStore.websiteRecordNo }}
+    </a>
   </div>
 </template>
 
 <script setup lang="ts">
-import {footerConfig} from "@/config/site";
-import {urlConfig} from "@/config/program";
 import {inject} from "vue";
 import type {ProcessInterface} from "@/d.ts/modules/process";
+import useWebsiteStore from "@/store/website";
 
 const $process = inject<ProcessInterface>("$process")!;
+const websiteStore = useWebsiteStore();
 
-const zwfwUrl = urlConfig.zwfwUrl;
-const warehouseUrl = urlConfig.warehouseUrl;
 const positionSwitch = $process.footerPosition;
-const jumpPage = (path: string) => {
-  window.open(path);
-}
 
 </script>
 
@@ -29,21 +28,31 @@ const jumpPage = (path: string) => {
 
 .footer {
   width: 100%;
-  height: 100px;
-  background: rgba($color: $page-bg, $alpha: 0.7);
-  color: $normal;
+  background: linear-gradient(90deg,#b7ba6b,#009ad6,#6950a1);
+  color: #fff;
+  line-height: 2;
+  font-weight: bold;
+  font-size: 14px;
+  position: relative;
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-size: 400% 400%;
+  animation: Gradient 6s ease infinite;
 
-  div {
-    height: 25px;
-    line-height: 25px;
+  @keyframes Gradient {
+    0% {
+      background-position: 0 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0 50%;
+    }
   }
 
-  .theme, .zwfw {
-    cursor: pointer;
-  }
 }
 
 .fixed {

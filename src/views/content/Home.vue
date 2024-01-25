@@ -29,11 +29,26 @@
         <!--网站信息-->
         <div class="blog-card notice-wrapper card t-shadow">
           <div class="web-info-title">
-            <svg-icon icon-class="gonggao" class="icon" />
+            <svg-icon icon-class="gonggao" class="icon"/>
             公告
           </div>
-          <div style="font-size:0.875rem">
+          <div class="web-info">
             {{ websiteStore.notice }}
+          </div>
+        </div>
+        <!--网站资讯-->
+        <div class="blog-card notice-wrapper card t-shadow">
+          <div class="web-info-title">
+            <svg-icon icon-class="chart-line" class="icon"/>
+            网站资讯
+          </div>
+          <div class="web-info">
+            <div style="padding:4px 0 0">
+              运行时间:<span style="float: right;">{{ time }}</span>
+            </div>
+            <div style="padding:4px 0 0">
+              总访问量:<span style="float: right;"> 5463 </span>
+            </div>
           </div>
         </div>
       </div>
@@ -57,18 +72,23 @@
 <script setup lang="ts">
 
 import api from "@/api";
-import {onBeforeMount, reactive, ref, watch} from "vue";
+import {computed, onBeforeMount, onMounted, reactive, ref, watch} from "vue";
 import {Wait} from "@/components/popup";
 import HomeList from "@/components/content/home/HomeList.vue";
 import {useRouter} from "vue-router";
 import Pagination from "@/components/general/page/Pagination.vue";
 import useWebsiteStore from "@/store/website";
+import SvgIcon from "@/components/general/icon/SvgIcon.vue";
 
 const router = useRouter();
 const websiteStore = useWebsiteStore();
 
+let timer: any = 0;
 let show = ref(true);
+
 let homeListData = reactive([]);
+const time = ref("");
+
 let pageNo = ref(1);
 let pageSize = ref(8);
 let total = ref(0)
@@ -96,6 +116,21 @@ const pageChange = (target: number) => {
   show.value = true;
 }
 
+const runTime = () => {
+  const timeold =
+      new Date().getTime() -
+      new Date(websiteStore.websiteCreateTime).getTime();
+  const msPerDay = 24 * 60 * 60 * 1000;
+  const daysold = Math.floor(timeold / msPerDay);
+  let str = "";
+  const day = new Date();
+  str += daysold + "天";
+  str += day.getHours() + "时";
+  str += day.getMinutes() + "分";
+  str += day.getSeconds() + "秒";
+  time.value = str;
+}
+
 watch(
     () => pageNo.value,
     () => {
@@ -107,6 +142,17 @@ onBeforeMount(() => {
   pageNo.value = router.currentRoute.value.query.page ? Number(router.currentRoute.value.query.page) : 1;
   getHomeList();
 })
+
+onMounted(() => {
+  runTime(); // 先执行一次
+  // 设置定时器，每秒执行一次 runTime 函数
+  timer = setInterval(runTime, 1000);
+});
+
+onBeforeMount(() => {
+  clearInterval(timer);
+  timer = 0;
+});
 
 
 </script>
@@ -221,6 +267,11 @@ onBeforeMount(() => {
       .notice-wrapper {
         position: sticky;
         color: #4c4948;
+
+        .web-info {
+          padding: 0.25rem;
+          font-size: 0.875rem;
+        }
       }
     }
 

@@ -13,10 +13,3 @@ export declare interface SiteConfigInterface {
     avatarImgType: Array<string>;
     sideBarShowStorage: string;
 }
-
-
-export declare interface UrlConfigInterface {
-    siteUrl: string;
-    zwfwUrl: string;
-    warehouseUrl: string;
-}

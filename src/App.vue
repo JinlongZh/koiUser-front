@@ -55,7 +55,7 @@ const user = () => {
 // 获取网站配置
 const websiteConfig = () => {
   getWebsiteConfig().then(({data}) => {
-    websiteStore.notice = data.notice;
+    websiteStore.$state = {...data};
   });
 }
 

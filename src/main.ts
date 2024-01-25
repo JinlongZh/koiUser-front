@@ -5,6 +5,7 @@ import "@/assets/iconfont/icon.css"
 import "@/assets/css/iconfont.css";
 import "virtual:svg-icons-register"
 import 'md-editor-v3/lib/preview.css'; // md-editor-v3
+import dayjs from "dayjs";
 
 import { $process } from "@/plugins/index.ts";
 import initSvgIcon from "@/assets/icons/index"
@@ -32,19 +33,26 @@ app.use(lazyPlugin, {
     error: resource.errorPage
 });
 
+// 日期格式化
+declare module '@vue/runtime-core' {
+    interface ComponentCustomProperties {
+        $filters: {
+            date: (value: any) => string;
+            year: (value: any) => string;
+            hour: (value: any) => string;
+            num: (value: any) => string;
+        };
+    }
+}
+app.config.globalProperties.$filters = {
+    date: (value) => dayjs(value).format('YYYY-MM-DD'),
+    year: (value) => dayjs(value).format('YYYY'),
+    hour: (value) => dayjs(value).format('YYYY-MM-DD HH:mm:ss'),
+    num: (value) => (value >= 1000 ? (value / 1000).toFixed(1) + 'k' : value),
+};
+
+
 
 app.mount('#app')
 
 app.use(initSvgIcon)
-
-// Vue.filter("date", function(value) {
-//     return dayjs(value).format("YYYY-MM-DD");
-// });
-//
-// Vue.filter("year", function(value) {
-//     return dayjs(value).format("YYYY");
-// });
-//
-// Vue.filter("hour", function(value) {
-//     return dayjs(value).format("YYYY-MM-DD HH:mm:ss");
-// });
