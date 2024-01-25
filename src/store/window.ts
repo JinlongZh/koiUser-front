@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import {ref} from "vue";
 
-const useWindow = defineStore("$window", () => {
+const useWindowStore = defineStore("$window", () => {
     const width = ref<number>(0);
 
     const height = ref<number>(0);
@@ -27,4 +27,4 @@ const useWindow = defineStore("$window", () => {
     }
 })
 
-export default useWindow;
+export default useWindowStore;

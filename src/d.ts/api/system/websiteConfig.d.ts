@@ -1,3 +1,4 @@
+
 export declare interface ApiWebsiteConfigInterface {
 
 }

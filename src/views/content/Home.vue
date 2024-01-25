@@ -33,7 +33,7 @@
             公告
           </div>
           <div style="font-size:0.875rem">
-            静坐于万花筒，在绚烂中寻找那唯一的本源
+            {{ websiteStore.notice }}
           </div>
         </div>
       </div>
@@ -62,8 +62,10 @@ import {Wait} from "@/components/popup";
 import HomeList from "@/components/content/home/HomeList.vue";
 import {useRouter} from "vue-router";
 import Pagination from "@/components/general/page/Pagination.vue";
+import useWebsiteStore from "@/store/website";
 
 const router = useRouter();
+const websiteStore = useWebsiteStore();
 
 let show = ref(true);
 let homeListData = reactive([]);

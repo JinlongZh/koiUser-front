@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import ButtonBlue from "@/components/general/button/ButtonBlue.vue";
-import useUserStore from "@/store/modules/user";
+import useUserStore from "@/store/user";
 
 const $user = useUserStore();
 </script>

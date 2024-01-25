@@ -27,7 +27,7 @@
 
 import {inject, ref} from "vue";
 import type {ProcessInterface} from "@/d.ts/modules/process";
-import useUserStore from "@/store/modules/user";
+import useUserStore from "@/store/user";
 import EmojiObject from "@/assets/images/emoji/emoji";
 import Emoji from "@/components/general/emoji/Emoji.vue";
 import {useRoute} from "vue-router";

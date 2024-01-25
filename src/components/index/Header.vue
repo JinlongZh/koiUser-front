@@ -36,12 +36,12 @@ import {inject, onMounted, ref, watch} from "vue";
 import {siteConfig} from "@/config/program";
 import useMouseWheel from "@/hooks/useMouseWheel";
 import resource from "@/config/resource";
-import useWindow from "@/store/modules/window";
-import useUserStore from "@/store/modules/user";
+import useWindowStore from "@/store/window";
+import useUserStore from "@/store/user";
 import {publicPath} from "@/router/path";
 
 const router = useRouter();
-const $window = useWindow();
+const $window = useWindowStore();
 const $process = inject<ProcessInterface>("$process")!;
 const menuBar = resource.menuBar;
 const $user = useUserStore();

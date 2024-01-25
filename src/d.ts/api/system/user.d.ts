@@ -1,7 +1,7 @@
 import {CommonResult} from "@/d.ts/api";
 
 export declare interface UserInfoResp extends CommonResult {
-    data: Partial<UserInfo>;
+    data: UserInfo;
 }
 
 export declare interface UserInfo {

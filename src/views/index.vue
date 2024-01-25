@@ -16,12 +16,12 @@
 import Header from "@/components/index/Header.vue";
 import {inject, nextTick, onMounted} from "vue";
 import {ProcessInterface} from "@/d.ts/plugins";
-import useWindow from "@/store/modules/window";
+import useWindowStore from "@/store/window";
 import Footer from "@/components/index/Footer.vue";
 import {siteConfig} from "@/config/program"
 
 const $process = inject<ProcessInterface>("$process")!;
-const $window = useWindow();
+const $window = useWindowStore();
 const headerSwitch = $process.headerStatus.value;
 const keepAliveRoute = siteConfig.keepAliveRoute;
 

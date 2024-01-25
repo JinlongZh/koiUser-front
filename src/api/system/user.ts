@@ -1,10 +1,10 @@
 import service from "@/utils/request";
-import {UserInfoResp} from "@/d.ts/api/system/user";
+import type {CommonResult} from "@/d.ts/api";
 
 /**
  * 获得登录用户信息
  * @returns
  */
-export const getUserInfo = (): Promise<UserInfoResp> => {
+export const getUserInfo = (): Promise<CommonResult> => {
     return service.get(`/system/user/profile/get`);
 }
