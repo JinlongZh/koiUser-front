@@ -1,17 +1,17 @@
-import {CommonResult, PageInterface} from "@/d.ts/api";
+import {CommonResult, PageParam} from "@/d.ts/api";
 
-export declare interface CommentInterface {
-    listComment: (req: CommentQueryInterface) => Promise<CommonResult>;
-    pageCommentReply: (req: ReplyQueryInterface) => Promise<CommonResult>;
-    insertComment: (req: CommentAddInterface) => Promise<CommonResult>;
+export declare interface ApiCommentInterface {
+    listComment: (req: CommentQueryReq) => Promise<CommonResult>;
+    pageCommentReply: (req: ReplyQueryReq) => Promise<CommonResult>;
+    insertComment: (req: CommentAddReq) => Promise<CommonResult>;
 }
 
-interface CommentQueryInterface extends PageInterface {
+interface CommentQueryReq extends PageParam {
     commentType: number;
     topicId: number;
 }
 
-interface CommentAddInterface {
+interface CommentAddReq {
     type: number;
     topicId: number;
     commentContent: string;
@@ -19,11 +19,11 @@ interface CommentAddInterface {
     replyUserId: number;
 }
 
-interface ReplyQueryInterface extends PageInterface {
+interface ReplyQueryReq extends PageParam {
     commentId: number;
 }
 
-interface CommentItemInterface {
+interface CommentResp {
     id: number;
     userId: number;
     nickname: string;
@@ -31,10 +31,10 @@ interface CommentItemInterface {
     commentContent: string;
     createTime: Record<string, unknown>;
     replyCount: number;
-    replyList: Partial<Array<ReplyInterface>>
+    replyList: Array<ReplyInterface>;
 }
 
-interface ReplyInterface {
+interface ReplyResp {
     id: number;
     parentId: number;
     userId: number;
@@ -43,5 +43,5 @@ interface ReplyInterface {
     replyUserId: number;
     replyNickname: string;
     commentContent: string;
-    createTime: Record<string, unknown>;
+    createTime: string;
 }

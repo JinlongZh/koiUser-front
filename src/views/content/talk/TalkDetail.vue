@@ -23,7 +23,7 @@
 import {onMounted, ref} from "vue";
 import api from "@/api";
 import {useRouter} from "vue-router";
-import type {TalkDetailInterface} from "@/d.ts/api/blog/talk";
+import type {TalkResp} from "@/d.ts/api/blog/talk";
 import TalkItem from "@/components/content/talk/TalkItem.vue";
 import {Wait} from "@/components/popup";
 import Comment from "@/components/content/comment/Comment.vue";
@@ -32,7 +32,7 @@ import {CommentApiType} from "@/config/constant";
 const router = useRouter();
 
 const talkId = ref(router.currentRoute.value.params.id);
-const talkData = ref<TalkDetailInterface>({});
+const talkData = ref<TalkResp>({});
 const show = ref(true);
 const getTalkDetail = () => {
   api.getTalkDetail(talkId.value).then(({data}) => {

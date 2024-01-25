@@ -1,8 +1,8 @@
-import {HomeInterface} from "@/d.ts/api/blog/home";
-import type {CategoryInterface} from "@/d.ts/api/blog/category";
-import type {ArticleInterface} from "@/d.ts/api/blog/article";
-import type {TalkInterface} from "@/d.ts/api/blog/talk";
-import type {CommentInterface} from "@/d.ts/api/blog/comment";
+import {ApiHomeInterface} from "@/d.ts/api/blog/home";
+import type {ApiCategoryInterface} from "@/d.ts/api/blog/category";
+import type {ApiArticleInterface} from "@/d.ts/api/blog/article";
+import type {ApiTalkInterface} from "@/d.ts/api/blog/talk";
+import type {ApiCommentInterface} from "@/d.ts/api/blog/comment";
 
 export declare interface CommonResult {
     code: number;
@@ -10,15 +10,15 @@ export declare interface CommonResult {
     [propName: string]: any;
 }
 
-interface PageInterface {
-    [pageNo]: number;
-    [pageSize]: number;
+interface PageParam {
+    pageNo: number;
+    pageSize: number;
 }
 
 export declare interface ApiObject extends
-    HomeInterface,
-    CategoryInterface,
-    ArticleInterface,
-    TalkInterface,
-    CommentInterface
+    ApiHomeInterface,
+    ApiCategoryInterface,
+    ApiArticleInterface,
+    ApiTalkInterface,
+    ApiCommentInterface
 {}

@@ -1,7 +1,7 @@
-import type {CommentInterface} from "@/d.ts/api/blog/comment";
+import type {ApiCommentInterface} from "@/d.ts/api/blog/comment";
 import {get, post} from "@/utils/request";
 
-export const commentInterface: CommentInterface = {
+export const apiCommentInterface: ApiCommentInterface = {
     listComment: async (req) => {
         return await get("/blog/comment/list", req);
     },

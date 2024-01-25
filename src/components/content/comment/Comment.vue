@@ -76,7 +76,7 @@
           <div
               style="font-size:0.75rem;color:#6d757a;margin-bottom:12px"
               v-show="item.replyCount > 3"
-              ref="check"
+              ref="checkRef"
           >
             共
             <b>{{ item.replyCount }}</b>
@@ -92,13 +92,13 @@
           <div
               class="mb-3"
               style="font-size:0.75rem;color:#222;display:none;margin-bottom:12px"
-              ref="paging"
+              ref="pagingRef"
           >
             <span style="padding-right:10px">
               共{{ Math.ceil(item.replyCount / 5) }}页
             </span>
             <paging
-                ref="page"
+                ref="pageRef"
                 :totalPage="Math.ceil(item.replyCount / 5)"
                 :index="index"
                 :commentId="item.id"
@@ -106,12 +106,12 @@
             />
           </div>
           <!-- 回复框 -->
-          <ReplyInput ref="reply" @reloadReply="reloadReply"/>
+          <ReplyInput ref="replyRef" @reloadReply="reloadReply"/>
         </div>
       </div>
       <!-- 加载按钮 -->
       <div class="load-wrapper">
-        <button class="k-btn k-btn-primary" v-if="commentCount > commentList.length" @click="listComment">加载更多...</button>
+        <button class="k-btn k-btn-primary" v-if="commentCount > commentList.length" @click="loadMore()">加载更多...</button>
       </div>
       <div v-if="commentCount <= commentList.length" style="padding:1.25rem;text-align:center">
         已经到底了~
@@ -130,9 +130,9 @@ import SvgIcon from "@/components/general/icon/SvgIcon.vue";
 import CommentInput from "@/components/content/comment/components/CommentInput.vue";
 import {onMounted, provide, ref} from "vue";
 import api from "@/api";
-import type {CommentItemInterface, Reply, ReplyInterface} from "@/d.ts/api/blog/comment";
 import Paging from "@/components/general/page/Paging.vue";
 import ReplyInput from "@/components/content/comment/components/ReplyInput.vue";
+import type {CommentResp, ReplyResp} from "@/d.ts/api/blog/comment";
 
 const props = defineProps(["commentType", "topicId"]);
 
@@ -140,73 +140,76 @@ provide("commentType", props.commentType);
 provide("topicId", props.topicId);
 
 //refs
-const check = ref();
-const paging = ref();
-const page = ref();
-const reply = ref();
+const checkRef = ref();
+const pagingRef = ref();
+const pageRef = ref();
+const replyRef = ref();
 
-let commentList = ref<Array<CommentItemInterface>>([]);
+let commentList = ref<Array<CommentResp>>([]);
 let commentCount = ref(0);
-const current = ref(0);
+const pageNo = ref(1);
 
 const listComment = async () => {
-  current.value++;
   await api.listComment({
-    pageNo: current.value,
+    pageNo: pageNo.value,
     pageSize: 10,
     commentType: props.commentType,
     topicId: props.topicId
-  }).then(({data}) => {
+  }).then(({ data }) => {
     commentList.value.push(...data.list);
     commentCount.value = data.total;
   })
 }
 
-const replyComment = (index: number, item: CommentItemInterface | ReplyInterface) => {
-  reply.value.forEach(item => {
+const loadMore = () => {
+  pageNo.value++;
+  listComment();
+}
+
+const replyComment = (index: number, item: CommentResp | ReplyResp) => {
+  replyRef.value.forEach((item: any) => {
     item.$el.style.display = "none";
   });
   // 通过dom对组件暴露的值传值
-  reply.value[index].commentContent = "";
-  reply.value[index].nickname = item.nickname;
-  reply.value[index].replyUserId = item.userId;
-  reply.value[index].parentId = commentList.value[index].id;
-  reply.value[index].chooseEmoji = false;
-  reply.value[index].index = index;
-  reply.value[index].$el.style.display = "block";
+  replyRef.value[index].commentContent = "";
+  replyRef.value[index].nickname = item.nickname;
+  replyRef.value[index].replyUserId = item.userId;
+  replyRef.value[index].parentId = commentList.value[index].id;
+  replyRef.value[index].chooseEmoji = false;
+  replyRef.value[index].index = index;
+  replyRef.value[index].$el.style.display = "block";
   // 定位到回复框
-  reply.value[index].focusTextarea();
+  replyRef.value[index].focusTextarea();
 }
 
-const checkReplies = (index: number, item: CommentItemInterface) => {
+const checkReplies = (index: number, item: CommentResp) => {
   api.pageCommentReply({
     pageNo: 1,
     PageSize: 5,
     commentId: item.id
   }).then(({data}) => {
-    check.value[index].style.display = "none";
+    checkRef.value[index].style.display = "none";
     item.replyList = data;
     //超过1页才显示分页
     if (Math.ceil(item.replyCount / 5) > 1) {
-      paging.value[index].style.display = "flex";
+      pagingRef.value[index].style.display = "flex";
     }
   })
 }
 
 const reloadReply = (index: number) => {
   api.pageCommentReply({
-    pageNo: page.value[index].current,
+    pageNo: pageRef.value[index].current,
     PageSize: 5,
     commentId: commentList.value[index].id
   }).then(({ data }) => {
-    console.log(data)
     commentList.value[index].replyCount++;
     //回复大于5条展示分页
     if (commentList.value[index].replyCount > 5) {
-      paging.value[index].style.display = "flex";
+      pagingRef.value[index].style.display = "flex";
     }
-    check.value[index].style.display = "none";
-    reply.value[index].$el.style.display = "none";
+    checkRef.value[index].style.display = "none";
+    replyRef.value[index].$el.style.display = "none";
     commentList.value[index].replyList = data;
   })
 }

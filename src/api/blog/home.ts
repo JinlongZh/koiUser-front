@@ -1,7 +1,7 @@
-import {HomeInterface} from "@/d.ts/api/blog/home";
+import {ApiHomeInterface} from "@/d.ts/api/blog/home";
 import {get} from "@/utils/request";
 
-export const homeInterface: HomeInterface = {
+export const apiHomeInterface: ApiHomeInterface = {
     pageHomeList: async (req) => {
         return await get("/blog/home/list", req);
     }

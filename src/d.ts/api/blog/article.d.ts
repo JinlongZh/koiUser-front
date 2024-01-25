@@ -1,11 +1,11 @@
-import type {CommonResult, PageInterface} from "@/d.ts/api";
+import type {CommonResult, PageParam} from "@/d.ts/api";
 
 
-export declare interface ArticleInterface {
+export declare interface ApiArticleInterface {
     pageHomeArticle: (req: ArticlePageReq) => Promise<CommonResult>;
     getArticleDetail: (id: number) => Promise<CommonResult>;
 }
 
-interface ArticlePageReq extends PageInterface {
+interface ArticlePageReq extends PageParam {
     categoryId: number;
 }

@@ -1,17 +1,17 @@
-import type {CommonResult, PageInterface} from "@/d.ts/api";
+import type {CommonResult, PageParam} from "@/d.ts/api";
 
-export declare interface TalkInterface {
-    pageTalk: (req: PageInterface) => Promise<CommonResult>;
+export declare interface ApiTalkInterface {
+    pageTalk: (req: PageParam) => Promise<CommonResult>;
     getTalkDetail: (id: number) => Promise<CommonResult>;
 }
 
-interface TalkDetailInterface {
+interface TalkResp {
     id: number;
     content: string;
-    imageList: Record<string, unknown>[];
+    imageList: string[];
     talkTop: number;
     status: number;
     viewCount: number;
-    createTime: Record<string, unknown>;
-    updateTime: Record<string, unknown>;
+    createTime: string;
+    updateTime: string;
 }

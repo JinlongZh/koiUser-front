@@ -1,7 +1,7 @@
-import type {ArticleInterface} from "@/d.ts/api/blog/article";
+import type {ApiArticleInterface} from "@/d.ts/api/blog/article";
 import {get} from "@/utils/request";
 
-export const articleInterface: ArticleInterface = {
+export const apiArticleInterface: ApiArticleInterface = {
     pageHomeArticle: async (req) => {
         return await get("/blog/article/list", req);
     },

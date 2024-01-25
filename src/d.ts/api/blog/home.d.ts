@@ -1,8 +1,8 @@
-import type {CommonResult, PageInterface} from "@/d.ts/api";
+import type {CommonResult, PageParam} from "@/d.ts/api";
 
-interface GetHomeListReqInterface extends PageInterface {
+interface GetHomeListReq extends PageParam {
 }
 
-export declare interface HomeInterface {
-    pageHomeList: (req: GetHomeListReqInterface) => Promise<CommonResult>;
+export declare interface ApiHomeInterface {
+    pageHomeList: (req: GetHomeListReq) => Promise<CommonResult>;
 }

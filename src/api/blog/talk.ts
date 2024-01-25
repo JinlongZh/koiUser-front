@@ -1,7 +1,7 @@
-import type {TalkInterface} from "@/d.ts/api/blog/talk";
+import type {ApiTalkInterface} from "@/d.ts/api/blog/talk";
 import {get} from "@/utils/request";
 
-export const talkInterface : TalkInterface = {
+export const apiTalkInterface : ApiTalkInterface = {
     pageTalk: (req) => {
         return get("/blog/talk/list", req);
     },

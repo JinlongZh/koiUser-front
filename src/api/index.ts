@@ -1,16 +1,16 @@
 import type {ApiObject} from "@/d.ts/api";
-import {homeInterface} from "@/api/blog/home";
-import {categoryInterface} from "@/api/blog/category";
-import {articleInterface} from "@/api/blog/article";
-import {talkInterface} from "@/api/blog/talk";
-import {commentInterface} from "@/api/blog/comment";
+import {apiHomeInterface} from "@/api/blog/home";
+import {apiCategoryInterface} from "@/api/blog/category";
+import {apiArticleInterface} from "@/api/blog/article";
+import {apiTalkInterface} from "@/api/blog/talk";
+import {apiCommentInterface} from "@/api/blog/comment";
 
 const api: ApiObject = {
-    ...homeInterface,
-    ...categoryInterface,
-    ...articleInterface,
-    ...talkInterface,
-    ...commentInterface
+    ...apiHomeInterface,
+    ...apiCategoryInterface,
+    ...apiArticleInterface,
+    ...apiTalkInterface,
+    ...apiCommentInterface
 }
 
 export default api;
