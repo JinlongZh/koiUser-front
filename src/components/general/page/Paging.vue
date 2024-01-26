@@ -117,6 +117,10 @@ const nextPage = () => {
 const isActive = (i) => {
   return i === current.value ? 'active' : '';
 };
+defineExpose({
+  current
+})
+
 </script>
 
 <style scoped lang="scss">

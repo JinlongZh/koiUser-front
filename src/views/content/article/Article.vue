@@ -1,42 +1,50 @@
 <template>
-  <div class="article-container">
-    <div class="left-container">
-      <!--分类-->
-      <div class="category-wrapper blog-card card t-shadow">
-        <div class="category-header">
-          <div class="web-info-title">
-            <svg-icon icon-class="category" class="icon" />
-            分类
-          </div>
-          <div>
-            {{ categoryCount }}
-          </div>
-        </div>
-        <div class="category-content">
-          <div class="category-item" :class="{'active': item.id === categoryQueryId}" v-for="item of categoryList" @click="selectCategory(item.id)">
-            <div class="category-name">
-              {{ item?.categoryName }}
+  <div class="page-article">
+    <page-cover
+        title="✍️行有余力 , 写点笔记!"
+        subtitle="生活不止有代码,别忘了还有诗和远方"
+        bg="http://cdn.koicode.cn/system-image/48380973b3514d2ca84472bf697088d7.jpg"
+    ></page-cover>
+    
+    <main>
+      <div class="left-container">
+        <!--分类-->
+        <div class="category-wrapper blog-card card t-shadow">
+          <div class="category-header">
+            <div class="web-info-title">
+              <svg-icon icon-class="category" class="icon" />
+              分类
             </div>
-            <div class="category-count">
-              {{ item?.articleCount }}
+            <div>
+              {{ categoryCount }}
+            </div>
+          </div>
+          <div class="category-content">
+            <div class="category-item" :class="{'active': item.id === categoryQueryId}" v-for="item of categoryList" @click="selectCategory(item.id)">
+              <div class="category-name">
+                {{ item?.categoryName }}
+              </div>
+              <div class="category-count">
+                {{ item?.articleCount }}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="right-container">
-      <Wait :show="show" height="400px">
-        <ArticleList :articleListData="articleListData"/>
-      </Wait>
-      <Pagination
-          :total="total"
-          :page-size="pageSize"
-          :current="pageNo"
-          :hide-on-single-page="false"
-          :show-total="true"
-          @pageChange="pageChange"
-      />
-    </div>
+      <div class="right-container">
+        <Wait :show="show" height="400px">
+          <ArticleList :articleListData="articleListData"/>
+        </Wait>
+        <Pagination
+            :total="total"
+            :page-size="pageSize"
+            :current="pageNo"
+            :hide-on-single-page="false"
+            :show-total="true"
+            @pageChange="pageChange"
+        />
+      </div>
+    </main>
   </div>
 </template>
 
@@ -48,6 +56,7 @@ import {Wait} from "@/components/popup";
 import ArticleList from "@/components/content/article/ArticleList.vue";
 import Pagination from "@/components/general/page/Pagination.vue";
 import {useRouter} from "vue-router";
+import PageCover from "@/components/general/page-cover/PageCover.vue";
 
 const router = useRouter();
 
@@ -124,16 +133,23 @@ watch(
 <style scoped lang="scss">
 @import "@/assets/scss/index.scss";
 
-.article-container {
-  display: flex;
-  width: 100%;
-  min-height: 101vh; // 解决 footer 组件的缺陷
-  justify-content: space-between;
+.page-article {
+
+  main {
+    max-width: 1200px;
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    z-index: 9;
+    margin: -80px auto auto;
+  }
 
   .left-container {
     flex: 1;
     display: flex;
     flex-direction: column;
+    position: sticky;
+    top: 30px;
 
     .blog-card {
       line-height: 2;
@@ -146,8 +162,6 @@ watch(
       width: 100%;
       display: flex;
       flex-direction: column;
-      position: sticky;
-      top: 30px;
 
       .category-header {
         display: flex;

@@ -7,5 +7,5 @@ export declare interface ApiArticleInterface {
 }
 
 interface ArticlePageReq extends PageParam {
-    categoryId: number;
+    categoryId: number | null;
 }

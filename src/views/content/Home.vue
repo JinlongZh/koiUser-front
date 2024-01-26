@@ -1,71 +1,79 @@
 <template>
-  <div class="home">
-    <div class="left-container">
-      <div class="blog-wrapper">
-        <!-- 博主信息 -->
-        <div class="blog-card author-wrapper card t-shadow">
-          <div class="avatar">
-            <img src="@/assets/images/bg.jpg" alt="Avatar">
-          </div>
-          <!-- 博客名称 -->
-          <div class="blog-name">
-            JinLonG
-          </div>
-          <!-- 博客简介 -->
-          <div class="motto">
-            我的博客
-          </div>
-          <!-- 收藏按钮 -->
-          <a class="collection-btn">
-            加入书签
-          </a>
-          <!-- 社交信息 -->
-          <div class="card-info-social">
-            <svg-icon icon-class="github" class="social-svgIcon"/>
-            <svg-icon icon-class="gitee" class="social-svgIcon"/>
-            <svg-icon icon-class="qq" class="social-svgIcon"/>
-          </div>
-        </div>
-        <!--网站信息-->
-        <div class="blog-card notice-wrapper card t-shadow">
-          <div class="web-info-title">
-            <svg-icon icon-class="gonggao" class="icon"/>
-            公告
-          </div>
-          <div class="web-info">
-            {{ websiteStore.notice }}
-          </div>
-        </div>
-        <!--网站资讯-->
-        <div class="blog-card notice-wrapper card t-shadow">
-          <div class="web-info-title">
-            <svg-icon icon-class="chart-line" class="icon"/>
-            网站资讯
-          </div>
-          <div class="web-info">
-            <div style="padding:4px 0 0">
-              运行时间:<span style="float: right;">{{ time }}</span>
+  <div class="page-home">
+    <page-cover
+        title="🏖️茶余饭后,聊聊天!"
+        subtitle="生活不止有代码,别忘了还有诗和远方"
+        bg="http://cdn.koicode.cn/system-image/9af3840152294a18836ac9786c3930ec.jpg"
+    ></page-cover>
+
+    <main>
+      <div class="left-container">
+        <div class="blog-wrapper">
+          <!-- 博主信息 -->
+          <div class="blog-card author-wrapper card t-shadow">
+            <div class="avatar">
+              <img src="@/assets/images/bg.jpg" alt="Avatar">
             </div>
-            <div style="padding:4px 0 0">
-              总访问量:<span style="float: right;"> 5463 </span>
+            <!-- 博客名称 -->
+            <div class="blog-name">
+              {{ websiteStore.websiteName }}
+            </div>
+            <!-- 博客简介 -->
+            <div class="motto">
+              {{ websiteStore.websiteIntro }}
+            </div>
+            <!-- 收藏按钮 -->
+            <a class="collection-btn">
+              加入书签
+            </a>
+            <!-- 社交信息 -->
+            <div class="card-info-social">
+              <svg-icon icon-class="github" class="social-svgIcon"/>
+              <svg-icon icon-class="gitee" class="social-svgIcon"/>
+              <svg-icon icon-class="qq" class="social-svgIcon"/>
+            </div>
+          </div>
+          <!--网站信息-->
+          <div class="blog-card notice-wrapper card t-shadow">
+            <div class="web-info-title">
+              <svg-icon icon-class="gonggao" class="icon"/>
+              公告
+            </div>
+            <div class="web-info">
+              {{ websiteStore.notice }}
+            </div>
+          </div>
+          <!--网站资讯-->
+          <div class="blog-card notice-wrapper card t-shadow">
+            <div class="web-info-title">
+              <svg-icon icon-class="chart-line" class="icon"/>
+              网站资讯
+            </div>
+            <div class="web-info">
+              <div style="padding:4px 0 0">
+                运行时间:<span style="float: right;">{{ time }}</span>
+              </div>
+              <div style="padding:4px 0 0">
+                总访问量:<span style="float: right;"> 5463 </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="right-container">
-      <Wait :show="show" height="400px">
-        <home-list :homeListData="homeListData"/>
-      </Wait>
-      <Pagination
-          :total="total"
-          :page-size="pageSize"
-          :current="pageNo"
-          :hide-on-single-page="false"
-          :show-total="true"
-          @pageChange="pageChange"
-      />
-    </div>
+      <div class="right-container">
+        <Wait :show="show" height="400px">
+          <home-list :homeListData="homeListData"/>
+        </Wait>
+        <Pagination
+            :total="total"
+            :page-size="pageSize"
+            :current="pageNo"
+            :hide-on-single-page="false"
+            :show-total="true"
+            @pageChange="pageChange"
+        />
+      </div>
+    </main>
   </div>
 </template>
 
@@ -79,6 +87,7 @@ import {useRouter} from "vue-router";
 import Pagination from "@/components/general/page/Pagination.vue";
 import useWebsiteStore from "@/store/website";
 import SvgIcon from "@/components/general/icon/SvgIcon.vue";
+import PageCover from "@/components/general/page-cover/PageCover.vue";
 
 const router = useRouter();
 const websiteStore = useWebsiteStore();
@@ -160,27 +169,33 @@ onBeforeMount(() => {
 <style scoped lang="scss">
 @import "@/assets/scss/index.scss";
 
-.home {
+.page-home {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  min-height: 101vh; // 解决 footer 组件的缺陷
+
+  main {
+    max-width: 1200px;
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    z-index: 9;
+    margin: -80px auto auto;
+  }
 
   .left-container {
     width: 25%;
     display: flex;
     flex-direction: column;
-
-    .blog-card {
-      line-height: 2;
-      padding: 1.25rem 1.5rem;
-      margin-right: 1.25rem;
-      margin-bottom: 1.5rem;
-    }
+    position: sticky;
+    top: 30px;
 
     .blog-wrapper {
-      position: sticky;
-      top: 30px;
+
+      .blog-card {
+        line-height: 2;
+        padding: 1.25rem 1.5rem;
+        margin-right: 1.25rem;
+        margin-bottom: 1.5rem;
+      }
 
       .author-wrapper {
         display: flex;
@@ -217,6 +232,7 @@ onBeforeMount(() => {
         .collection-btn {
           width: 100%;
           text-align: center;
+          margin-top: 10px;
           z-index: 1;
           font-size: 14px;
           position: relative;

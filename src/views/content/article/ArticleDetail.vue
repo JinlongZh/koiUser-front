@@ -1,63 +1,72 @@
 <template>
-  <div class="details-container">
-    <div class="left-container">
-      <div class="article-catalog blog-card card t-shadow">
-        <div class="web-info-title">
-          <svg-icon icon-class="mulu" class="icon"/>
-          目录
+  <div class="page-article-detail">
+    <page-cover
+        title="🏖️茶余饭后,聊聊天!"
+        subtitle="生活不止有代码,别忘了还有诗和远方"
+        bg="http://cdn.koicode.cn/system-image/9af3840152294a18836ac9786c3930ec.jpg"
+    ></page-cover>
+
+    <main>
+      <div class="left-container">
+        <div class="article-catalog blog-card card t-shadow">
+          <div class="web-info-title">
+            <svg-icon icon-class="mulu" class="icon"/>
+            目录
+          </div>
+          <MdCatalog class="catalog-content" :editorId="editorId" :scrollElement="scrollElement"/>
         </div>
-        <MdCatalog :editorId="editorId" :scrollElement="scrollElement"/>
       </div>
-    </div>
-    <div class="right-container card t-shadow">
-      <!-- 文章标题 -->
-      <div class="article-title">{{ articleDetail.articleTitle }}</div>
-      <div class="article-info">
-        <!-- 是否置顶 -->
-        <span v-if="articleDetail.articleTop">
+      <div class="right-container card t-shadow">
+        <!-- 文章标题 -->
+        <div class="article-title">{{ articleDetail.articleTitle }}</div>
+        <div class="article-info">
+          <!-- 是否置顶 -->
+          <span v-if="articleDetail.articleTop">
           <span style="color:#ff7242">
             <svg-icon icon-class="zhiding" style="width: 1rem; height: 1rem; "/>置顶
           </span>
           <span class="separator">|</span>
         </span>
 
-        <!--发表时间-->
-        <svg-icon icon-class="riqi" style="width: 1rem; height: 1rem; "/>
-        发表时间
-        <span class="separator">|</span>
+          <!--发表时间-->
+          <svg-icon icon-class="riqi" style="width: 1rem; height: 1rem; "/>
+          发表时间
+          <span class="separator">|</span>
 
-        <!--更新时间-->
-        <svg-icon icon-class="riqi" style="width: 1rem; height: 1rem; "/>
-        更新时间
-        <span class="separator">|</span>
+          <!--更新时间-->
+          <svg-icon icon-class="riqi" style="width: 1rem; height: 1rem; "/>
+          更新时间
+          <span class="separator">|</span>
 
-        <!--文章分类-->
-        <svg-icon icon-class="category" style="width: 1rem; height: 1rem; "/>
-        文章分类
-        <span class="separator">|</span>
+          <!--文章分类-->
+          <svg-icon icon-class="category" style="width: 1rem; height: 1rem; "/>
+          文章分类
+          <span class="separator">|</span>
 
-        <!-- 字数统计 -->
-        <svg-icon icon-class="word" style="width: 1rem; height: 1rem; "/>
-        字数统计: {{ wordNum }}
-        <span class="separator">|</span>
+          <!-- 字数统计 -->
+          <svg-icon icon-class="word" style="width: 1rem; height: 1rem; "/>
+          字数统计: {{ wordNum }}
+          <span class="separator">|</span>
 
-        <!-- 阅读时长 -->
-        <svg-icon icon-class="duration" style="width: 1rem; height: 1rem; "/>
-        阅读时长: {{ readTime }} 分钟
-      </div>
-      <div class="article-content ">
-        <MdPreview
-            :editorId="editorId"
-            v-model="articleDetail.articleContent"
-            previewTheme="vuepress"
+          <!-- 阅读时长 -->
+          <svg-icon icon-class="duration" style="width: 1rem; height: 1rem; "/>
+          阅读时长: {{ readTime }} 分钟
+        </div>
+        <div class="article-content ">
+          <MdPreview
+              :editorId="editorId"
+              v-model="articleDetail.articleContent"
+              previewTheme="vuepress"
+          />
+        </div>
+        <!--评论-->
+        <Comment
+            :commentType="CommentApiType.article"
+            :topic-id="articleId"
         />
       </div>
-      <!--评论-->
-      <Comment
-          :commentType="CommentApiType.article"
-          :topic-id="articleId"
-      />
-    </div>
+    </main>
+
   </div>
 </template>
 
@@ -70,6 +79,7 @@ import api from "@/api";
 import {useRouter} from "vue-router";
 import Comment from "@/components/content/comment/Comment.vue";
 import {CommentApiType} from "@/config/constant";
+import PageCover from "@/components/general/page-cover/PageCover.vue";
 
 const router = useRouter();
 
@@ -109,16 +119,23 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.details-container {
-  display: flex;
-  width: 100%;
-  min-height: 101vh; // 解决 footer 组件的缺陷
-  justify-content: space-between;
+.page-article-detail {
+
+  main {
+    max-width: 1200px;
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    z-index: 9;
+    margin: -80px auto auto;
+  }
 
   .left-container {
     width: 25%;
     display: flex;
     flex-direction: column;
+    position: sticky;
+    top: 30px;
 
     .blog-card {
       line-height: 2;
@@ -129,12 +146,13 @@ onMounted(() => {
 
     .article-catalog {
       width: 100%;
-      max-height: 600px;
       display: flex;
       flex-direction: column;
-      position: sticky;
-      top: 30px;
-      overflow-y: auto;
+
+      .catalog-content {
+        overflow-y: auto;
+        max-height: 600px;
+      }
     }
   }
 

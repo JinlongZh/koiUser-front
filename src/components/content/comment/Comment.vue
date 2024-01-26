@@ -4,7 +4,7 @@
       <svg-icon icon-class="comment" class="icon"/>
       <span>评论</span>
     </div>
-    <CommentInput @reloadComment="listComment"/>
+    <CommentInput @reloadComment="reloadComment()"/>
     <!--评论内容区-->
     <div class="comment-area" v-if="commentCount > 0">
       <div class="comment-title">{{ commentCount }} 评论</div>
@@ -76,7 +76,7 @@
           <div
               style="font-size:0.75rem;color:#6d757a;margin-bottom:12px"
               v-show="item.replyCount > 3"
-              ref="checkRef"
+              :ref="(el) => getCheckRef(el, index)"
           >
             共
             <b>{{ item.replyCount }}</b>
@@ -92,13 +92,13 @@
           <div
               class="mb-3"
               style="font-size:0.75rem;color:#222;display:none;margin-bottom:12px"
-              ref="pagingRef"
+              :ref="(el) => getPagingRef(el, index)"
           >
             <span style="padding-right:10px">
               共{{ Math.ceil(item.replyCount / 5) }}页
             </span>
             <paging
-                ref="pageRef"
+                :ref="(el) => getPageRef(el, index)"
                 :totalPage="Math.ceil(item.replyCount / 5)"
                 :index="index"
                 :commentId="item.id"
@@ -106,12 +106,12 @@
             />
           </div>
           <!-- 回复框 -->
-          <ReplyInput ref="replyRef" @reloadReply="reloadReply"/>
+          <ReplyInput :ref="(el) => getReplyRef(el, index)" @reloadReply="reloadReply"/>
         </div>
       </div>
       <!-- 加载按钮 -->
       <div class="load-wrapper">
-        <button class="k-btn k-btn-primary" v-if="commentCount > commentList.length" @click="loadMore()">加载更多...</button>
+        <button class="k-btn k-btn-primary" v-if="commentCount > commentList.length" @click="listComment()">加载更多...</button>
       </div>
       <div v-if="commentCount <= commentList.length" style="padding:1.25rem;text-align:center">
         已经到底了~
@@ -140,16 +140,17 @@ provide("commentType", props.commentType);
 provide("topicId", props.topicId);
 
 //refs
-const checkRef = ref();
-const pagingRef = ref();
-const pageRef = ref();
-const replyRef = ref();
+const checkRef = ref<any>(new Map());
+const pagingRef = ref<any>(new Map());
+const pageRef = ref<any>(new Map());
+const replyRef = ref<any>(new Map());
 
 let commentList = ref<Array<CommentResp>>([]);
 let commentCount = ref(0);
-const pageNo = ref(1);
+const pageNo = ref(0);
 
 const listComment = async () => {
+  pageNo.value++;
   await api.listComment({
     pageNo: pageNo.value,
     pageSize: 10,
@@ -161,9 +162,16 @@ const listComment = async () => {
   })
 }
 
-const loadMore = () => {
-  pageNo.value++;
-  listComment();
+const reloadComment = async () => {
+  await api.listComment({
+    pageNo: pageNo.value,
+    pageSize: 10,
+    commentType: props.commentType,
+    topicId: props.topicId
+  }).then(({ data }) => {
+    commentList.value = data.list;
+    commentCount.value = data.total;
+  })
 }
 
 const replyComment = (index: number, item: CommentResp | ReplyResp) => {
@@ -171,45 +179,45 @@ const replyComment = (index: number, item: CommentResp | ReplyResp) => {
     item.$el.style.display = "none";
   });
   // 通过dom对组件暴露的值传值
-  replyRef.value[index].commentContent = "";
-  replyRef.value[index].nickname = item.nickname;
-  replyRef.value[index].replyUserId = item.userId;
-  replyRef.value[index].parentId = commentList.value[index].id;
-  replyRef.value[index].chooseEmoji = false;
-  replyRef.value[index].index = index;
-  replyRef.value[index].$el.style.display = "block";
+  replyRef.value.get(index).commentContent = "";
+  replyRef.value.get(index).nickname = item.nickname;
+  replyRef.value.get(index).replyUserId = item.userId;
+  replyRef.value.get(index).parentId = commentList.value[index].id;
+  replyRef.value.get(index).chooseEmoji = false;
+  replyRef.value.get(index).index = index;
+  replyRef.value.get(index).$el.style.display = "block";
   // 定位到回复框
-  replyRef.value[index].focusTextarea();
+  replyRef.value.get(index).focusTextarea();
 }
 
 const checkReplies = (index: number, item: CommentResp) => {
   api.pageCommentReply({
     pageNo: 1,
-    PageSize: 5,
+    pageSize: 5,
     commentId: item.id
   }).then(({data}) => {
-    checkRef.value[index].style.display = "none";
+    checkRef.value.get(index).style.display = "none";
     item.replyList = data;
     //超过1页才显示分页
     if (Math.ceil(item.replyCount / 5) > 1) {
-      pagingRef.value[index].style.display = "flex";
+      pagingRef.value.get(index).style.display = "flex";
     }
   })
 }
 
 const reloadReply = (index: number) => {
   api.pageCommentReply({
-    pageNo: pageRef.value[index].current,
-    PageSize: 5,
+    pageNo: pageRef.value.get(index).current,
+    pageSize: 5,
     commentId: commentList.value[index].id
   }).then(({ data }) => {
     commentList.value[index].replyCount++;
     //回复大于5条展示分页
     if (commentList.value[index].replyCount > 5) {
-      pagingRef.value[index].style.display = "flex";
+      pagingRef.value.get(index).style.display = "flex";
     }
-    checkRef.value[index].style.display = "none";
-    replyRef.value[index].$el.style.display = "none";
+    checkRef.value.get(index).style.display = "none";
+    replyRef.value.get(index).$el.style.display = "none";
     commentList.value[index].replyList = data;
   })
 }
@@ -217,7 +225,7 @@ const reloadReply = (index: number) => {
 const changeReplyCurrent = (current: number, index: number, commentId: number) => {
   api.pageCommentReply({
     pageNo: current,
-    PageSize: 5,
+    pageSize: 5,
     commentId: commentId
   }).then(({data}) => {
     commentList.value[index].replyList = data;
@@ -227,6 +235,27 @@ const changeReplyCurrent = (current: number, index: number, commentId: number) =
 onMounted(() => {
   listComment();
 })
+
+const getCheckRef = (el: any, index: number) => {
+  if (el) {
+    checkRef.value.set(index, el);
+  }
+};
+const getPagingRef = (el: any, index: number) => {
+  if (el) {
+    pagingRef.value.set(index, el);
+  }
+};
+const getPageRef = (el: any, index: number) => {
+  if (el) {
+    pageRef.value.set(index, el);
+  }
+};
+const getReplyRef = (el: any, index: number) => {
+  if (el) {
+    replyRef.value.set(index, el);
+  }
+};
 
 </script>
 

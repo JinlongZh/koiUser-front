@@ -1,18 +1,27 @@
 <template>
-  <div class="talk-container">
-    <div class="talk-content">
-      <Wait :show="show" height="400px">
-        <TalkList :talkListData="talkListData"/>
-      </Wait>
-      <Pagination
-          :total="total"
-          :page-size="pageSize"
-          :current="pageNo"
-          :hide-on-single-page="false"
-          :show-total="true"
-          @pageChange="pageChange"
-      />
-    </div>
+  <div class="page-talk">
+    <page-cover
+        title="🏖️茶余饭后,聊聊天!"
+        subtitle="生活不止有代码,别忘了还有诗和远方"
+        bg="http://cdn.koicode.cn/system-image/9af3840152294a18836ac9786c3930ec.jpg"
+    ></page-cover>
+
+    <main>
+      <div class="talk-container">
+        <Wait :show="show" height="400px">
+          <TalkList :talkListData="talkListData"/>
+        </Wait>
+        <Pagination
+            :total="total"
+            :page-size="pageSize"
+            :current="pageNo"
+            :hide-on-single-page="false"
+            :show-total="true"
+            @pageChange="pageChange"
+        />
+      </div>
+      >
+    </main>
   </div>
 </template>
 
@@ -23,6 +32,7 @@ import Pagination from "@/components/general/page/Pagination.vue";
 import {useRouter} from "vue-router";
 import TalkList from "@/components/content/talk/TalkList.vue";
 import api from "@/api";
+import PageCover from "@/components/general/page-cover/PageCover.vue";
 
 const router = useRouter();
 
@@ -72,17 +82,21 @@ watch(
 <style scoped lang="scss">
 @import "@/assets/scss/var.scss";
 
-.talk-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+.page-talk {
 
-  .talk-content {
-    width: 75%;
-    padding: 0 1.25rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  main {
+    max-width: 900px;
+    min-height: 800px;
+    margin: -80px auto auto;
+    position: relative;
+    z-index: 9;
+  }
+
+  .talk-container {
+    padding: 30px 2.5rem 3rem;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.07);
   }
 }
 
