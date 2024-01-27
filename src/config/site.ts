@@ -85,17 +85,6 @@ const sideMenuConfig: SideMenuConfigType = [
     },
 ]
 
-/*
- ***************************************************************************************
- *                                    footer
- ***************************************************************************************
- */
-const footerConfig: FooterConfigInterface = {
-    copyright: "©2023 By JinLonG",
-    theme: "koi",
-    techStack: "vue+spring",
-    zwfwCode: "xxxxxxxx"
-}
 
 
-export {tipType, headerConfig, sideMenuConfig, footerConfig}
+export {tipType, headerConfig, sideMenuConfig}

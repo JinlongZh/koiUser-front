@@ -3,7 +3,7 @@
     <page-cover
         title="🏖️茶余饭后,聊聊天!"
         subtitle="生活不止有代码,别忘了还有诗和远方"
-        bg="http://cdn.koicode.cn/system-image/9af3840152294a18836ac9786c3930ec.jpg"
+        bg="http://cdn.koicode.cn/system-image/097ad13f000f488bb94ffafa4444313d.png"
     ></page-cover>
 
     <main>
@@ -186,7 +186,7 @@ onBeforeMount(() => {
     display: flex;
     flex-direction: column;
     position: sticky;
-    top: 30px;
+    top: 80px;
 
     .blog-wrapper {
 

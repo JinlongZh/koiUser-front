@@ -5,14 +5,14 @@
         subtitle="生活不止有代码,别忘了还有诗和远方"
         bg="http://cdn.koicode.cn/system-image/48380973b3514d2ca84472bf697088d7.jpg"
     ></page-cover>
-    
+
     <main>
       <div class="left-container">
         <!--分类-->
         <div class="category-wrapper blog-card card t-shadow">
           <div class="category-header">
             <div class="web-info-title">
-              <svg-icon icon-class="category" class="icon" />
+              <svg-icon icon-class="category" class="icon"/>
               分类
             </div>
             <div>
@@ -20,7 +20,11 @@
             </div>
           </div>
           <div class="category-content">
-            <div class="category-item" :class="{'active': item.id === categoryQueryId}" v-for="item of categoryList" @click="selectCategory(item.id)">
+            <div
+                class="category-item"
+                :class="{'active': item.id === categoryQueryId}"
+                v-for="item of categoryList.filter(i => i.articleCount > 0)"
+                @click="selectCategory(item.id)">
               <div class="category-name">
                 {{ item?.categoryName }}
               </div>
@@ -57,11 +61,12 @@ import ArticleList from "@/components/content/article/ArticleList.vue";
 import Pagination from "@/components/general/page/Pagination.vue";
 import {useRouter} from "vue-router";
 import PageCover from "@/components/general/page-cover/PageCover.vue";
+import type {CategoryResp} from "@/d.ts/api/blog/category";
 
 const router = useRouter();
 
 let categoryCount = ref(0);
-let categoryList = ref([]);
+let categoryList = ref<Array<CategoryResp>>([]);
 let articleListData = ref([]);
 let show = ref(true);
 let pageNo = ref(1);
@@ -149,7 +154,7 @@ watch(
     display: flex;
     flex-direction: column;
     position: sticky;
-    top: 30px;
+    top: 80px;
 
     .blog-card {
       line-height: 2;

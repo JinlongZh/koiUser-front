@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="header" :class="{'active': !transparent}">
     <div class="space" @click="pageJump('/')">KOI-SPACE</div>
     <div class="right">
       <HeaderItem v-if="mpSwitch"/>
@@ -49,6 +49,7 @@ const $user = useUserStore();
 // true: 显示  false: 显示侧边栏
 let mpSwitch = ref<boolean>(true);
 let lock = true; // 显示锁
+let transparent = ref(true); // 是否透明
 
 const pageJump = (path: string) => {
   router.push(path);
@@ -82,33 +83,47 @@ watch(
     () => $window.scrollTop,
     (value) => {
       if (value == 0) {
-        lock = true;
-        jQuery(".header").css("top", "0px");
+        // lock = true;
+        // jQuery(".header").css("top", "0px");
+        // 设为透明
+        transparent.value = true;
+      } else {
+        transparent.value = false;
       }
     }
 );
 
 // 滚轮与滑动监听
-onMounted(() => {
-  useMouseWheel(
-      () => {
-        if (lock) return;
-        jQuery(".header").css("top", "0px");
-        lock = true;
-      },
-      () => {
-        if (!lock || $process.headerCheckLock.value) return;
-        jQuery(".header").css("top", "-60px");
-        lock = false;
-      }
-  );
-});
+// onMounted(() => {
+//   useMouseWheel(
+//       () => {
+//         if (lock) return;
+//         jQuery(".header").css("top", "0px");
+//         lock = true;
+//       },
+//       () => {
+//         if (!lock || $process.headerCheckLock.value) return;
+//         jQuery(".header").css("top", "-60px");
+//         lock = false;
+//       }
+//   );
+// });
 
 
 </script>
 
 <style scoped lang="scss">
 @import "@/assets/scss/var.scss";
+
+.active {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 1px 3px 0 rgba(0, 34, 77, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  .space, .right {
+    color: #333;
+  }
+}
 
 .header {
   display: flex;
@@ -119,20 +134,18 @@ onMounted(() => {
   margin: 0 auto;
   height: 60px;
   padding: 20px 40px 20px 40px;
-  background: rgba($white, 0.7);
-  color: $normal;
-  transition: top 0.5s;
+  transition: 0.3s ease-out;
   position: fixed;
   z-index: 998;
   top: 0;
   left: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-weight: 600;
   transform: translateX(-50%);
 
   .space {
     width: 140px;
     height: 20px;
-    color: $title;
     line-height: 20px;
     font-size: 20px;
     cursor: pointer;
