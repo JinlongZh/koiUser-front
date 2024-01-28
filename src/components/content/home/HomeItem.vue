@@ -26,11 +26,15 @@ const props = defineProps(["data"]);
 const router = useRouter();
 
 const jumpArticle = (id: number) => {
-  window.open(router.resolve(`/article/detail/${id}`).href, "_blank");
+  router.push({
+    path: `/article/detail/${id}`
+  });
 }
 
 const jumpTalk = (id: number) => {
-  window.open(router.resolve(`/talk/detail/${id}`).href, "_blank");
+  router.push({
+    path: `/talk/detail/${id}`
+  });
 }
 
 </script>

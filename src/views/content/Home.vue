@@ -10,8 +10,9 @@
       <div class="left-container">
         <div class="blog-wrapper">
           <!-- 博主信息 -->
-          <div class="blog-card author-wrapper card t-shadow">
-            <div class="avatar">
+          <div class="blog-card author-wrapper">
+            <div class="bg"></div>
+            <div class="header">
               <img src="@/assets/images/bg.jpg" alt="Avatar">
             </div>
             <!-- 博客名称 -->
@@ -22,15 +23,26 @@
             <div class="motto">
               {{ websiteStore.websiteIntro }}
             </div>
-            <!-- 收藏按钮 -->
-            <a class="collection-btn">
-              加入书签
-            </a>
             <!-- 社交信息 -->
-            <div class="card-info-social">
-              <svg-icon icon-class="github" class="social-svgIcon"/>
-              <svg-icon icon-class="gitee" class="social-svgIcon"/>
-              <svg-icon icon-class="qq" class="social-svgIcon"/>
+            <div class="concat">
+              <div val="" class="item">
+                <div class="val-box">
+                  <span class="val">{{ websiteStore.qq }}</span>
+                </div>
+                <svg-icon icon-class="qq" />
+              </div>
+              <div class="item">
+                <div class="val-box">
+                  <span class="val">{{ websiteStore.github }}</span>
+                </div>
+                <svg-icon icon-class="email" />
+              </div>
+              <div class="item">
+                <div class="val-box">
+                  <span class="val">{{ websiteStore.gitee }}</span>
+                </div>
+                <svg-icon icon-class="gitee" />
+              </div>
             </div>
           </div>
           <!--网站信息-->
@@ -198,17 +210,47 @@ onBeforeMount(() => {
       }
 
       .author-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        padding: 1px;
         text-align: center;
         color: #4c4948;
+        border-radius: 6px;
+        background: #fff;
+        position: relative;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.07);
 
-        .avatar {
-          width: 110px;
-          height: 110px;
+        .bg {
+          width: 100%;
+          height: 120px;
+          background-image: url("http://cdn.koicode.cn/system-image/sakura.gif");
+          background-position: center center;
+          background-size: cover;
+          background-repeat: no-repeat;
+          position: absolute;
+          left: 0;
+          top: 0;
+          border-radius: 6px;
+
+          &::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 50%;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(transparent, #fff);
+          }
+        }
+
+        .header {
+          width: 68px;
+          height: 68px;
+          background: #f5f5f5;
           border-radius: 50%;
           overflow: hidden;
+          margin: 80px auto auto;
+          position: relative;
+          z-index: 9;
+          border: 2px solid #fff;
 
           img {
             width: 100%;
@@ -229,53 +271,47 @@ onBeforeMount(() => {
           font-size: 0.875rem;
         }
 
-        .collection-btn {
-          width: 100%;
-          text-align: center;
-          margin-top: 10px;
-          z-index: 1;
-          font-size: 14px;
-          position: relative;
-          display: block;
-          background-color: #49b1f5;
-          color: #fff !important;
-          height: 32px;
-          line-height: 32px;
-          transition: color 1s;
-
-          &:before {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            z-index: -1;
-            background: #ff7242;
-            content: "";
-            transition: transform 0.5s ease-out;
-            transform: scaleX(0);
-            transform-origin: 0 50%;
-          }
-
-          &:hover:before {
-            transition: transform 0.5s cubic-bezier(0.45, 1.64, 0.47, 0.66);
-            transform: scaleX(1);
-          }
-        }
-
-        .card-info-social {
-          width: 100%;
-          height: 50px;
-          padding: 8px;
+        .concat {
+          font-size: 18px;
           display: flex;
-          justify-content: space-around;
-          line-height: 40px;
-          margin: 6px 0 -6px;
-
-          .social-svgIcon {
-            width: 1.5rem;
-            height: 1.5rem;
-            margin-right: 1rem;
+          justify-content: center;
+          padding: 20px 0 15px;
+          border-top: 1px solid #f5f5f5;
+          margin-top: 20px;
+          .item {
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            margin: 0 10px;
+            border: 1px solid #999;
+            border-radius: 50%;
+            position: relative;
+            .val-box {
+              display: none;
+              height: 50px;
+              position: absolute;
+              top: -45px;
+              left: 50%;
+              transform: translateX(-50%);
+              z-index: 2;
+              span {
+                white-space: nowrap;
+              }
+              .val {
+                background: #fff;
+                font-size: 14px;
+                padding: 10px 20px;
+                border-radius: 40px;
+                box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.07);
+              }
+            }
+            &:hover {
+              border-color: #2ebc3c;
+              .val-box {
+                display: block;
+              }
+            }
           }
         }
       }

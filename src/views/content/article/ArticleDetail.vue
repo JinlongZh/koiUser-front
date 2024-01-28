@@ -30,17 +30,17 @@
 
           <!--发表时间-->
           <svg-icon icon-class="riqi" style="width: 1rem; height: 1rem; "/>
-          发表时间
+          发表时间: {{ $filters.date(articleDetail.createTime) }}
           <span class="separator">|</span>
 
           <!--更新时间-->
           <svg-icon icon-class="riqi" style="width: 1rem; height: 1rem; "/>
-          更新时间
+          更新时间: {{ $filters.date(articleDetail.createTime) }}
           <span class="separator">|</span>
 
           <!--文章分类-->
           <svg-icon icon-class="category" style="width: 1rem; height: 1rem; "/>
-          文章分类
+          {{ articleDetail.categoryName }}
           <span class="separator">|</span>
 
           <!-- 字数统计 -->
@@ -80,11 +80,23 @@ import {useRouter} from "vue-router";
 import Comment from "@/components/content/comment/Comment.vue";
 import {CommentApiType} from "@/config/constant";
 import PageCover from "@/components/general/page-cover/PageCover.vue";
+import type {ArticleResp} from "@/d.ts/api/blog/article";
 
 const router = useRouter();
 
 let articleId = ref(router.currentRoute.value.params.id);
-let articleDetail = ref<any>({});
+let articleDetail = ref<ArticleResp>({
+  id: 0,
+  articleCover: '',
+  articleTitle: '',
+  articleContent: '',
+  articleTop: 0,
+  categoryId: 0,
+  categoryName: '',
+  viewCount: 0,
+  createTime: '',
+  updateTime: '',
+});
 let wordNum = ref(0);
 let readTime = ref(0);
 

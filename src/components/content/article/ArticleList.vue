@@ -16,7 +16,9 @@ const router = useRouter();
 const props = defineProps(["articleListData"])
 
 const jumpDetail = (id: number) => {
-  window.open(router.resolve(`/article/detail/${id}`).href, "_blank");
+  router.push({
+    path: `/article/detail/${id}`
+  })
 };
 </script>
 

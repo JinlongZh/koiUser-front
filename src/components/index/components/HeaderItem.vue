@@ -110,6 +110,7 @@ const pageJump = (path: string) => {
       .child {
         height: 40px;
         cursor: pointer;
+        color: #333;
         &:hover {
           background-color:  #80c8f8;
         }

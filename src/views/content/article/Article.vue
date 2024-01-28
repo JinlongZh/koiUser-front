@@ -62,6 +62,7 @@ import Pagination from "@/components/general/page/Pagination.vue";
 import {useRouter} from "vue-router";
 import PageCover from "@/components/general/page-cover/PageCover.vue";
 import type {CategoryResp} from "@/d.ts/api/blog/category";
+import SvgIcon from "@/components/general/icon/SvgIcon.vue";
 
 const router = useRouter();
 

@@ -1,36 +1,26 @@
 @import "@/assets/scss/var.scss";
 
-// 标题
-.title-small {
-  font-size: 14px;
-  line-height: 21px;
-}
-.title-small-normal {
-  color: $normal;
-  font-size: 14px;
-  line-height: 21px;
-}
-
-.title {
-  color: $title;
-  font-size: 16px;
-  line-height: 20px;
-}
-.title-normal {
-  color: $normal;
-  font-size: 16px;
-  line-height: 20px;
-}
-.title-600 {
-  color: $title;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 600;
-}
-
 // 文字
-.text {
-  color: $normal;
-  font-size: 14px;
-  line-height: 20px;
+.text1 {
+  font-size: 0.25rem;
+}
+
+.text2 {
+  font-size: 0.50rem;
+}
+
+.text3 {
+  font-size: 0.75rem;
+}
+
+.text4 {
+  font-size: 1rem;
+}
+
+.text5 {
+  font-size: 1.25rem;
+}
+
+.font-bold {
+  font-weight: 700;
 }

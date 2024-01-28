@@ -2,7 +2,7 @@
   <div class="input-group">
     <div class="header">
       <span v-if="isRequired" class="required-star">*</span>
-      <label class="title-600" :for="name">{{ name }}</label>
+      <label class="font-bold text5" :for="name">{{ name }}</label>
       <div class="input-description text">{{ describe }}</div>
     </div>
     <input :type="inputType" :id="name" :name="name" :required="isRequired" v-model="inputValue" @input="handleInput" />

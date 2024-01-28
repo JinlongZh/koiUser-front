@@ -76,7 +76,7 @@ const content: Array<RouteRecordRaw> = [
     {
         path: publicPath.interface,
         name: "interface",
-        component: () => import("@/views/content/interface/index.vue"),
+        component: () => import("@/views/content/interface/Interface.vue"),
         redirect: publicPath.interfaceList,
         children: [
             {

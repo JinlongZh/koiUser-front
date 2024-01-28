@@ -94,7 +94,7 @@ const cover = computed(() => `url(${data.articleCover})`);
     }
 
     .article-content {
-      max-width: 100%; /* Ensure it doesn't overflow the container */
+      max-width: 100%;
       line-height: 2;
       overflow: hidden;
       color: #4c4948;

@@ -20,7 +20,6 @@
             @pageChange="pageChange"
         />
       </div>
-      >
     </main>
   </div>
 </template>
@@ -85,7 +84,7 @@ watch(
 .page-talk {
 
   main {
-    max-width: 900px;
+    max-width: 940px;
     min-height: 800px;
     margin: -80px auto auto;
     position: relative;

@@ -23,7 +23,9 @@ const router = useRouter();
 const props = defineProps(["talkListData"])
 
 const jumpDetail = (id: number) => {
-  window.open(router.resolve(`/talk/detail/${id}`).href, "_blank");
+  router.push({
+    path: `/talk/detail/${id}`
+  })
 };
 
 </script>

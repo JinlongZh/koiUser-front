@@ -21,15 +21,8 @@ export declare interface InterfaceInfo {
     responseHeader: string;
     status: number; //（0-关闭，1-开启）
     method: string;
-    createTime: Record<string, unknown>;
-    updateTime: Record<string, unknown>;
-}
-
-export declare interface PageResultInterfaceInfoResp extends CommonResult {
-    data: {
-        list: Array<Partial<InterfaceInfo>>,
-        total: number;
-    };
+    createTime: string;
+    updateTime: string;
 }
 
 export declare interface InterfaceInfoResp extends CommonResult {
