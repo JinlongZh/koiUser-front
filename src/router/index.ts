@@ -29,7 +29,7 @@ router.beforeEach((
     to: RouteLocationNormalized,
     from: RouteLocationNormalized,
     next: NavigationGuardNext) => {
-    console.log(to.meta.title)
+
     if (to.meta.title) document.title = to.meta.title;
     next();
 })

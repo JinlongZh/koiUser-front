@@ -22,11 +22,11 @@
           <div class="blog-card author-wrapper">
             <div class="bg"></div>
             <div class="header">
-              <img src="@/assets/images/bg.jpg" alt="Avatar">
+              <img :src="websiteStore.websiteAvatar" alt="Avatar">
             </div>
             <!-- 博客名称 -->
             <div class="blog-name">
-              {{ websiteStore.websiteName }}
+              {{ websiteStore.websiteAuthor }}
             </div>
             <!-- 博客简介 -->
             <div class="motto">
