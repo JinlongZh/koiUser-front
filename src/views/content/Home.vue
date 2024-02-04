@@ -1,10 +1,19 @@
 <template>
   <div class="page-home">
-    <page-cover
-        title="🏖️茶余饭后,聊聊天!"
-        subtitle="生活不止有代码,别忘了还有诗和远方"
-        bg="http://cdn.koicode.cn/system-image/097ad13f000f488bb94ffafa4444313d.png"
-    ></page-cover>
+    <div class="home-banner">
+      <div class="banner-container">
+        <h1 class="name">
+          {{ websiteStore.websiteName }}
+        </h1>
+        <!-- 一言 -->
+        <div class="personality">
+          {{ obj.output }} <span class="typed-cursor">|</span>
+        </div>
+      </div>
+      <div class="scroll-down" @click="scrollDown">
+        <svg-icon icon-class="scroll_down" class="scroll-down-effects"></svg-icon>
+      </div>
+    </div>
 
     <main>
       <div class="left-container">
@@ -29,19 +38,19 @@
                 <div class="val-box">
                   <span class="val">{{ websiteStore.qq }}</span>
                 </div>
-                <svg-icon icon-class="qq" />
+                <svg-icon icon-class="qq"/>
               </div>
               <div class="item">
                 <div class="val-box">
                   <span class="val">{{ websiteStore.github }}</span>
                 </div>
-                <svg-icon icon-class="email" />
+                <svg-icon icon-class="email"/>
               </div>
               <div class="item">
                 <div class="val-box">
                   <span class="val">{{ websiteStore.gitee }}</span>
                 </div>
-                <svg-icon icon-class="gitee" />
+                <svg-icon icon-class="gitee"/>
               </div>
             </div>
           </div>
@@ -100,6 +109,7 @@ import Pagination from "@/components/general/page/Pagination.vue";
 import useWebsiteStore from "@/store/website";
 import SvgIcon from "@/components/general/icon/SvgIcon.vue";
 import PageCover from "@/components/general/page-cover/PageCover.vue";
+import EasyTyper from "easy-typer-js";
 
 const router = useRouter();
 const websiteStore = useWebsiteStore();
@@ -109,10 +119,45 @@ let show = ref(true);
 
 let homeListData = reactive([]);
 const time = ref("");
+const obj = ref({
+  output: "",
+  isEnd: false,
+  speed: 80,
+  singleBack: false,
+  sleep: 0,
+  type: "rollback",
+  backSpeed: 40,
+  sentencePause: true
+})
 
 let pageNo = ref(1);
 let pageSize = ref(8);
-let total = ref(0)
+let total = ref(0);
+
+
+const init = () => {
+  fetchData();
+}
+const fetchData = () => {
+  fetch('https://v1.hitokoto.cn/?c=i')
+      .then(res => res.json())
+      .then(({hitokoto}) => {
+        initTyped(hitokoto)
+      })
+      .catch(err => {
+        console.error(err)
+      })
+}
+const initTyped = (input: string, fn?: () => void, hooks?: any) => {
+  const typed = new EasyTyper(obj.value, input, fn, hooks)
+}
+
+const scrollDown = () => {
+  window.scrollTo({
+    behavior: "smooth",
+    top: document.documentElement.clientHeight
+  });
+}
 
 const getHomeList = async () => {
   await api.pageHomeList({
@@ -165,6 +210,7 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
+  init();
   runTime(); // 先执行一次
   // 设置定时器，每秒执行一次 runTime 函数
   timer = setInterval(runTime, 1000);
@@ -184,13 +230,95 @@ onBeforeMount(() => {
 .page-home {
   width: 100%;
 
+  .home-banner {
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background: url("http://cdn.koicode.cn/system-image/097ad13f000f488bb94ffafa4444313d.png") center/cover no-repeat;
+    position: relative;
+
+    .banner-container {
+      width: 80%;
+      position: absolute;
+      left: 50%;
+      top: 40%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      letter-spacing: 1.2px;
+
+      .name {
+        font-size: 26px;
+        color: #fff;
+        font-weight: 800;
+        padding: 20px 0;
+      }
+
+      .personality {
+        display: inline-block;
+        font-size: 1.5rem;
+        color: #fff;
+        border-radius: 40px;
+
+        .typed-cursor {
+          margin-left: 10px;
+          opacity: 1;
+          animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+          0%, 50%, 100% {
+            opacity: 0;
+          }
+          25%, 75% {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    .scroll-down {
+      cursor: pointer;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+
+      .scroll-down-effects {
+        position: relative;
+        font-size: 2rem;
+        margin: 10px;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        animation: scroll-down-effect 1.5s infinite;
+      }
+
+      @keyframes scroll-down-effect {
+        0% {
+          top: 0;
+          opacity: 0.4;
+          filter: alpha(opacity=40);
+        }
+        50% {
+          top: -16px;
+          opacity: 1;
+          filter: none;
+        }
+        100% {
+          top: 0;
+          opacity: 0.4;
+          filter: alpha(opacity=40);
+        }
+      }
+    }
+  }
+
   main {
     max-width: 1200px;
     display: flex;
     align-items: flex-start;
     position: relative;
     z-index: 9;
-    margin: -80px auto auto;
+    margin: 80px auto auto;
   }
 
   .left-container {
@@ -278,6 +406,7 @@ onBeforeMount(() => {
           padding: 20px 0 15px;
           border-top: 1px solid #f5f5f5;
           margin-top: 20px;
+
           .item {
             width: 35px;
             height: 35px;
@@ -287,6 +416,7 @@ onBeforeMount(() => {
             border: 1px solid #999;
             border-radius: 50%;
             position: relative;
+
             .val-box {
               display: none;
               height: 50px;
@@ -295,9 +425,11 @@ onBeforeMount(() => {
               left: 50%;
               transform: translateX(-50%);
               z-index: 2;
+
               span {
                 white-space: nowrap;
               }
+
               .val {
                 background: #fff;
                 font-size: 14px;
@@ -306,8 +438,10 @@ onBeforeMount(() => {
                 box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.07);
               }
             }
+
             &:hover {
               border-color: #2ebc3c;
+
               .val-box {
                 display: block;
               }

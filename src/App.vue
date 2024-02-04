@@ -24,7 +24,7 @@ import {getUserInfo} from "@/api/system/user";
 import {getAccessToken, getRefreshToken} from "@/utils/auth";
 import {Tip, Wait, Load} from "@/components/popup";
 import Tools from "@/components/Tools.vue";
-import {getWebsiteConfig} from "@/api/system/websiteConfig";
+import {getWebsiteConfig, report} from "@/api/system/websiteConfig";
 import useWebsiteStore from "@/store/website";
 
 const router = useRouter();
@@ -38,6 +38,7 @@ let isShow = ref(false);
 onMounted(() => {
   user();
   websiteConfig();
+  report();
 
   closeLoad(); // 关闭加载层
   listenWindow.initAll();

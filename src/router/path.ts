@@ -36,6 +36,9 @@ const content: Array<RouteRecordRaw> = [
     {
         path: "",
         name: "home",
+        meta: {
+            title: "锦理的集装箱",
+        },
         component: () => import("@/views/content/Home.vue")
     },
     // 文章
@@ -45,6 +48,9 @@ const content: Array<RouteRecordRaw> = [
             {
                 path: "",
                 name: "article",
+                meta: {
+                    title: "文章",
+                },
                 component: () => import("@/views/content/article/Article.vue")
             },
             {
@@ -62,6 +68,9 @@ const content: Array<RouteRecordRaw> = [
             {
                 path: "",
                 name: "talk",
+                meta: {
+                    title: "说说",
+                },
                 component: () => import("@/views/content/talk/Talk.vue")
             },
             {
@@ -76,6 +85,9 @@ const content: Array<RouteRecordRaw> = [
     {
         path: publicPath.interface,
         name: "interface",
+        meta: {
+            title: "接口",
+        },
         component: () => import("@/views/content/interface/Interface.vue"),
         redirect: publicPath.interfaceList,
         children: [

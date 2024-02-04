@@ -1,12 +1,12 @@
 <template>
   <div class="header" :class="{'active': !transparent}">
-    <div class="space" @click="pageJump('/')">KOI-SPACE</div>
+    <div class="space" @click="pageJump('/')">{{ websiteStore.websiteAuthor }}</div>
     <div class="right">
       <HeaderItem v-if="mpSwitch"/>
       <div class="menuBar" :style="{backgroundImage: 'url(' + menuBar + ')' }" @click="openSideBar" v-else></div>
-      <div class="dropDown" v-if="$user.isLoggedIn">
+      <div class="dropDown" v-if="userStore.isLoggedIn">
         <div class="avatar" @click="avatarClick"
-             :style="{ backgroundImage: 'url(' + $user.userInfo?.avatar + ')' }"></div>
+             :style="{ backgroundImage: 'url(' + userStore.userInfo?.avatar + ')' }"></div>
         <div class="dropDown-content">
           <div class="child" @click="pageJump(publicPath.userCenter)">
             <img :src=resource.userCenter alt="">
@@ -31,20 +31,21 @@
 <script setup lang="ts">
 import {useRouter} from "vue-router";
 import {ProcessInterface} from "@/d.ts/plugins";
-import jQuery from 'jquery';
-import {inject, onMounted, ref, watch} from "vue";
+import {inject, ref, watch} from "vue";
 import {siteConfig} from "@/config/program";
-import useMouseWheel from "@/hooks/useMouseWheel";
 import resource from "@/config/resource";
 import useWindowStore from "@/store/window";
 import useUserStore from "@/store/user";
 import {publicPath} from "@/router/path";
+import useWebsiteStore from "@/store/website";
+import HeaderItem from "@/components/index/components/HeaderItem.vue";
 
 const router = useRouter();
 const $window = useWindowStore();
 const $process = inject<ProcessInterface>("$process")!;
 const menuBar = resource.menuBar;
-const $user = useUserStore();
+const userStore = useUserStore();
+const websiteStore = useWebsiteStore();
 
 // true: 显示  false: 显示侧边栏
 let mpSwitch = ref<boolean>(true);

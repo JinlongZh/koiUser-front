@@ -72,10 +72,14 @@ import {
 } from "@/utils/auth";
 import {LoginResp} from "@/d.ts/api/system/login";
 import {login} from "@/api/system/login";
+import {getUserInfo} from "@/api/system/user";
+import useUserStore from "@/store/user";
 
 const route = useRoute();
 const router = useRouter();
 const $process = inject<ProcessInterface>("$process")!;
+const userStore = useUserStore();
+
 const loginFormRef = ref<FormInstance>();
 const registerFormRef = ref<FormInstance>();
 
@@ -177,6 +181,9 @@ const resetForm = (formEl: FormInstance | undefined) => {
 
 const afterLoginSuccess = (res: LoginResp) => {
   setToken(res.data);
+  getUserInfo().then(({data}) => {
+    userStore.initUserInfo(data);
+  });
   $process.tipShow.success("登录成功");
   router.push({
     path: redirect.value || "/"
