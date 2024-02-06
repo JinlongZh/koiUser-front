@@ -234,7 +234,7 @@ onBeforeMount(() => {
     width: 100%;
     height: 100vh;
     background-size: cover;
-    background: url("http://cdn.koicode.cn/system-image/097ad13f000f488bb94ffafa4444313d.png") center/cover no-repeat;
+    background: url("https://cdn.koicode.cn/system-image/097ad13f000f488bb94ffafa4444313d.png") center/cover no-repeat;
     position: relative;
 
     .banner-container {
@@ -349,7 +349,7 @@ onBeforeMount(() => {
         .bg {
           width: 100%;
           height: 120px;
-          background-image: url("http://cdn.koicode.cn/system-image/sakura.gif");
+          background-image: url("https://cdn.koicode.cn/system-image/sakura.gif");
           background-position: center center;
           background-size: cover;
           background-repeat: no-repeat;

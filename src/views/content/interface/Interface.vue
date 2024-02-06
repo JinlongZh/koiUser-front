@@ -3,7 +3,7 @@
     <page-cover
         title="🏖️好玩的接口!"
         subtitle="生活不止有代码,别忘了还有诗和远方"
-        bg="http://cdn.koicode.cn/system-image/9af3840152294a18836ac9786c3930ec.jpg"
+        bg="https://cdn.koicode.cn/system-image/9af3840152294a18836ac9786c3930ec.jpg"
     ></page-cover>
 
     <main>

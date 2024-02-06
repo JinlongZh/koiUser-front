@@ -3,7 +3,7 @@
     <div class="space" @click="pageJump('/')">{{ websiteStore.websiteAuthor }}</div>
     <div class="right">
       <HeaderItem v-if="mpSwitch"/>
-      <div class="menuBar" :style="{backgroundImage: 'url(' + menuBar + ')' }" @click="openSideBar" v-else></div>
+      <svg-icon class="menuBar" icon-class="menu-bar" @click="openSideBar" v-else></svg-icon>
       <div class="dropDown" v-if="userStore.isLoggedIn">
         <div class="avatar" @click="avatarClick"
              :style="{ backgroundImage: 'url(' + userStore.userInfo?.avatar + ')' }"></div>
@@ -39,11 +39,11 @@ import useUserStore from "@/store/user";
 import {publicPath} from "@/router/path";
 import useWebsiteStore from "@/store/website";
 import HeaderItem from "@/components/index/components/HeaderItem.vue";
+import SvgIcon from "@/components/general/icon/SvgIcon.vue";
 
 const router = useRouter();
 const $window = useWindowStore();
 const $process = inject<ProcessInterface>("$process")!;
-const menuBar = resource.menuBar;
 const userStore = useUserStore();
 const websiteStore = useWebsiteStore();
 

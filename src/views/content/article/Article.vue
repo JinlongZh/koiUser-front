@@ -3,7 +3,7 @@
     <page-cover
         title="✍️行有余力 , 写点笔记!"
         subtitle="生活不止有代码,别忘了还有诗和远方"
-        bg="http://cdn.koicode.cn/system-image/48380973b3514d2ca84472bf697088d7.jpg"
+        bg="https://cdn.koicode.cn/system-image/48380973b3514d2ca84472bf697088d7.jpg"
     ></page-cover>
 
     <main>

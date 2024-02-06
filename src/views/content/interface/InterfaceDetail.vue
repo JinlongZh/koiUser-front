@@ -3,7 +3,7 @@
     <page-cover
         :title="'🏖️' + interfaceInfo.name"
         :subtitle="interfaceInfo.description"
-        bg="http://cdn.koicode.cn/system-image/9af3840152294a18836ac9786c3930ec.jpg"
+        bg="https://cdn.koicode.cn/system-image/9af3840152294a18836ac9786c3930ec.jpg"
     ></page-cover>
 
     <main>
