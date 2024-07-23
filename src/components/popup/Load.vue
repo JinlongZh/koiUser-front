@@ -18,7 +18,6 @@ import type {ProcessInterface} from "@/d.ts/modules/process";
 const $process = inject<ProcessInterface>("$process")!;
 
 let status = ref($process.loadStatus.value);
-
 watch(
     () => $process.loadStatus.value,
     value => {

@@ -35,14 +35,17 @@ const userStore = useUserStore();
 
 let isShow = ref(false);
 
-onMounted(() => {
-  user();
-  websiteConfig();
-  report();
+// 空间初始化
+router.isReady().then(async () => {
+  Promise.all([user(), websiteConfig()]).then(async () => {
+    await report();
+    closeLoad(); // 关闭加载层
+  }).catch(() => {
 
-  closeLoad(); // 关闭加载层
-  listenWindow.initAll();
-})
+  }).finally(() => {
+    listenWindow.initAll();
+  })
+});
 
 // 用户信息初始化
 const user = () => {

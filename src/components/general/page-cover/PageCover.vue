@@ -18,6 +18,8 @@
 
 <script setup lang="ts">
 
+import {defineProps} from "vue";
+
 defineProps(['bg', 'title', 'subtitle']);
 
 </script>

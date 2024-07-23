@@ -1,4 +1,4 @@
-import service from "@/utils/request";
+import service, {get} from "@/utils/request";
 import type {CommonResult} from "@/d.ts/api";
 
 /**
@@ -6,5 +6,5 @@ import type {CommonResult} from "@/d.ts/api";
  * @returns
  */
 export const getUserInfo = (): Promise<CommonResult> => {
-    return service.get(`/system/user/profile/get`);
+    return get(`/system/user/profile/get`);
 }
