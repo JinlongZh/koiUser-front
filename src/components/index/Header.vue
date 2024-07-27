@@ -114,12 +114,10 @@ import {useRouter} from "vue-router";
 import {ProcessInterface} from "@/d.ts/plugins";
 import {inject, ref, watch} from "vue";
 import {siteConfig} from "@/config/program";
-import resource from "@/config/resource";
 import useWindowStore from "@/store/window";
 import useUserStore from "@/store/user";
 import {publicPath} from "@/router/path";
 import useWebsiteStore from "@/store/website";
-import HeaderItem from "@/components/index/components/HeaderItem.vue";
 import SvgIcon from "@/components/general/icon/SvgIcon.vue";
 
 const router = useRouter();
@@ -221,7 +219,6 @@ watch(
   z-index: 998;
   top: 0;
   left: 50%;
-  color: #fff;
   font-weight: 600;
   transform: translateX(-50%);
   user-select: none;

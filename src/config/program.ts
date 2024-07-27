@@ -1,5 +1,5 @@
 import {publicPath} from "@/router/path";
-import {SiteConfigInterface, UrlConfigInterface} from "@/d.ts/config/program";
+import {SiteConfigInterface} from "@/d.ts/config/program";
 
 
 const siteConfig: SiteConfigInterface = {
