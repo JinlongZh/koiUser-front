@@ -3,7 +3,7 @@ import {computed, ref} from "vue";
 import type {UserInfo} from "@/d.ts/api/system/user";
 
 const useUserStore = defineStore("$user", () => {
-    const userInfo = ref<UserInfo>({});
+    const userInfo = ref<UserInfo>({} as UserInfo);
 
     const status = ref<number>(0);
 

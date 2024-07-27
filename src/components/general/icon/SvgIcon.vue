@@ -1,11 +1,12 @@
 <template>
   <svg :class="svgClass" aria-hidden="true">
-    <use :xlink:href="iconName" />
+    <use :xlink:href="iconName"/>
   </svg>
 </template>
 
 <script setup lang='ts'>
-import { computed } from 'vue'
+import {computed, defineProps} from 'vue'
+
 const props = defineProps({
   iconClass: {
     type: String,

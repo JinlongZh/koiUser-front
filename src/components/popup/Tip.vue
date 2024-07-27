@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import {watch, inject, ref, Ref, UnwrapNestedRefs} from "vue";
 import {ProcessInterface} from "@/d.ts/modules/process";
-import { tipType } from "@/config/site";
+// import { tipType } from "@/config/site";
 
 const $process = inject<ProcessInterface>("$process")!;
 

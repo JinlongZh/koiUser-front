@@ -23,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import {headerConfig} from "@/config/site";
 import {useRouter} from "vue-router";
 
 const router = useRouter();

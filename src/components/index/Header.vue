@@ -2,28 +2,109 @@
   <div class="header" :class="{'active': !transparent}">
     <div class="space" @click="pageJump('/')">{{ websiteStore.websiteAuthor }}</div>
     <div class="right">
-      <HeaderItem v-if="mpSwitch"/>
+      <!--导航列表-->
+      <div v-if="mpSwitch">
+        <ul class="scroll-menu">
+          <li @click="$router.push({path: '/'})">
+            <div class="my-menu">
+              🏡 <span>首页</span>
+            </div>
+          </li>
+
+          <!-- 家 -->
+          <li @click="pageJump(publicPath.article)">
+            <div class="my-menu">
+              🔖️‍ <span>文章</span>
+            </div>
+          </li>
+
+          <li @click="pageJump(publicPath.talk)">
+            <div class="my-menu">
+              ☘️‍ <span>说说</span>
+            </div>
+          </li>
+
+          <li @click="pageJump(publicPath.interface)">
+            <div class="my-menu">
+              🧰 <span>百宝箱</span>
+            </div>
+          </li>
+
+          <li @click="$router.push({path: '/friend'})">
+            <div class="my-menu">
+              ✈️<span>友链</span>
+            </div>
+          </li>
+
+          <li @click="$router.push({path: '/message'})">
+            <div class="my-menu">
+              📪 <span>留言</span>
+            </div>
+          </li>
+
+          <!-- 聊天室 -->
+          <li @click="goIm()">
+            <div class="my-menu">
+              💬 <span>联系我</span>
+            </div>
+          </li>
+
+          <!-- 后台 -->
+          <li @click="goAdmin()">
+            <div class="my-menu">
+              💻️ <span>后台</span>
+            </div>
+          </li>
+
+          <!-- 个人中心 -->
+          <li>
+            <el-dropdown placement="bottom" v-if="userStore.isLoggedIn">
+              <el-avatar class="user-avatar" :size="36"
+                         :src="userStore.userInfo.avatar">
+              </el-avatar>
+
+              <template #dropdown>
+                <el-dropdown-menu style="width: 200px">
+                  <el-dropdown-item @click.native="pageJump('/user')">
+                    <svg-icon icon-class="qq"/> <span>个人中心</span>
+                  </el-dropdown-item>
+                  <el-dropdown-item @click.native="logout()">
+                    <svg-icon icon-class="qq"/> <span>退出</span>
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+
+            <div v-else>
+              denglu
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!--图标-->
       <svg-icon class="menuBar" icon-class="menu-bar" @click="openSideBar" v-else></svg-icon>
-      <div class="dropDown" v-if="userStore.isLoggedIn">
-        <div class="avatar" @click="avatarClick"
-             :style="{ backgroundImage: 'url(' + userStore.userInfo?.avatar + ')' }"></div>
-        <div class="dropDown-content">
-          <div class="child" @click="pageJump(publicPath.userCenter)">
-            <img :src=resource.userCenter alt="">
-            <div class="word">个人中心</div>
-          </div>
-          <div class="child" @click="logout">
-            <img :src=resource.logout alt="">
-            <div class="word">退出登录</div>
-          </div>
-        </div>
-      </div>
-      <div class="login-button" @click="openLogin" v-else>
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-denglu"></use>
-        </svg>
-        <span> 登录</span>
-      </div>
+
+
+      <!--<div class="dropDown" v-if="userStore.isLoggedIn">-->
+      <!--  <div class="avatar" @click="avatarClick"-->
+      <!--       :style="{ backgroundImage: 'url(' + userStore.userInfo?.avatar + ')' }"></div>-->
+      <!--  <div class="dropDown-content">-->
+      <!--    <div class="child" @click="pageJump(publicPath.userCenter)">-->
+      <!--      <img :src=resource.userCenter alt="">-->
+      <!--      <div class="word">个人中心</div>-->
+      <!--    </div>-->
+      <!--    <div class="child" @click="logout">-->
+      <!--      <img :src=resource.logout alt="">-->
+      <!--      <div class="word">退出登录</div>-->
+      <!--    </div>-->
+      <!--  </div>-->
+      <!--</div>-->
+      <!--<div class="login-button" @click="openLogin" v-else>-->
+      <!--  <svg class="icon" aria-hidden="true">-->
+      <!--    <use xlink:href="#icon-denglu"></use>-->
+      <!--  </svg>-->
+      <!--  <span> 登录</span>-->
+      <!--</div>-->
     </div>
   </div>
 </template>
@@ -129,12 +210,12 @@ watch(
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   min-width: 370px;
   width: 100%;
   max-width: 2500px;
   margin: 0 auto;
   height: 60px;
-  padding: 20px 40px 20px 40px;
   transition: 0.3s ease-out;
   position: fixed;
   z-index: 998;
@@ -143,6 +224,7 @@ watch(
   color: #fff;
   font-weight: 600;
   transform: translateX(-50%);
+  user-select: none;
 
   .space {
     width: 140px;
@@ -150,84 +232,64 @@ watch(
     line-height: 20px;
     font-size: 20px;
     cursor: pointer;
+    margin-left: 20px;
   }
 
   .right {
     display: flex;
     justify-content: space-between;
 
-    .menuBar {
-      width: 30px;
-      height: 30px;
-      background-size: 100% 100%;
-      transform: translate(-10px, -5px);
-      cursor: pointer;
-    }
+    .scroll-menu {
+      height: 60px;
+      margin: 0 25px 0 0;
+      display: flex;
+      justify-content: flex-end;
+      padding: 0;
 
-    .dropDown {
-      position: relative;
-      cursor: pointer;
-
-      .avatar {
-        width: 40px;
-        height: 40px;
-        background-size: 100% 100%;
-        border-radius: 50%;
-        transform: translateY(-10px);
-        box-shadow: 0 0 5px rgba($black, 0.7);
-        -webkit-box-shadow: 0 0 5px rgba($black, 0.7);
-        -moz-box-shadow: 0 0 5px rgba($black, 0.7);
+      li {
+        height: 100%;
+        list-style: none;
+        margin: 0 8px;
+        position: relative;
         cursor: pointer;
-      }
+        display: flex;
+        align-items: center;
 
-      .dropDown-content {
-        position: absolute;
-        top: calc(100% + 13px); /* 调整菜单的垂直位置 */
-        right: -20px; /* 调整菜单右对齐 */
-        width: 120px;
-        opacity: 0;
-        border-radius: 8px;
-        background-color: #fff;
-        box-shadow: 0 4px 8px 6px rgba(7, 17, 27, .06);
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
-        z-index: 999;
+        &:hover {
+          .my-menu {
+            span {
+              color: red;
+            }
 
-        .child {
-          display: flex;
-          justify-content: space-between;
-          padding: 10px;
-          cursor: pointer;
-          color: #333;
-
-          &:hover {
-            background-color:  #80c8f8;
-          }
-
-          img {
-            width: 16px;
-            height: 16px;
-            display: block;
-          }
-
-          .word {
-            line-height: 20px;
-            margin-left: 5px;
+            &::after {
+              max-width: 100%;
+            }
           }
         }
-      }
 
-      &:hover .dropDown-content {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
+        .my-menu {
+          &::after {
+            content: "";
+            display: block;
+            position: absolute;
+            bottom: 10px;
+            height: 6px;
+            background-color: red;
+            border-radius: 2px;
+            width: 100%;
+            max-width: 0;
+            transition: max-width 0.25s ease-in-out;
+          }
+        }
+
+        :deep(.el-dropdown) {
+
+        }
+
       }
     }
 
-    .login-button {
-      cursor: pointer;
-    }
+
   }
 }
 
