@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 
-import {inject, ref} from "vue";
+import {defineEmits, inject, ref} from "vue";
 import type {ProcessInterface} from "@/d.ts/modules/process";
 import useUserStore from "@/store/user";
 import EmojiObject from "@/assets/images/emoji/emoji";

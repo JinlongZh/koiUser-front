@@ -128,7 +128,7 @@
 
 import SvgIcon from "@/components/general/icon/SvgIcon.vue";
 import CommentInput from "@/components/content/comment/components/CommentInput.vue";
-import {onMounted, provide, ref} from "vue";
+import {defineProps, onMounted, provide, ref} from "vue";
 import api from "@/api";
 import Paging from "@/components/general/page/Paging.vue";
 import ReplyInput from "@/components/content/comment/components/ReplyInput.vue";

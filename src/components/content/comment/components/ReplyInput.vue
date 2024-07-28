@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 
-import {inject, ref} from "vue";
+import {defineExpose, defineProps, inject, ref} from "vue";
 import Emoji from "@/components/general/emoji/Emoji.vue";
 import {ProcessInterface} from "@/d.ts/modules/process";
 import useUserStore from "@/store/user";
@@ -40,7 +40,7 @@ import api from "@/api";
 const reply = ref();
 const replyTextarea = ref();
 
-const emit = defineEmits(["reloadReply"]);
+const emit = defineProps(["reloadReply"]);
 const route = useRoute();
 const $process = inject<ProcessInterface>("$process")!;
 const $user = useUserStore();
