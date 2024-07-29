@@ -75,7 +75,7 @@
               </template>
             </el-dropdown>
 
-            <div v-else>
+            <div v-else @click="openLogin">
               denglu
             </div>
           </li>

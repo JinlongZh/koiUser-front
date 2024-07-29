@@ -14,6 +14,7 @@ const useWebsiteStore = defineStore("$website", {
         qq: "",
         github: "",
         gitee: "",
+        websiteAddress: "",
     }),
 })
 

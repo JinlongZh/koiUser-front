@@ -22,19 +22,19 @@
               <div class="form-friend">
                 <div class="form-friend-item">
                   <span>名称：</span>
-                  <el-input maxlength="30" v-model="friend.title"></el-input>
+                  <el-input maxlength="30" v-model="friendForm.title"></el-input>
                 </div>
                 <div class="form-friend-item">
                   <span>简介：</span>
-                  <el-input maxlength="120" v-model="friend.introduction"></el-input>
+                  <el-input maxlength="120" v-model="friendForm.introduction"></el-input>
                 </div>
                 <div class="form-friend-item">
                   <span>封面：</span>
-                  <el-input maxlength="200" v-model="friend.cover"></el-input>
+                  <el-input maxlength="200" v-model="friendForm.cover"></el-input>
                 </div>
                 <div class="form-friend-item">
                   <span>网址：</span>
-                  <el-input maxlength="200" v-model="friend.url"></el-input>
+                  <el-input maxlength="200" v-model="friendForm.url"></el-input>
                 </div>
               </div>
               <div class="submit-friend">
@@ -56,10 +56,10 @@
       <div class="friend-content">
         <div style="font-size: 20px;font-weight: bold;margin-top: 40px">🌸本站信息</div>
         <blockquote style="margin-top: 20px">
-          <div>网站名称：</div>
-          <div>网址：</div>
-          <div>头像：</div>
-          <div>描述：</div>
+          <div>网站名称：{{ websiteStore.websiteName }}</div>
+          <div>网址：{{ websiteStore.websiteAddress }}</div>
+          <div>头像：{{ websiteStore.websiteAvatar }}</div>
+          <div>描述：{{ websiteStore.websiteIntro }}</div>
         </blockquote>
         <div style="margin-top: 20px">
           需要交换友链的可在上方提交💖
@@ -73,14 +73,14 @@
         <div style="font-size: 20px;font-weight: bold;margin-top: 40px">⛳大佬链接</div>
 
         <div class="friend-link">
-          <div class="friend-link-item" v-for="key in 6">
-            <img src="https://bu.dusays.com/2022/10/22/6352dfd1f3fa3.png">
+          <div class="friend-link-item" v-for="link in friendLinkList" @click="jumpPage(link.linkAddress)">
+            <img :src="link.linkAvatar">
             <div class="friend-link-content">
               <div class="friend-link-title">
-                名称
+                {{ link.linkName }}
               </div>
               <div class="friend-link-description">
-                人有悲欢离合，月有阴晴圆缺。人有悲欢离合，月有阴晴圆缺。
+                {{ link.linkIntro }}
               </div>
               <div class="friend-link-links">
                 <svg-icon iconClass="right"></svg-icon>
@@ -95,16 +95,37 @@
 
 <script setup lang="ts">
 
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import jQuery from "jquery";
 import SvgIcon from "@/components/general/icon/SvgIcon.vue";
+import {FriendLinkResp} from "@/d.ts/api/blog/friend";
+import {listFriendLinks} from "@/api/blog/friend";
+import useWebsiteStore from "@/store/website";
 
-const friend = ref({
+const friendForm = ref({
   title: "",
   introduction: "",
   cover: "",
   url: ""
 })
+
+const websiteStore = useWebsiteStore();
+
+const friendLinkList = ref([{} as FriendLinkResp]);
+
+onMounted(() => {
+  getFriendLink();
+})
+
+const getFriendLink = () => {
+  listFriendLinks().then((res) => {
+    friendLinkList.value = res.data;
+  })
+}
+
+const jumpPage = (address: string) => {
+  window.open(address, "_blank")
+}
 
 const clickLetter = () => {
   if (document.body.clientWidth < 700) {
