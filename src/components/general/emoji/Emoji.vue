@@ -19,6 +19,7 @@
 
 <script setup lang="ts">
 import EmojiList from "@/assets/images/emoji/emoji"
+import {defineEmits, defineProps} from "vue";
 
 const props = defineProps(["chooseEmoji"]);
 

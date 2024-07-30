@@ -7,3 +7,10 @@ export interface FriendLinkResp {
     createTime: string;
     updateTime: string;
 }
+
+export interface FriendLinkAddReq {
+    linkName: string;
+    linkIntro: string;
+    linkAvatar: string;
+    linkAddress: string;
+}

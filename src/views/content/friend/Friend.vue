@@ -22,23 +22,23 @@
               <div class="form-friend">
                 <div class="form-friend-item">
                   <span>名称：</span>
-                  <el-input maxlength="30" v-model="friendForm.title"></el-input>
+                  <el-input maxlength="30" v-model="friendForm.linkName"></el-input>
                 </div>
                 <div class="form-friend-item">
                   <span>简介：</span>
-                  <el-input maxlength="120" v-model="friendForm.introduction"></el-input>
+                  <el-input maxlength="120" v-model="friendForm.linkIntro"></el-input>
                 </div>
                 <div class="form-friend-item">
-                  <span>封面：</span>
-                  <el-input maxlength="200" v-model="friendForm.cover"></el-input>
+                  <span>头像：</span>
+                  <el-input maxlength="200" v-model="friendForm.linkAvatar"></el-input>
                 </div>
                 <div class="form-friend-item">
                   <span>网址：</span>
-                  <el-input maxlength="200" v-model="friendForm.url"></el-input>
+                  <el-input maxlength="200" v-model="friendForm.linkAddress"></el-input>
                 </div>
               </div>
               <div class="submit-friend">
-                <button class="k-btn k-btn-primary" style="width:66px;height: 33px; margin: 10px 0">
+                <button class="k-btn k-btn-primary" @click="submit()" style="width:66px;height: 33px; margin: 10px 0">
                   提交
                 </button>
               </div>
@@ -95,21 +95,23 @@
 
 <script setup lang="ts">
 
-import {onMounted, ref} from "vue";
+import {inject, onMounted, ref} from "vue";
 import jQuery from "jquery";
 import SvgIcon from "@/components/general/icon/SvgIcon.vue";
 import {FriendLinkResp} from "@/d.ts/api/blog/friend";
-import {listFriendLinks} from "@/api/blog/friend";
+import {listFriendLinks, submitFriendLink} from "@/api/blog/friend";
 import useWebsiteStore from "@/store/website";
+import {ProcessInterface} from "@/d.ts/modules/process";
 
 const friendForm = ref({
-  title: "",
-  introduction: "",
-  cover: "",
-  url: ""
+  linkName: "",
+  linkIntro: "",
+  linkAvatar: "",
+  linkAddress: ""
 })
 
 const websiteStore = useWebsiteStore();
+const $process = inject<ProcessInterface>("$process")!;
 
 const friendLinkList = ref([{} as FriendLinkResp]);
 
@@ -133,6 +135,23 @@ const clickLetter = () => {
   } else {
     jQuery(".form-wrap").css({"height": "1150px", "top": "-200px"});
   }
+}
+
+const submit = () => {
+  if (Object.values(friendForm.value).some(value => value == null || value.trim() === "")) {
+    $process.tipShow.error("请填写完整");
+    return ;
+  }
+  submitFriendLink(friendForm.value).then(() => {
+    friendForm.value = {
+      linkName: "",
+      linkIntro: "",
+      linkAvatar: "",
+      linkAddress: ""
+    }
+    // jQuery(".form-wrap").css({"height": "530", "top": "447"});
+    $process.tipShow.success("提交成功")
+  })
 }
 
 </script>
