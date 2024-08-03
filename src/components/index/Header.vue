@@ -43,9 +43,9 @@
           </li>
 
           <!-- 聊天室 -->
-          <li @click="goIm()">
+          <li @click="pageJump(publicPath.im)">
             <div class="my-menu">
-              💬 <span>联系我</span>
+              💬 <span>聊天室</span>
             </div>
           </li>
 

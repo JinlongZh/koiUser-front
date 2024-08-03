@@ -14,6 +14,7 @@ declare module 'vue' {
     CommentInput: typeof import('./src/components/content/comment/components/CommentInput.vue')['default']
     CreateTime: typeof import('./src/components/general/time/CreateTime.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
+    ElBadge: typeof import('element-plus/es')['ElBadge']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
@@ -49,5 +50,8 @@ declare module 'vue' {
     Tip: typeof import('./src/components/popup/Tip.vue')['default']
     Tools: typeof import('./src/components/Tools.vue')['default']
     Wait: typeof import('./src/components/popup/Wait.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vInfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
   }
 }

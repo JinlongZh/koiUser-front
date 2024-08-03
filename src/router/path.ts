@@ -19,6 +19,11 @@ const publicPath = {
     article: "/article",
     talk: "/talk",
     friend:"/friend",
+    // im
+    im: "/im",
+    chat: "/chat",
+    contacts: "/contact",
+
 
 }
 
@@ -111,6 +116,28 @@ const content: Array<RouteRecordRaw> = [
             title: "友链",
         },
         component: () => import("@/views/content/friend/Friend.vue"),
+    },
+    // im
+    {
+        path: publicPath.im,
+        name: "im",
+        meta: {
+            title: "聊天室",
+        },
+        redirect: publicPath.chat,
+        component: () => import("@/views/content/im/Im.vue"),
+        children: [
+            {
+                path: publicPath.chat,
+                name: 'chat',
+                component: () => import("@/views/content/im/components/chat/ImChat.vue"),
+            },
+            {
+                path: publicPath.contacts,
+                name: 'contact',
+                component: () => import("@/views/content/im/components/contact/ImContacts.vue"),
+            },
+        ],
     },
     // 用户中心
     {
