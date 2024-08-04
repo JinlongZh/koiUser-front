@@ -49,6 +49,7 @@ const unReadMark = computed(() => imGlobalStore.unReadMark);
   user-select: none;
   border-right: 1px solid #e6e6e6;
   background: #fff;
+  border-radius: 8px;
 
   .im-tool-icons {
     display: flex;

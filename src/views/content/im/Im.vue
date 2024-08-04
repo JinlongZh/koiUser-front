@@ -31,9 +31,7 @@ import ImToolBar from "@/views/content/im/components/ImToolBar.vue";
     width: 80vw;
     height: 83vh;
     margin: 0 auto;
-    color: #fff;
-    background-color: #fff;
-    opacity: 0.7;
+    background-color: rgba(255, 255, 255, 0.7);
     border-radius: 16px;
     border: 1px solid #e0e0e0
   }

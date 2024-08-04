@@ -1,32 +1,43 @@
-// 文字
-$title: #333333;
-$normal: #666666;
-$assist: #999999;
+:root {
+  --color-primary: #1d90f5;
+  --color-link: #002aff;
+  --color-wechat: #2aae67;
+  --color-online: greenyellow;
+  --color-white: #fff;
+  --color-gold: #c59512;
+  --color-balck: #000;
+  --color-light-1: #bebebe;
+  --color-light-2: #dedfe0;
+  --color-light-3: #e9e9eb;
+  --color-light-4: #f5f5f5;
 
-// 基础色
-$black: #000;
-$white: #fff;
+  /* font */
+  --font-placeholder: #a8abb2;
+  --font-main: #fff;
+  --font-base: #333;
+  --font-gray: #666;
+  --font-light: #999;
+  --font-light-1: #eee;
+  --font-pink: #fe2c55;
 
-// 灰色系
-$gray-darker: #222;
-$gray-dark: #333;
-$gray: #666;
-$gray-light: #999;
-$gray-lighter: #eee;
+  /* 背景色 */
+  --background-indigo: #2c3e50;
+  --background-wrapper: #272a37;
+  --background-secondary: #323644;
+  --background-black-half: rgba(0, 0, 0, 50%);
+  --background-dark: rgba(39, 42, 55, 40%);
+  --background-mask: rgba(255, 255, 255, 20%);
+  --background-1: #2b2d31;
+  --background-2: #383c4b;
+  --background-3: #424656;
+  --background-4: #efe2bb;
 
-// 蓝色系
-$blue-darker: #001f3f;
-$blue-dark: #0074D9;
-$blue: #3498DB;
-$blue-light: #7FDBFF;
-$blue-lighter: #C7E9FF;
+  /* hover */
+  --hover-primary: #2287e1;
+  --hover-bg-1: #484d5f;
+  --hover-bg-2: rgba(0, 0, 0, 20%);
 
-// 橙色系
-$orange-darker: #D35400;
-$orange-dark: #E67E22;
-$orange: #F39C12;
-$orange-light: #F5B041;
-$orange-lighter: #FDE3A7;
-
-// 页面背景色
-$page-bg: #f5f5f5;
+  /* border */
+  //--border-base: var(--color-background-1);
+  --border-pink: #b52c47;
+}

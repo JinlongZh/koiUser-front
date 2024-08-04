@@ -5,15 +5,22 @@ import type {ApiTalkInterface} from "@/d.ts/api/blog/talk";
 import type {ApiCommentInterface} from "@/d.ts/api/blog/comment";
 import type {ApiWebsiteConfigInterface} from "@/d.ts/api/system/websiteConfig";
 
-export declare interface CommonResult {
+export declare interface CommonResult<T = any> {
     code: number;
     msg: string;
-    [propName: string]: any;
+    data: T;
 }
 
-interface PageParam {
+export interface PageParam {
     pageNo: number;
     pageSize: number;
+}
+
+export interface PageResult<T = any> extends CommonResult<{ total: number; list: T[] }> {
+    data: {
+        total: number;
+        list: T[];
+    };
 }
 
 export declare interface ApiObject extends

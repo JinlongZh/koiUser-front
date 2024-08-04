@@ -54,17 +54,17 @@ watch(
     min-width: 150px;
     max-width: 300px;
     min-height: 30px;
-    background: $white;
+    background: var(--color-white);
     border-radius: 5px;
-    box-shadow: 0 0 5px rgba($color: $black, $alpha: 0.7);
-    -webkit-box-shadow: 0 0 5px rgba($color: $black, $alpha: 0.7);
-    -moz-box-shadow: 0 0 5px rgba($color: $black, $alpha: 0.7);
+    box-shadow: 0 0 5px rgba($color: var(--color-balck), $alpha: 0.7);
+    -webkit-box-shadow: 0 0 5px rgba($color: var(--color-balck), $alpha: 0.7);
+    -moz-box-shadow: 0 0 5px rgba($color: var(--color-balck), $alpha: 0.7);
     padding: 5px 10px;
     margin-bottom: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: $normal;
+    color: var(--font-main);
 
     img {
       width: 20px;
