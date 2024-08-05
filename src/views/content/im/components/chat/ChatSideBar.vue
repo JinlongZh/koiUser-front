@@ -9,16 +9,16 @@
       >
         <div class="item-wrapper">
           <el-badge :value="item.unreadCount" :max="999" :hidden="item.unreadCount < 1" class="item">
-            <el-avatar shape="circle" :size="38" :src="item.avatar" />
+            <el-avatar shape="circle" :size="38" :src="item.avatar"/>
           </el-badge>
           <div class="message-info">
             <div style="white-space: nowrap">
               <span class="person">{{ item.name }}</span>
-              <span class="tag">tag</span>
+              <span class="tag">{{ item.tag }}</span>
             </div>
-            <div class="message-message">人们总是低估心智在白日梦和无目的的闲逛之际所获得的成长空间。</div>
+            <div class="message-message">{{ item.text }}</div>
           </div>
-          <span class="message-time">2024-08-04</span>
+          <span class="message-time">{{ item.lastMessageTime }}</span>
         </div>
       </li>
     </ul>
@@ -30,6 +30,7 @@
 import {computed, onBeforeMount} from "vue";
 import {useChatStore} from "@/store/im/chat";
 import {useImGlobalStore} from "@/store/im/global";
+import {formatTime} from "@/d.ts/utils/computedTime";
 
 const chatStore = useChatStore();
 const globalStore = useImGlobalStore();
@@ -43,7 +44,13 @@ const currentSession = computed(() => {
 })
 
 const contactList = computed(() => {
-  return chatStore.contactList;
+  return chatStore.contactList.map(item => {
+    return {
+      ...item,
+      tag: "官方",
+      lastMessageTime: formatTime(item.activeTime),
+    }
+  });
 })
 
 // 加载更多

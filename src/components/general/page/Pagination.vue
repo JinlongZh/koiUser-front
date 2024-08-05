@@ -233,11 +233,11 @@ function changePage(pageNum: number): boolean | void {
 
     .active {
       font-weight: 600;
-      color: $blue;
-      border-color: $blue;
+      color: var(--color-primary);
+      border-color: var(--color-primary);
 
       .u-arrow {
-        fill: $blue;
+        fill: var(--color-primary);
       }
     }
 
@@ -308,7 +308,7 @@ function changePage(pageNum: number): boolean | void {
         align-items: center;
         text-align: center;
         vertical-align: -0.125em;
-        fill: $blue;
+        fill: var(--color-primary);
         width: 12px;
         height: 12px;
         opacity: 0;
@@ -336,11 +336,11 @@ function changePage(pageNum: number): boolean | void {
         transition: all 0.3s;
 
         &:hover {
-          border-color: $blue;
+          border-color: var(--color-primary);
         }
 
         &:focus {
-          border-color: $blue;
+          border-color: var(--color-primary);
           box-shadow: 0 0 0 2px rgb(52, 152, 219, 0.2);
         }
       }

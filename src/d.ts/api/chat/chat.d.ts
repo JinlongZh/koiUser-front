@@ -4,6 +4,7 @@ export interface ContactRoomResp {
     roomId: number;
     type: number;
     text: string;
+    lastMessageNickName: string;
     name: string;
     avatar: string;
     activeTime: string;

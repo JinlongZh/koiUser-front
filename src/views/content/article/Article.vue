@@ -186,13 +186,13 @@ watch(
           transition: 0.5s;
 
           &:hover {
-            color: $white;
+            color: var(--font-main);
             background: rgb(73, 177, 245);
             padding: 0 5%;
           }
 
           &.active {
-            color: $white;
+            color: var(--font-main);
             background: rgb(255, 144, 66);
             padding: 0 5%;
           }
