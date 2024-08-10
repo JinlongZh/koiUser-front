@@ -1,11 +1,12 @@
 <template>
   <div class="chat-message">
     <ul v-infinite-scroll="load" :infinite-scroll-immediate="false">
-      <li
+      <div
           v-for="(item, index) in contactList"
           :key="index"
           :data-room-id="item.roomId"
-          :class="['chat-message-item', { active: currentSession.roomId === item.roomId }]"
+          :class="['chat-message-item', { active: currentContact.roomId === item.roomId }]"
+          @click="onSelectSelectSession(item.roomId, item.type)"
       >
         <div class="item-wrapper">
           <el-badge :value="item.unreadCount" :max="999" :hidden="item.unreadCount < 1" class="item">
@@ -20,7 +21,7 @@
           </div>
           <span class="message-time">{{ item.lastMessageTime }}</span>
         </div>
-      </li>
+      </div>
     </ul>
   </div>
 </template>
@@ -31,6 +32,7 @@ import {computed, onBeforeMount} from "vue";
 import {useChatStore} from "@/store/im/chat";
 import {useImGlobalStore} from "@/store/im/global";
 import {formatTime} from "@/d.ts/utils/computedTime";
+import {RoomTypeEnum} from "@/config/constant";
 
 const chatStore = useChatStore();
 const globalStore = useImGlobalStore();
@@ -39,8 +41,8 @@ onBeforeMount(() => {
   chatStore.getContactList();
 })
 
-const currentSession = computed(() => {
-  return globalStore.currentSession;
+const currentContact = computed(() => {
+  return globalStore.currentContact;
 })
 
 const contactList = computed(() => {
@@ -52,6 +54,12 @@ const contactList = computed(() => {
     }
   });
 })
+
+// 选中会话
+const onSelectSelectSession = (roomId: number, roomType: RoomTypeEnum) => {
+  globalStore.currentContact.roomId = roomId;
+  globalStore.currentContact.type = roomType;
+}
 
 // 加载更多
 const load = () => {
@@ -73,12 +81,11 @@ const load = () => {
     margin: 20px 10px;
     user-select: none;
 
-    li {
-      height: 60px;
-      padding: 0 10px;
+    .chat-message-item {
+      height: 78px;
+      padding: 9px 10px;
       cursor: pointer;
       background-color: #fff;
-      border-radius: 8px;
       list-style-type: none;
 
       .item-wrapper {
@@ -131,6 +138,15 @@ const load = () => {
           color: var(--font-light);
           white-space: nowrap;
         }
+      }
+
+      &:hover {
+        background-color: #e4e5e6;
+        transition: 0.3s;
+      }
+
+      &.active {
+        background-color: #e4e5e6;
       }
     }
   }

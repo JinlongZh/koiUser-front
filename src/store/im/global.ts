@@ -8,13 +8,13 @@ export const useImGlobalStore = defineStore("$global", () => {
         newMessageUnreadCount: 8,
     })
 
-    const currentSession = reactive<{ roomId: number; type: RoomTypeEnum }>({
-        roomId: 1,
+    const currentContact = reactive<{ roomId: number; type: RoomTypeEnum }>({
+        roomId: 0,
         type: RoomTypeEnum.Group,
     })
 
     return {
         unReadMark,
-        currentSession,
+        currentContact,
     }
 })

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import type {Dayjs, OpUnitType, ConfigType} from 'dayjs'
-import type {MessageType} from '@/services/types'
+import {MessageType} from "@/d.ts/api/chat/chat";
 
 // 5 分钟 5 * 60 * 1000;
 const intervalTime = 300000
@@ -25,22 +25,22 @@ const timeToStr = (time: number) => {
 }
 
 // 超过5分钟，或者超过20条消息，就添加展示时间
-// const checkTimeInterval = (cur: MessageType, pre: MessageType) => {
-//   // 如果有一个超过 5 分钟了或者计数达到 20 条了
-//   if (
-//     (pre && cur.message.sendTime - pre.message.sendTime > intervalTime) ||
-//     computedCount >= computedCountMax
-//   ) {
-//     // 重置计数
-//     computedCount = 0
-//     // 返回时间标记
-//     return { ...cur, timeBlock: timeToStr(cur.message.sendTime) }
-//   } else {
-//     // 时间间隔很短的就累计计数
-//     computedCount += 1
-//     return cur
-//   }
-// }
+const checkTimeInterval = (cur: MessageType, pre: MessageType) => {
+    // 如果有一个超过 5 分钟了或者计数达到 20 条了
+    if (
+        (pre && cur.message.sendTime - pre.message.sendTime > intervalTime) ||
+        computedCount >= computedCountMax
+    ) {
+        // 重置计数
+        computedCount = 0
+        // 返回时间标记
+        return {...cur, timeBlock: timeToStr(cur.message.sendTime)}
+    } else {
+        // 时间间隔很短的就累计计数
+        computedCount += 1
+        return cur
+    }
+}
 
 export const computedTimeBlock = (list: MessageType[], needFirst = true) => {
     if (!list || list.length === 0) return []
