@@ -14,7 +14,7 @@ import ImToolBar from "@/views/content/im/components/ImToolBar.vue";
 
 <style scoped lang="scss">
 .im {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background: url("/src/assets/images/Asuna.webp") no-repeat center;
   background-size: cover;
