@@ -3,12 +3,14 @@ import {computed, reactive, ref, watch} from "vue";
 import {ContactRoomResp, MessageType} from "@/d.ts/api/chat/chat";
 import {getContactPage, getMessagePage} from "@/api/chat/chat";
 import {useImGlobalStore} from "@/store/im/global";
-import {computedTimeBlock} from "@/d.ts/utils/computedTime";
+import {computedTimeBlock} from "@/utils/computedTime";
 import {RoomTypeEnum} from "@/config/constant";
+import {useUserCachedStore} from "@/store/cache/userCache";
 
 export const pageSize = 20;
 
 const globalStore = useImGlobalStore();
+const userCacheStore = useUserCachedStore();
 
 export const useChatStore = defineStore('$chat', () => {
 
@@ -68,6 +70,40 @@ export const useChatStore = defineStore('$chat', () => {
         },
     })
 
+    // TODO 新消息计数
+    const newMessageCount = reactive<Map<number, { count: number; isStart: boolean }>>(
+        new Map([
+            [
+                currentRoomId.value,
+                {
+                    // 新消息计数
+                    count: 0,
+                    // 是否开始计数
+                    isStart: false,
+                },
+            ],
+        ]),
+    )
+    // 当前新消息计数
+    const currentNewMessageCount = computed({
+        get: () => {
+            const current = newMessageCount.get(currentRoomId.value as number);
+            if (current === undefined) {
+                newMessageCount.set(currentRoomId.value, {count: 0, isStart: false});
+            }
+            return newMessageCount.get(currentRoomId.value as number);
+        },
+        set: (val) => {
+            newMessageCount.set(currentRoomId.value, val as { count: number; isStart: boolean });
+        },
+    })
+
+    const clearNewMessageCount = () => {
+        if (currentNewMessageCount.value) {
+            currentNewMessageCount.value.count = 0;
+        }
+    }
+
     // 获取会话列表
     const getContactList = async (isFresh = false) => {
         // 如果不需要刷新，并且 session 正在加载或已是最后一页，则直接返回
@@ -104,6 +140,17 @@ export const useChatStore = defineStore('$chat', () => {
                 roomId: currentRoomId.value,
             }).then(({data}) => {
                 const computedList = computedTimeBlock(data.list);
+                // TODO 用户缓存有缺陷
+                // // 收集需要请求用户详情的userId
+                // const userIdCollectSet: Set<number> = new Set() // 去重用
+                // computedList.forEach((msg) => {
+                //     // 查询消息发送者的信息
+                //     userIdCollectSet.add(msg.fromUser.userId);
+                // })
+                //
+                // // 获取用户信息缓存
+                // userCacheStore.getBatchUserInfo([...userIdCollectSet]);
+
                 // 为保证获取的历史消息在前面
                 const newList = [...computedList, ...chatMessageList.value]
                 currentMessageMap.value?.clear() // 清空Map
@@ -123,6 +170,14 @@ export const useChatStore = defineStore('$chat', () => {
     const getMessage = (messageId: number) => {
         return currentMessageMap.value?.get(messageId);
     }
+
+    const loadMore = async (size?: number) => {
+        if (currentMessageOptions.value?.isLast || currentMessageOptions.value?.isLoading) {
+            return;
+        }
+        await getMessageList(size);
+    }
+
 
     /**
      * 获取当前会话信息
@@ -181,9 +236,13 @@ export const useChatStore = defineStore('$chat', () => {
         chatMessageList,
         currentMessageReply,
         currentMessageOptions,
+        newMessageCount,
+        currentNewMessageCount,
+        clearNewMessageCount,
         getContactList,
         getMessageList,
         getMessage,
+        loadMore,
         currentContactInfo,
         chatListToBottomAction
     }

@@ -22,6 +22,7 @@ declare module 'vue' {
     ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     Emoji: typeof import('./src/components/general/emoji/Emoji.vue')['default']
     EmojiInput: typeof import('./src/components/general/input/EmojiInput.vue')['default']

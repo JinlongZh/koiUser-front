@@ -31,7 +31,7 @@
 import {computed, onBeforeMount} from "vue";
 import {useChatStore} from "@/store/im/chat";
 import {useImGlobalStore} from "@/store/im/global";
-import {formatTime} from "@/d.ts/utils/computedTime";
+import {formatTime} from "@/utils/computedTime";
 import {RoomTypeEnum} from "@/config/constant";
 
 const chatStore = useChatStore();

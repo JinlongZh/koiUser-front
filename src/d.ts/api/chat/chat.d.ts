@@ -23,7 +23,7 @@ export interface MessageType {
     /** 发送者信息 */
     fromUser: MessageUserType;
     /** 消息主体 */
-    message: MessageType;
+    message: MsgType;
     /** 发送时间 */
     sendTime: string;
     /** 时间段（可选） */
@@ -34,16 +34,16 @@ export interface MessageType {
 
 export interface MessageUserType {
     /** 用户ID */
-    uid: number;
+    userId: number;
     /** 用户名 */
     username: string;
     /** 头像 */
     avatar: string;
     /** 归属地 */
-    locPlace: string;
+    localPlace: string;
 }
 
-export interface MessageType {
+export interface MsgType {
     /** 消息ID */
     id: number;
     /**  房间 ID */
@@ -52,8 +52,8 @@ export interface MessageType {
     type: MessageEnum;
     /** 动态消息体-`根据消息类型变化` */
     body: TextBody | ImageBody | any;
-    /** 发送时间戳 */
-    sendTime: number;
+    /** 发送时间 */
+    createTime: string;
 }
 
 /** 文本消息体 */
