@@ -1,5 +1,6 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
@@ -21,6 +22,7 @@ export default ({command, mode}: {command: string, mode: string}) => {
     return defineConfig({
         plugins: [
             vue(),
+            vueJsx(),
             AutoImport({
                 resolvers: [ElementPlusResolver({
                     importStyle: 'sass'

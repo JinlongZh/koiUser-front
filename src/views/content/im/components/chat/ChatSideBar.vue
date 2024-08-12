@@ -1,6 +1,9 @@
 <template>
   <div class="chat-message">
-    <ul v-infinite-scroll="load" :infinite-scroll-immediate="false">
+    <div class="chat-message-header">
+      <span class="chat-message-header-title">全部消息</span>
+    </div>
+    <div class="chat-message-content" v-infinite-scroll="load" infinite-scroll-distance="1" :infinite-scroll-immediate="false">
       <div
           v-for="(item, index) in contactList"
           :key="index"
@@ -22,7 +25,7 @@
           <span class="message-time">{{ item.lastMessageTime }}</span>
         </div>
       </div>
-    </ul>
+    </div>
   </div>
 </template>
 
@@ -63,7 +66,7 @@ const onSelectSelectSession = (roomId: number, roomType: RoomTypeEnum) => {
 
 // 加载更多
 const load = () => {
-  console.log("load")
+  console.log('正在加载更多项目...');
 }
 
 
@@ -76,10 +79,22 @@ const load = () => {
   height: 100%;
   background: #fff;
 
-  ul {
-    padding: 0;
-    margin: 20px 10px;
+  .chat-message-header {
+    height: 50px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .chat-message-header-title {
+      font-size: 14px;
+    }
+  }
+
+  .chat-message-content {
+    height: calc(100% - 50px);
     user-select: none;
+    overflow-y: auto;
 
     .chat-message-item {
       height: 78px;

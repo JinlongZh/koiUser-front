@@ -19,22 +19,18 @@
     </el-drawer>
 
     <!--消息列表-->
-    <!--<VirtualList-->
-    <!--    v-if="chatMessageList?.length"-->
-    <!--    ref="virtualListRef"-->
-    <!--    class="virtual-list scroll-hover"-->
-    <!--    dataPropName="msg"-->
-    <!--    :data="chatMessageList"-->
-    <!--    :data-key="getKey"-->
-    <!--    :item="MessageItem"-->
-    <!--    :size="20"-->
-    <!--    @totop="onToTop"-->
-    <!--    @scroll="onScroll"-->
-    <!--    @ok="goToBottom"-->
-    <!--/>-->
-    <MessageItem
-        v-for="item in chatMessageList"
-        :msg="item"
+    <VirtualList
+        v-if="chatMessageList?.length"
+        ref="virtualListRef"
+        class="virtual-list scroll-hover"
+        dataPropName="msg"
+        :data="chatMessageList"
+        :data-key="getKey"
+        :item="MessageItem"
+        :size="20"
+        @totop="onToTop"
+        @scroll="onScroll"
+        @ok="goToBottom"
     />
   </div>
 </template>

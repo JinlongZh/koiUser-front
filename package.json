@@ -12,6 +12,7 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
   },
   "dependencies": {
+    "@vitejs/plugin-vue-jsx": "^4.0.0",
     "axios": "1.6.0",
     "dayjs": "^1.11.10",
     "dotenv": "^16.4.1",

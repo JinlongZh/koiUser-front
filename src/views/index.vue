@@ -90,6 +90,16 @@ watch(() => route.fullPath, () => {
   flex-direction: column;
 
   .content {
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+      background-color: rgba(1, 1, 1, 0);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #aaa;
+      border-radius: 4px;
+    }
     //width: 1200px;
     //margin: 70px auto 0;
     //display: flex;
