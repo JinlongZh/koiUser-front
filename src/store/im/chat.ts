@@ -133,9 +133,14 @@ export const useChatStore = defineStore('$chat', () => {
         if (currentMessageOptions.value) {
             currentMessageOptions.value.isLoading = true;
         }
+        //  已是最后一页，则直接返回
+        if (currentMessageOptions.value.isLast) {
+            return;
+        }
         try {
+            const pageNo = currentMessageOptions.value.pageNo;
             await getMessagePage({
-                pageNo: currentMessageOptions.value.pageNo,
+                pageNo: pageNo,
                 pageSize: size,
                 roomId: currentRoomId.value,
             }).then(({data}) => {
@@ -157,6 +162,14 @@ export const useChatStore = defineStore('$chat', () => {
                 newList.forEach((msg) => {
                     currentMessageMap.value?.set(msg.message.id, msg)
                 })
+
+                // 判断是否还有更多消息
+                if (data.total <= pageNo * size) {
+                    currentMessageOptions.value.isLast = true;
+                } else {
+                    currentMessageOptions.value.pageNo++;
+                }
+
             })
 
         } finally {
