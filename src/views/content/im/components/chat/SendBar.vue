@@ -18,12 +18,19 @@
           />
         </div>
 
+        <!--  输入内容-->
       </div>
       <div class="chat-edit-input">
-
+        <ChatMessageInput
+            v-model="inputMessage"
+            :mentions="mentionList"
+            @change="onInputChange"
+        />
       </div>
 
-
+      <div class="chat-edit-submit">
+        <span class="btn-send">发送</span>
+      </div>
     </div>
   </div>
 </template>
@@ -32,11 +39,19 @@
 
 import Emoji from "@/components/general/emoji/Emoji.vue";
 import {ref} from "vue";
+import ChatMessageInput from "@/views/content/im/components/input/ChatMessageInput.vue";
+import {IMention} from "@/views/content/im/components/input/type";
 
 const chooseEmoji = ref(false);
+const mentionList = ref<IMention[]>([])
+const inputMessage = ref("");
 
 const addEmoji = (key: number) => {
 
+}
+
+const onInputChange = (val: string, mentions: IMention[]) => {
+  mentionList.value = mentions;
 }
 
 </script>
@@ -86,7 +101,7 @@ const addEmoji = (key: number) => {
       height: 45px;
       display: flex;
       user-select: none;
-      position: absolute;
+      position: relative;
 
       .chat-edit-emoji {
         width: 300px;
@@ -98,6 +113,17 @@ const addEmoji = (key: number) => {
         border-radius: 4px;
         border: 1px solid #d8d8d8;
       }
+    }
+
+    .chat-edit-input {
+      width: 100%;
+      height: 70px;
+      background: red;
+    }
+
+    .chat-edit-submit {
+      height: 45px;
+      width: 100%;
     }
   }
 }
