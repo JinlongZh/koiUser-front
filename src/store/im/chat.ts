@@ -145,16 +145,15 @@ export const useChatStore = defineStore('$chat', () => {
                 roomId: currentRoomId.value,
             }).then(({data}) => {
                 const computedList = computedTimeBlock(data.list);
-                // TODO 用户缓存有缺陷
-                // // 收集需要请求用户详情的userId
-                // const userIdCollectSet: Set<number> = new Set() // 去重用
-                // computedList.forEach((msg) => {
-                //     // 查询消息发送者的信息
-                //     userIdCollectSet.add(msg.fromUser.userId);
-                // })
-                //
-                // // 获取用户信息缓存
-                // userCacheStore.getBatchUserInfo([...userIdCollectSet]);
+                // 收集需要请求用户详情的userId
+                const userIdCollectSet: Set<number> = new Set() // 去重用
+                computedList.forEach((msg) => {
+                    // 查询消息发送者的信息
+                    userIdCollectSet.add(msg.fromUser.userId);
+                })
+
+                // 获取用户信息缓存
+                userCacheStore.getBatchUserInfo([...userIdCollectSet]);
 
                 // 为保证获取的历史消息在前面
                 const newList = [...computedList, ...chatMessageList.value]

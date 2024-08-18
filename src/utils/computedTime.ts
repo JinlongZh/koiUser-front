@@ -64,8 +64,8 @@ export const computedTimeBlock = (list: MessageType[], needFirst = true) => {
 
 /**
  * 消息时间戳格式化
- * @param timestampStr 时间戳字符串，格式为YYYY-MM-DD HH:mm:ss
  * @returns 格式化后的时间字符串
+ * @param time
  */
 export const formatTime = (time: string): string => {
     const date: Dayjs = dayjs(time, 'YYYY-MM-DD HH:mm:ss')
