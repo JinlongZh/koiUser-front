@@ -1,5 +1,5 @@
 <template>
-  <span v-if="isShowTimeBlock && message.timeBlock" class="send-time-block">{{ message.timeBlock }}</span>
+  <span v-if="isShowTimeBlock && messageData.timeBlock" class="send-time-block">{{ messageData.timeBlock }}</span>
   <span v-if="isRecall" class="send-time-block">{{ message.body }}</span>
   <div ref="messageVisibleEl">
     <transition name="remove">
@@ -23,7 +23,7 @@
           </div>
           <div
               ref="renderMessageRef"
-              :class="['chat-item-content', { uploading: msg?.loading }]"
+              :class="['chat-item-content', { uploading: messageData?.loading }]"
           >
             <span class="text">{{ message.body }}</span>
           </div>
@@ -46,7 +46,7 @@ import {useUserInfo} from "@/hooks/useCache";
 const props = withDefaults(
     defineProps<{
       // 消息体
-      msg: MessageType,
+      messageData: MessageType,
       // 是否显示时间
       isShowTime?: boolean,
       // 是否显示时间段
@@ -73,8 +73,8 @@ const messageVisibleEl = ref(null);
 const boxRef = ref<HTMLElement | null>(null);
 
 // 只能对一级 props 进行 toRefs 结构，否则会丢失响应
-const message = computed(() => props.msg.message);
-const fromUser = computed(() => props.msg.fromUser);
+const message = computed(() => props.messageData.message);
+const fromUser = computed(() => props.messageData.fromUser);
 // 从缓存中获取用户信息
 const userInfo = useUserInfo(fromUser.value.userId);
 const isRecall = computed(() => {
@@ -108,7 +108,6 @@ const handleUserRightClick = (e: MouseEvent) => {
   color: var(--font-light);
   text-align: center;
   user-select: none;
-  background: red;
 }
 
 .chat-item {

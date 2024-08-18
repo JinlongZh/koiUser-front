@@ -78,6 +78,7 @@ const load = () => {
   width: 280px;
   height: 100%;
   background: #fff;
+  border-right: 1px solid #d8d8d8;
 
   .chat-message-header {
     height: 50px;
@@ -85,6 +86,7 @@ const load = () => {
     display: flex;
     align-items: center;
     justify-content: center;
+    border-bottom: 1px solid #d8d8d8;
 
     .chat-message-header-title {
       font-size: 14px;

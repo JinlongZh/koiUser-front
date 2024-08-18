@@ -23,7 +23,7 @@
         v-if="chatMessageList?.length"
         ref="virtualListRef"
         class="virtual-list scroll-hover"
-        dataPropName="msg"
+        dataPropName="messageData"
         :data="chatMessageList"
         :data-key="getKey"
         :item="MessageItem"
@@ -109,9 +109,11 @@ const goToBottom = () => {
     align-items: center;
     justify-content: space-between;
     height: 50px;
+    min-height: 50px;
     padding: 0 10px;
     background: #fff;
-    border-radius: 8px 8px 0 0;
+    border-radius: 0 8px 0 0;
+    border-bottom: 1px solid #d8d8d8;
     user-select: none;
 
     .setting {

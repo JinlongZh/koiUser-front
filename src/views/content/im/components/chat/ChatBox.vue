@@ -23,7 +23,6 @@ import SendBar from "@/views/content/im/components/chat/SendBar.vue";
   display: flex;
   flex: 1;
   align-items: stretch;
-  padding: 0 10px;
   overflow: hidden;
 
   .chat-wrapper {
@@ -38,7 +37,6 @@ import SendBar from "@/views/content/im/components/chat/SendBar.vue";
       flex: 1;
       flex-direction: column;
       height: 100%;
-      padding-bottom: 16px;
       border-radius: 8px;
     }
   }

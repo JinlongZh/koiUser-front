@@ -38,7 +38,8 @@ const addEmoji = (key: number) => {
 @import "@/assets/scss/index.scss";
 
 .emoji-wrapper {
-  width: 80%;
+  width: 100%;
+  height: 100%;
   max-height: 150px;
   overflow-y: auto;
 
