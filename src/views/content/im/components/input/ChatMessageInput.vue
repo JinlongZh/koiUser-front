@@ -7,6 +7,7 @@
         :text="modelValue"
         :contenteditable="!disabled"
         @input="onInput"
+        @keydown="onInputKeyDown"
     >
     </div>
   </div>
@@ -16,29 +17,34 @@
 
 import {defineOptions, defineProps, withDefaults, toRefs, defineEmits, ref, onMounted, watch, nextTick} from "vue";
 import {IMention, INode, NodeType} from "@/views/content/im/components/input/type.d.ts";
-import {transformNodeListToMentionData} from "@/views/content/im/components/input/util";
+import {
+  getEditorRange,
+  insertInputText,
+  transformNodeListToMentionData
+} from "@/views/content/im/components/input/util";
+import {CacheUserItem} from "@/d.ts/api/system/user";
 
 // 关闭透传 attrs 到组件根节点，传递到子节点  v-bind="$attrs"
 defineOptions({inheritAttrs: false});
 
 interface Props {
   // 是否启用 contentEditable
-  disabled?: boolean
+  disabled?: boolean;
   // v-model 的 value
-  modelValue: string
+  modelValue: string;
   // 艾特 成员列表数据
-  mentions?: IMention[]
+  mentions?: IMention[];
   // 最大长度
-  maxLength?: number
+  maxLength?: number;
   // 劫持
-  className?: string
-  style?: object
+  className?: string;
+  style?: object;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   modelValue: '',
-  mentions: () => [],
+  mentions: () => [] as IMention[],
   maxLength: -1,
 });
 
@@ -53,6 +59,10 @@ const emit = defineEmits([
 ])
 
 const editorRef = ref<HTMLElement | null>();
+
+// 是否展示选人弹窗
+const showDialog = ref(false);
+const personList = ref<CacheUserItem[]>([])
 
 const {modelValue: value, maxLength, disabled} = toRefs(props);
 
@@ -128,6 +138,56 @@ const onDataChangeCallBack = () => {
       emit('change', pureString, mentionList);
     }
   }
+}
+
+const onInputKeyDown = (e: KeyboardEvent) => {
+  // 设置maxLength后，限制字符数输入
+  if (maxLength.value && maxLength.value > 0) {
+    if ((e.target as HTMLInputElement).innerText.length >= maxLength.value) {
+      // 不屏蔽删除键
+      // keyCode Backspace:8 Delete:46
+      if (!(e.key === 'Backspace' || e.key === 'Delete')) {
+        e.preventDefault();
+      }
+    }
+  }
+
+  if (showDialog.value && personList.value.length > 0) {
+    console.log("showDialog.value && personList.value.length > 0")
+  } else {
+    // 禁止默认换行
+    if (
+        (e.ctrlKey && e.key === 'Enter') ||
+        (e.shiftKey && e.key === 'Enter') ||
+        (e.metaKey && e.key === 'Enter')
+    ) {
+      e.preventDefault();
+      onWrap();
+      return;
+    }
+    // 处理输入法状态下的回车事件
+    if ((e as KeyboardEvent).isComposing) {
+      return e.preventDefault();
+    }
+    // 禁止默认换行
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      emit('send', e);
+    }
+  }
+}
+
+// 插入换行符
+const onWrap = () => {
+  const rangeInfo = getEditorRange();
+  if (!rangeInfo || !rangeInfo.range || !rangeInfo.selection) {
+    return;
+  }
+  insertInputText({
+    content: '\n',
+    selection: rangeInfo.selection,
+    range: rangeInfo.range,
+  })
 }
 
 

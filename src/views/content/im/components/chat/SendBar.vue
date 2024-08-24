@@ -24,7 +24,9 @@
         <ChatMessageInput
             v-model="inputMessage"
             :mentions="mentionList"
+            :maxLength="500"
             @change="onInputChange"
+            @send="sendMessageHandler"
         />
       </div>
 
@@ -41,18 +43,42 @@ import Emoji from "@/components/general/emoji/Emoji.vue";
 import {ref} from "vue";
 import ChatMessageInput from "@/views/content/im/components/input/ChatMessageInput.vue";
 import {IMention} from "@/views/content/im/components/input/type";
+import {MessageEnum} from "@/config/constant";
 
 const chooseEmoji = ref(false);
 const mentionList = ref<IMention[]>([])
 const inputMessage = ref("");
+const isSending = ref(false);
 
 const addEmoji = (key: number) => {
 
 }
 
+// 输入消息有变化
 const onInputChange = (val: string, mentions: IMention[]) => {
   mentionList.value = mentions;
 }
+
+// 消息发送处理器
+const sendMessageHandler = () => {
+  // 空消息或正在发送时禁止发送
+  if (!inputMessage.value?.trim().length || isSending.value) {
+    return;
+  }
+
+  isSending.value = true;
+  send(MessageEnum.TEXT, {
+    content: inputMessage.value,
+    // replyMsgId: currentMsgReply.value.message?.id,
+    atUidList: mentionList.value.map((item) => item.userId),
+  })
+}
+
+// 发送消息
+const send = (msgType: MessageEnum, body: any) => {
+  console.log(msgType, body);
+}
+
 
 </script>
 
