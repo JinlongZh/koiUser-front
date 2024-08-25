@@ -235,7 +235,7 @@ const validateForm = () => {
 
         span {
           margin-left: 10px;
-          color: $normal;
+          color: #666;
           font-size: 14px;
           line-height: 20px;
         }

@@ -44,6 +44,10 @@ import {ref} from "vue";
 import ChatMessageInput from "@/views/content/im/components/input/ChatMessageInput.vue";
 import {IMention} from "@/views/content/im/components/input/type";
 import {MessageEnum} from "@/config/constant";
+import {sendMessage} from "@/api/chat/chat";
+import {useImGlobalStore} from "@/store/im/global";
+
+const globalStore = useImGlobalStore();
 
 const chooseEmoji = ref(false);
 const mentionList = ref<IMention[]>([])
@@ -75,8 +79,20 @@ const sendMessageHandler = () => {
 }
 
 // 发送消息
-const send = (msgType: MessageEnum, body: any) => {
-  console.log(msgType, body);
+const send = (messageType: MessageEnum, body: any) => {
+  sendMessage({
+    roomId: globalStore.currentContact.roomId,
+    messageType: messageType,
+    body
+  }).then((res) => {
+    console.log(res);
+  }).finally(() => {
+    isSending.value = false;
+    // 输入框重新获取焦点
+
+    // 滚动到消息列表底部
+
+  })
 }
 
 
@@ -124,7 +140,7 @@ const send = (msgType: MessageEnum, body: any) => {
 
     .chat-edit-btn {
       width: 100%;
-      height: 45px;
+      height: 40px;
       display: flex;
       user-select: none;
       position: relative;
@@ -143,8 +159,7 @@ const send = (msgType: MessageEnum, body: any) => {
 
     .chat-edit-input {
       width: 100%;
-      height: 70px;
-      background: red;
+      height: 75px;
     }
 
     .chat-edit-submit {

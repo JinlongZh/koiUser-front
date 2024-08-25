@@ -200,9 +200,7 @@ const onWrap = () => {
   height: 100%;
   max-height: 100px;
   padding: 0 12px;
-  color: var(--font-main);
   cursor: text;
-  background-color: var(--background-2);
   border: 1px solid transparent;
   border-radius: 6px;
   transition: all 0.1s cubic-bezier(0, 0, 1, 1);

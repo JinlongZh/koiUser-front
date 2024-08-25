@@ -15,7 +15,7 @@ export interface ContactRoomResp {
 export interface ContactPageReq extends PageParam {
 }
 
-export interface MessagePageReq extends PageParam{
+export interface MessagePageReq extends PageParam {
     roomId: number;
 }
 
@@ -57,7 +57,7 @@ export interface MsgType {
 }
 
 /** 文本消息体 */
-export interface TextBody  {
+export interface TextBody {
     /** 消息内容 */
     content: string;
     /** 回复 */
@@ -65,9 +65,28 @@ export interface TextBody  {
 }
 
 /** 图片消息体 */
-export interface ImageBody  {
+export interface ImageBody {
     size: number;
     url: string;
     width: number;
     height: number;
+}
+
+/**
+ * 发送消息载体
+ */
+export interface SendMessageReq {
+    /** 会话id */
+    roomId: number;
+    /** 消息类型 */
+    messageType: MessageEnum;
+    /** 消息体 */
+    body: {
+        /** 文本消息内容 */
+        content?: string;
+        /** 回复的消息id */
+        replyMessageId?: number;
+        /** 任意 */
+        [key: string]: any;
+    }
 }
