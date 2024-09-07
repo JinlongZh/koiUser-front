@@ -1,4 +1,6 @@
 // 向主线程发送消息
+import {WsRequestMessageType} from "@/d.ts/utils/websocket.d.ts";
+
 const postMessageToMainThread = ({type, value}: { type: string; value?: object }) => {
     self.postMessage(JSON.stringify({type, value}));
 };
@@ -27,7 +29,7 @@ const sendMessage = (message: object) => {
 // 开始发送心跳包，每 10 秒发送一次
 const startHeartbeat = () => {
     heartbeatTimer = setInterval(() => {
-        sendMessage({type: 2}); // 心跳包消息类型为 2
+        sendMessage({type: WsRequestMessageType.HeartBeatDetection});
     }, 10000);
 };
 
@@ -89,7 +91,7 @@ const handleWebSocketOpen = () => {
 };
 
 // 处理 WebSocket 收到消息事件
-const handleWebSocketMessage = (event: MessageEvent) => {
+const handleWebSocketMessage = (event: any) => {
     postMessageToMainThread({type: 'message', value: event.data});
 };
 
@@ -102,7 +104,7 @@ const initializeWebSocketConnection = () => {
     websocket?.removeEventListener('error', handleConnectionError);
 
     // 创建新的 WebSocket 连接
-    const wsUrl = `${import.meta.env.VITE_WS_URL}${connectionToken ? `?token=${connectionToken}` : ''}`;
+    const wsUrl = `${import.meta.env.VITE_WS_URL}${connectionToken ? `?Authorization=${connectionToken}` : ''}`;
     websocket = new WebSocket(wsUrl);
 
     // 添加事件监听器
@@ -119,12 +121,15 @@ self.onmessage = (event: MessageEvent<string>) => {
     switch (type) {
         case 'initWS':
             reconnectAttempts = 0;
-            connectionToken = value as string;
+            connectionToken = value;
             initializeWebSocketConnection();
             break;
 
         case 'message':
             sendMessage(value as object);
+            break;
+
+        default:
             break;
     }
 };

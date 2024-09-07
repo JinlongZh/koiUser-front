@@ -38,7 +38,7 @@
 <script setup lang="ts">
 
 import {useChatStore} from "@/store/im/chat";
-import {computed, ref} from "vue";
+import {computed, ref, onMounted, nextTick} from "vue";
 import VirtualList from "@/components/content/VirtualList";
 import {MessageType} from "@/d.ts/api/chat/chat";
 import throttle from 'lodash/throttle';
@@ -51,6 +51,14 @@ const chatMessageList = computed(() => chatStore.chatMessageList);
 const currentNewMessageCount = computed(() => chatStore.currentNewMessageCount);
 
 const isShowSetting = ref<boolean>(false);
+
+onMounted(() => {
+  nextTick(() => {
+    chatStore.chatListToBottomAction = () => {
+      goToBottom();
+    }
+  })
+})
 
 const getKey = (item: MessageType) => item.message.id;
 

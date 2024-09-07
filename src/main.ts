@@ -17,7 +17,6 @@ import resource from "@/config/resource";
 import App from './App.vue'
 import lazyPlugin from "vue3-lazy";
 import router from './router';
-import '@/utils/websocket';
 
 const app = createApp(App)
 

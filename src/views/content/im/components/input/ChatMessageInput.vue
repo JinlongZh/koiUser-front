@@ -4,7 +4,7 @@
     <div
         ref="editorRef"
         class="input"
-        :text="modelValue"
+        v-text="modelValue"
         :contenteditable="!disabled"
         @input="onInput"
         @keydown="onInputKeyDown"
@@ -60,20 +60,20 @@ const emit = defineEmits([
 
 const editorRef = ref<HTMLElement | null>();
 
+// 记录编辑器光标的位置
+const editorRange = ref<{ range: Range; selection: Selection } | null>(null)
+
 // 是否展示选人弹窗
 const showDialog = ref(false);
 const personList = ref<CacheUserItem[]>([])
 
 const {modelValue: value, maxLength, disabled} = toRefs(props);
 
-// 记录input文本内容
-const inputStr = ref("");
-
 // 禁用解除后自动获取焦点。
 watch(disabled, (newVal) => {
   if (!newVal) {
     setTimeout(() => {
-      editorRef.value?.focus()
+      editorRef.value?.focus();
     })
   }
 })
@@ -88,7 +88,6 @@ function onInput(event: Event) {
   const target = event.target as HTMLDivElement;
   let text = target.innerText;
   emit('update:modelValue', text);
-  inputStr.value = text;
 
   onDataChangeCallBack()
 }
@@ -189,6 +188,9 @@ const onWrap = () => {
     range: rangeInfo.range,
   })
 }
+
+// 暴露 ref 属性
+defineExpose({input: editorRef, range: editorRange});
 
 
 </script>

@@ -22,6 +22,7 @@
       </div>
       <div class="chat-edit-input">
         <ChatMessageInput
+            ref="mentionRef"
             v-model="inputMessage"
             :mentions="mentionList"
             :maxLength="500"
@@ -31,7 +32,8 @@
       </div>
 
       <div class="chat-edit-submit">
-        <span class="btn-send">发送</span>
+        <span style="font-size: 14px; color: #b3b3b3; margin-right: 10px">Ctrl+Enter：换行 | Enter：发送</span>
+        <button class="k-btn k-btn-primary" @click="sendMessageHandler">发送</button>
       </div>
     </div>
   </div>
@@ -40,14 +42,22 @@
 <script setup lang="ts">
 
 import Emoji from "@/components/general/emoji/Emoji.vue";
-import {ref} from "vue";
+import {inject, ref} from "vue";
 import ChatMessageInput from "@/views/content/im/components/input/ChatMessageInput.vue";
 import {IMention} from "@/views/content/im/components/input/type";
 import {MessageEnum} from "@/config/constant";
 import {sendMessage} from "@/api/chat/chat";
 import {useImGlobalStore} from "@/store/im/global";
+import {useChatStore} from "@/store/im/chat";
+import type {ProcessInterface} from "@/d.ts/modules/process";
+import {ElInput} from "element-plus";
+
+const $process = inject<ProcessInterface>("$process")!;
+
+const mentionRef = ref<typeof ElInput>()
 
 const globalStore = useImGlobalStore();
+const chatStore = useChatStore();
 
 const chooseEmoji = ref(false);
 const mentionList = ref<IMention[]>([])
@@ -67,6 +77,7 @@ const onInputChange = (val: string, mentions: IMention[]) => {
 const sendMessageHandler = () => {
   // 空消息或正在发送时禁止发送
   if (!inputMessage.value?.trim().length || isSending.value) {
+    $process.tipShow.error("请输入消息内容");
     return;
   }
 
@@ -84,14 +95,36 @@ const send = (messageType: MessageEnum, body: any) => {
     roomId: globalStore.currentContact.roomId,
     messageType: messageType,
     body
-  }).then((res) => {
-    console.log(res);
+  }).then(({data}) => {
+    if (data.message.type === MessageEnum.TEXT) {
+      chatStore.pushMessage(data) // 消息列表新增一条消息
+    } else {
+
+    }
+    // 清空输入列表
+    inputMessage.value = '';
+
   }).finally(() => {
     isSending.value = false;
     // 输入框重新获取焦点
-
+    focusMessageInput(); // 输入框重新获取焦点
     // 滚动到消息列表底部
+    chatStore.chatListToBottomAction?.();
+  })
+}
 
+/**
+ * 输入框重新获取焦点
+ */
+const focusMessageInput = () => {
+  setTimeout(() => {
+    if (!mentionRef.value) {
+      return;
+    }
+    mentionRef.value?.focus?.();
+    const selection = mentionRef.value?.range?.selection as Selection;
+    selection?.selectAllChildren(mentionRef.value.input);
+    selection?.collapseToEnd();
   })
 }
 
@@ -165,6 +198,10 @@ const send = (messageType: MessageEnum, body: any) => {
     .chat-edit-submit {
       height: 45px;
       width: 100%;
+      margin: 8px 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
     }
   }
 }

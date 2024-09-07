@@ -26,6 +26,7 @@ import {Tip, Wait, Load} from "@/components/popup";
 import Tools from "@/components/Tools.vue";
 import {getWebsiteConfig, report} from "@/api/system/websiteConfig";
 import useWebsiteStore from "@/store/website";
+import WSService from "@/utils/websocket";
 
 const router = useRouter();
 const $process = inject<ProcessInterface>("$process")!;
@@ -45,6 +46,8 @@ router.isReady().then(async () => {
   }).finally(() => {
     listenWindow.initAll();
   })
+
+  WSService.start();
 });
 
 // 用户信息初始化

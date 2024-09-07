@@ -2,7 +2,7 @@ import {defineStore} from "pinia";
 import {reactive} from "vue";
 import {RoomTypeEnum} from "@/config/constant";
 
-export const useImGlobalStore = defineStore("$global", () => {
+export const useImGlobalStore = defineStore("$imGlobal", () => {
     const unReadMark = reactive<{ newFriendUnreadCount: number; newMessageUnreadCount: number }>({
         newFriendUnreadCount: 8,
         newMessageUnreadCount: 8,

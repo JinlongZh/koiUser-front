@@ -9,10 +9,9 @@ import {useUserCachedStore} from "@/store/cache/userCache";
 
 export const pageSize = 20;
 
-const globalStore = useImGlobalStore();
-const userCacheStore = useUserCachedStore();
-
 export const useChatStore = defineStore('$chat', () => {
+    const globalStore = useImGlobalStore();
+    const userCacheStore = useUserCachedStore();
 
     // 会话列表
     const contactList = reactive<ContactRoomResp[]>([]);
@@ -178,6 +177,23 @@ export const useChatStore = defineStore('$chat', () => {
         }
     }
 
+    /**
+     * 推送消息
+     *
+     * @param messageType
+     */
+    const pushMessage = async (messageType: MessageType) => {
+        // 将新消息放入Map中
+        const current = messageMap.get(messageType.message.roomId);
+        current?.set(messageType.message.id, messageType);
+
+        // 发完消息就要刷新会话列表，如果当前会话已经置顶了，可以不用刷新
+        if (globalStore.currentContact && globalStore.currentContact.roomId !== messageType.message.roomId) {
+            // TODO 刷新会话列表
+            console.log(`刷新会话列表`);
+        }
+    }
+
     // 根据消息id获取消息体
     const getMessage = (messageId: number) => {
         return currentMessageMap.value?.get(messageId);
@@ -253,6 +269,7 @@ export const useChatStore = defineStore('$chat', () => {
         clearNewMessageCount,
         getContactList,
         getMessageList,
+        pushMessage,
         getMessage,
         loadMore,
         currentContactInfo,
