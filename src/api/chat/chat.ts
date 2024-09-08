@@ -6,6 +6,10 @@ export const getContactPage = (req: ContactPageReq): Promise<PageResult<ContactR
     return get(`/chat/contact/page`, req);
 }
 
+export const getContactDetail = (roomId: number): Promise<CommonResult<ContactRoomResp>> => {
+    return get(`/chat/contact/detail?roomId=${roomId}`);
+}
+
 export const getMessagePage = (req: MessagePageReq): Promise<PageResult<MessageType>> => {
     return get(`/chat/page`, req);
 }

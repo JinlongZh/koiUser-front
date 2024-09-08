@@ -94,6 +94,25 @@ const formatTimeByDayjs = (date: Dayjs): string => {
 }
 
 /**
+ * 将时间戳转为字符串
+ *
+ * @param timestamp
+ */
+export const formatStampToString = (timestamp: number): string => {
+    const date: Dayjs = dayjs(timestamp);
+    return date.format('YYYY-MM-DD HH:mm:ss');
+}
+
+/**
+ * 将字符串时间转为时间戳
+ * @param time
+ */
+export const formatStringToStamp = (time: string): number => {
+    const date: Dayjs = dayjs(time, 'YYYY-MM-DD HH:mm:ss');
+    return date.valueOf();
+}
+
+/**
  * 消息间隔判断
  * @param {ConfigType} time 输入时间
  * @param {OpUnitType} unit 间隔单位

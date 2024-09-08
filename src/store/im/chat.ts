@@ -1,11 +1,12 @@
 import {defineStore} from "pinia";
 import {computed, reactive, ref, watch} from "vue";
 import {ContactRoomResp, MessageType} from "@/d.ts/api/chat/chat";
-import {getContactPage, getMessagePage} from "@/api/chat/chat";
+import {getContactDetail, getContactPage, getMessagePage} from "@/api/chat/chat";
 import {useImGlobalStore} from "@/store/im/global";
-import {computedTimeBlock} from "@/utils/computedTime";
+import {computedTimeBlock, formatStampToString, formatStringToStamp} from "@/utils/computedTime";
 import {RoomTypeEnum} from "@/config/constant";
 import {useUserCachedStore} from "@/store/cache/userCache";
+import cloneDeep from 'lodash/cloneDeep';
 
 export const pageSize = 20;
 
@@ -25,7 +26,11 @@ export const useChatStore = defineStore('$chat', () => {
         new Map([[currentRoomId.value, new Map()]]),
     )
     // 消息加载状态(roomId(isLast, isLoading, cursor))
-    const messageOptions = reactive<Map<number, { isLast: boolean; isLoading: boolean; pageNo: number }>>(new Map([[currentRoomId.value, {
+    const messageOptions = reactive<Map<number, {
+        isLast: boolean;
+        isLoading: boolean;
+        pageNo: number
+    }>>(new Map([[currentRoomId.value, {
         isLast: false,
         isLoading: false,
         pageNo: 1,
@@ -183,16 +188,45 @@ export const useChatStore = defineStore('$chat', () => {
      * @param messageType
      */
     const pushMessage = async (messageType: MessageType) => {
+        const messageId = messageType.message.id;
+        const roomId = messageType.message.roomId;
+        if (!messageId || !roomId) {
+            console.log("消息id或房间id错误, messageId: " + messageId + ", roomId: " + roomId);
+            return;
+        }
         // 将新消息放入Map中
-        const current = messageMap.get(messageType.message.roomId);
-        current?.set(messageType.message.id, messageType);
+        const current = messageMap.get(roomId);
+        current?.set(messageId, messageType);
 
         // 发完消息就要刷新会话列表，如果当前会话已经置顶了，可以不用刷新
-        if (globalStore.currentContact && globalStore.currentContact.roomId !== messageType.message.roomId) {
-            // TODO 刷新会话列表
-            console.log(`刷新会话列表`);
-        }
+        getContactDetail(roomId).then(({data}) => {
+            console.log(data)
+            updateContactLastActiveTime(roomId, data);
+        });
     }
+
+    /**
+     * 更新会话列表最后活跃时间
+     *
+     * @param roomId
+     * @param room
+     */
+    const updateContactLastActiveTime = (roomId: number, room?: ContactRoomResp) => {
+        const contact = contactList.find((item) => item.roomId === roomId);
+        // 如果已经存在当前会话，则直接更新，否则根据后端返回的room插入
+        if (contact && contact) {
+            Object.assign(contact, {activeTime: formatStampToString(Date.now()), text: room.text});
+        } else if (contact) {
+            Object.assign(contact, {activeTime: formatStampToString(Date.now())});
+        } else if (room) {
+            const newItem = cloneDeep(room);
+            newItem.activeTime = Date.now();
+            contactList.unshift(newItem);
+        }
+        // 排序并去重
+        sortAndUniqueContactList();
+    }
+
 
     // 根据消息id获取消息体
     const getMessage = (messageId: number) => {
@@ -220,10 +254,10 @@ export const useChatStore = defineStore('$chat', () => {
 
     // 会话列表去重并排序
     const sortAndUniqueContactList = () => {
-        const temp: Record<string, ContactRoomResp> = {}
+        const temp: Record<string, ContactRoomResp> = {};
         contactList.forEach((item) => (temp[item.roomId] = item))
         contactList.splice(0, contactList.length, ...Object.values(temp))
-        contactList.sort((pre, cur) => cur.activeTime - pre.activeTime)
+        contactList.sort((pre, cur) => formatStringToStamp(cur.activeTime) - formatStringToStamp(pre.activeTime))
     }
 
     // 切换会话
