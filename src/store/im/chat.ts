@@ -7,10 +7,13 @@ import {computedTimeBlock, formatStampToString, formatStringToStamp} from "@/uti
 import {RoomTypeEnum} from "@/config/constant";
 import {useUserCachedStore} from "@/store/cache/userCache";
 import cloneDeep from 'lodash/cloneDeep';
+import {useRoute} from "vue-router";
 
 export const pageSize = 20;
 
 export const useChatStore = defineStore('$chat', () => {
+    const route = useRoute();
+
     const globalStore = useImGlobalStore();
     const userCacheStore = useUserCachedStore();
 
@@ -200,9 +203,39 @@ export const useChatStore = defineStore('$chat', () => {
 
         // 发完消息就要刷新会话列表，如果当前会话已经置顶了，可以不用刷新
         getContactDetail(roomId).then(({data}) => {
-            console.log(data)
             updateContactLastActiveTime(roomId, data);
         });
+
+        if (currentNewMessageCount.value && currentNewMessageCount.value?.isStart) {
+            currentNewMessageCount.value.count++;
+            return;
+        }
+
+        // 聊天记录计数
+        if (currentRoomId.value !== messageType.message.roomId) {
+            // 总的未读数增加
+            globalStore.unReadMark.newMessageUnreadCount++;
+
+            // 如果当前会话不是当前聊天窗口，则增加未读数
+            const item = contactList.find(
+                (item) => item.roomId === messageType.message.roomId
+            );
+            if (item) {
+                item.unreadCount += 1;
+            }
+        } else {
+            // 如果新消息的 roomId 和 当前显示的 room 的 Id 一致，且当前路由在聊天内, 就更新已读
+            if (route?.path && route?.path === '/chat') {
+                // TODO 更新已读
+                console.log("更新已读");
+            }
+        }
+
+        // 聊天列表滚动到底部
+        setTimeout(() => {
+            // TODO 如果超过一屏了，不自动滚动到最新消息
+            chatListToBottomAction.value?.();
+        }, 0)
     }
 
     /**

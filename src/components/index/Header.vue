@@ -49,13 +49,6 @@
             </div>
           </li>
 
-          <!-- 后台 -->
-          <li @click="goAdmin()">
-            <div class="my-menu">
-              💻️ <span>后台</span>
-            </div>
-          </li>
-
           <!-- 个人中心 -->
           <li>
             <el-dropdown placement="bottom" v-if="userStore.isLoggedIn">
@@ -64,12 +57,12 @@
               </el-avatar>
 
               <template #dropdown>
-                <el-dropdown-menu style="width: 200px">
-                  <el-dropdown-item @click.native="pageJump('/user')">
-                    <svg-icon icon-class="qq"/> <span>个人中心</span>
-                  </el-dropdown-item>
-                  <el-dropdown-item @click.native="logout()">
-                    <svg-icon icon-class="qq"/> <span>退出</span>
+                <el-dropdown-menu style="width: 200px; color: red">
+                  <!--<el-dropdown-item @click.native="pageJump('/user')">-->
+                  <!--  <svg-icon icon-class="qq"/> <span>个人中心</span>-->
+                  <!--</el-dropdown-item>-->
+                  <el-dropdown-item @click.native="handleLogout()">
+                    <svg-icon icon-class="exit" style="width: 18px; height: 18px; margin-right: 10px"/> <span>退出</span>
                   </el-dropdown-item>
                 </el-dropdown-menu>
               </template>
@@ -119,6 +112,7 @@ import useUserStore from "@/store/user";
 import {publicPath} from "@/router/path";
 import useWebsiteStore from "@/store/website";
 import SvgIcon from "@/components/general/icon/SvgIcon.vue";
+import {logout} from "@/api/system/login";
 
 const router = useRouter();
 const $window = useWindowStore();
@@ -147,8 +141,8 @@ const openLogin = () => {
   router.push("/login");
 }
 
-const logout = () => {
-  console.log("退出登录")
+const handleLogout = () => {
+  logout();
 }
 
 watch(

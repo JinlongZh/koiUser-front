@@ -115,7 +115,7 @@ const load = () => {
 
         .message-info {
           height: 100%;
-          padding: 5px 10px;
+          padding: 5px 20px;
           margin-right: auto;
 
           .person {
