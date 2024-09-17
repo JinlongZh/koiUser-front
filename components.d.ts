@@ -37,6 +37,7 @@ declare module 'vue' {
     InterfaceCard: typeof import('./src/components/content/interface/card/InterfaceCard.vue')['default']
     InterfaceInput: typeof import('./src/components/general/input/InterfaceInput.vue')['default']
     Load: typeof import('./src/components/popup/Load.vue')['default']
+    MyEmpty: typeof import('./src/components/general/image/MyEmpty.vue')['default']
     PageCover: typeof import('./src/components/general/page-cover/PageCover.vue')['default']
     Pagination: typeof import('./src/components/general/page/Pagination.vue')['default']
     Paging: typeof import('./src/components/general/page/Paging.vue')['default']
