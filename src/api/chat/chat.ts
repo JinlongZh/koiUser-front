@@ -1,5 +1,12 @@
-import {ContactPageReq, ContactRoomResp, MessagePageReq, MessageType, SendMessageReq} from "@/d.ts/api/chat/chat";
-import {get, post} from "@/utils/request";
+import {
+    ContactPageReq,
+    ContactRoomResp,
+    MessagePageReq,
+    MessageType,
+    ReadMessageReqVO,
+    SendMessageReq
+} from "@/d.ts/api/chat/chat";
+import {get, post, put} from "@/utils/request";
 import {CommonResult, PageResult} from "@/d.ts/api";
 
 export const getContactPage = (req: ContactPageReq): Promise<PageResult<ContactRoomResp>> => {
@@ -16,4 +23,8 @@ export const getMessagePage = (req: MessagePageReq): Promise<PageResult<MessageT
 
 export const sendMessage = (req: SendMessageReq): Promise<CommonResult<MessageType>> => {
     return post(`/chat/send`, req);
+}
+
+export const readMessage = (req: ReadMessageReqVO): Promise<CommonResult> => {
+    return put(`/chat/read`, req);
 }

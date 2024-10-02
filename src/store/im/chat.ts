@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import {computed, reactive, ref, watch} from "vue";
 import {ContactRoomResp, MessageType} from "@/d.ts/api/chat/chat";
-import {getContactDetail, getContactPage, getMessagePage} from "@/api/chat/chat";
+import {getContactDetail, getContactPage, getMessagePage, readMessage} from "@/api/chat/chat";
 import {useImGlobalStore} from "@/store/im/global";
 import {computedTimeBlock, formatStampToString, formatStringToStamp} from "@/utils/computedTime";
 import {RoomTypeEnum} from "@/config/constant";
@@ -17,18 +17,24 @@ export const useChatStore = defineStore('$chat', () => {
     const globalStore = useImGlobalStore();
     const userCacheStore = useUserCachedStore();
 
-    // 会话列表
+    /**
+     * 会话列表
+     */
     const contactList = reactive<ContactRoomResp[]>([]);
     const contactOptions = reactive({isLast: false, isLoading: false, page: 1});
 
     const currentRoomId = computed(() => globalStore.currentContact?.roomId)
     const currentRoomType = computed(() => globalStore.currentContact?.type)
 
-    // 消息Map(roomId(messageId, Message))
+    /**
+     * 消息Map(roomId(messageId, Message))
+     */
     const messageMap = reactive<Map<number, Map<number, MessageType>>>(
         new Map([[currentRoomId.value, new Map()]]),
     )
-    // 消息加载状态(roomId(isLast, isLoading, cursor))
+    /**
+     * 消息加载状态(roomId(isLast, isLoading, cursor))
+     */
     const messageOptions = reactive<Map<number, {
         isLast: boolean;
         isLoading: boolean;
@@ -38,11 +44,16 @@ export const useChatStore = defineStore('$chat', () => {
         isLoading: false,
         pageNo: 1,
     }]]))
-    // 回复消息映射
+    /**
+     * 回复消息映射
+     */
     const replyMapping = reactive<Map<number, Map<number, number[]>>>(
         new Map([[currentRoomId.value, new Map()]]),
     )
 
+    /**
+     * 当前消息操作方法
+     */
     const currentMessageMap = computed({
         get: () => {
             const current = messageMap.get(currentRoomId.value as number)
@@ -55,12 +66,19 @@ export const useChatStore = defineStore('$chat', () => {
             messageMap.set(currentRoomId.value, val as Map<number, MessageType>)
         },
     })
-    // 将消息列表转换为数组
+    /**
+     * 将消息列表转换为数组
+     */
     const chatMessageList = computed(() => [...(currentMessageMap.value?.values() || [])]);
 
-    // 当前消息回复
+    /**
+     * 当前消息回复
+     */
     const currentMessageReply = ref<Partial<MessageType>>({});
 
+    /**
+     * 当前消息操作方法
+     */
     const currentMessageOptions = computed({
         get: () => {
             const current = messageOptions.get(currentRoomId.value as number)
@@ -77,7 +95,9 @@ export const useChatStore = defineStore('$chat', () => {
         },
     })
 
-    // TODO 新消息计数
+    /**
+     * 新消息计数
+     */
     const newMessageCount = reactive<Map<number, { count: number; isStart: boolean }>>(
         new Map([
             [
@@ -91,7 +111,9 @@ export const useChatStore = defineStore('$chat', () => {
             ],
         ]),
     )
-    // 当前新消息计数
+    /**
+     * 当前新消息计数
+     */
     const currentNewMessageCount = computed({
         get: () => {
             const current = newMessageCount.get(currentRoomId.value as number);
@@ -111,7 +133,11 @@ export const useChatStore = defineStore('$chat', () => {
         }
     }
 
-    // 获取会话列表
+    /**
+     * 获取会话列表
+     *
+     * @param isFresh
+     */
     const getContactList = async (isFresh = false) => {
         // 如果不需要刷新，并且 session 正在加载或已是最后一页，则直接返回
         if (!isFresh && (contactOptions.isLast || contactOptions.isLoading)) {
@@ -135,7 +161,11 @@ export const useChatStore = defineStore('$chat', () => {
         sortAndUniqueContactList();
     }
 
-    // 获取消息列表
+    /**
+     * 获取消息列表
+     *
+     * @param size
+     */
     const getMessageList = async (size = pageSize) => {
         if (currentMessageOptions.value) {
             currentMessageOptions.value.isLoading = true;
@@ -226,8 +256,9 @@ export const useChatStore = defineStore('$chat', () => {
         } else {
             // 如果新消息的 roomId 和 当前显示的 room 的 Id 一致，且当前路由在聊天内, 就更新已读
             if (route?.path && route?.path === '/chat') {
-                // TODO 更新已读
-                console.log("更新已读");
+                readMessage({
+                    roomId: currentRoomId.value
+                })
             }
         }
 
@@ -260,12 +291,36 @@ export const useChatStore = defineStore('$chat', () => {
         sortAndUniqueContactList();
     }
 
+    /**
+     * 消息列表阅读，并返回未读数
+     *
+     * @param roomId
+     * @constructor
+     */
+    const readContact = (roomId: number): number => {
+        const contact = contactList.find((item) => item.roomId === roomId);
+        const unreadCount = contact?.unreadCount || 0;
+        if (contact) {
+            contact.unreadCount = 0;
+        }
+        return unreadCount;
+    }
 
-    // 根据消息id获取消息体
+
+    /**
+     * 根据消息id获取消息体
+     *
+     * @param messageId
+     */
     const getMessage = (messageId: number) => {
         return currentMessageMap.value?.get(messageId);
     }
 
+    /**
+     * 加载更多消息
+     *
+     * @param size
+     */
     const loadMore = async (size?: number) => {
         if (currentMessageOptions.value?.isLast || currentMessageOptions.value?.isLoading) {
             return;
@@ -281,11 +336,15 @@ export const useChatStore = defineStore('$chat', () => {
         contactList.find((contact) => contact.roomId === globalStore.currentContact.roomId),
     )
 
-    // 外部提供消息列表滚动到底部事件
+    /**
+     * 外部提供消息列表滚动到底部事件
+     */
     const chatListToBottomAction = ref<() => void>();
 
 
-    // 会话列表去重并排序
+    /**
+     * 会话列表去重并排序
+     */
     const sortAndUniqueContactList = () => {
         const temp: Record<string, ContactRoomResp> = {};
         contactList.forEach((item) => (temp[item.roomId] = item))
@@ -293,7 +352,9 @@ export const useChatStore = defineStore('$chat', () => {
         contactList.sort((pre, cur) => formatStringToStamp(cur.activeTime) - formatStringToStamp(pre.activeTime))
     }
 
-    // 切换会话
+    /**
+     * 切换会话时触发
+     */
     watch(currentRoomId, (val, oldVal) => {
         if (oldVal !== undefined && val !== oldVal) {
             // 切换会话，滚动到底部
@@ -337,6 +398,7 @@ export const useChatStore = defineStore('$chat', () => {
         getContactList,
         getMessageList,
         pushMessage,
+        readContact,
         getMessage,
         loadMore,
         currentContactInfo,

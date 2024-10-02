@@ -90,3 +90,10 @@ export interface SendMessageReq {
         [key: string]: any;
     }
 }
+
+/**
+ * 阅读上报请求
+ */
+export interface ReadMessageReqVO {
+    roomId: number;
+}
