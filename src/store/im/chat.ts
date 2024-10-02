@@ -239,11 +239,6 @@ export const useChatStore = defineStore('$chat', () => {
             updateContactLastActiveTime(roomId, data);
         });
 
-        if (currentNewMessageCount.value && currentNewMessageCount.value?.isStart) {
-            currentNewMessageCount.value.count++;
-            return;
-        }
-
         // 聊天记录计数
         if (currentRoomId.value !== messageType.message.roomId) {
             // 总的未读数增加
@@ -263,6 +258,11 @@ export const useChatStore = defineStore('$chat', () => {
                     roomId: currentRoomId.value
                 })
             }
+        }
+
+        if (currentNewMessageCount.value && currentNewMessageCount.value?.isStart) {
+            currentNewMessageCount.value.count++;
+            return;
         }
 
         // 聊天列表滚动到底部

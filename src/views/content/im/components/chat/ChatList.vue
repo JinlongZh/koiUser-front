@@ -32,6 +32,16 @@
         @scroll="onScrollHandler"
         @ok="goToBottom"
     />
+    <template v-if="!messageOptions?.isLoading && chatMessageList?.length === 0">
+      <div class="empty">暂无消息，快来发送第一条消息吧~</div>
+    </template>
+    <span
+        class="new-message-tips"
+        v-show="currentNewMessageCount?.count && currentNewMessageCount.count > 0"
+        @click="goToNewMessage"
+    >
+      {{ currentNewMessageCount?.count }} 条新消息
+    </span>
   </div>
 </template>
 
@@ -163,6 +173,38 @@ const goToNewMessage = () => {
     padding-right: 20px;
     padding-left: 20px;
     overflow-y: auto;
+  }
+
+  .empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    color: var(--font-light);
+  }
+
+  .new-message-tips {
+    position: absolute;
+    height: 20px;
+    right: 20px;
+    bottom: 16px;
+    display: flex;
+    column-gap: 4px;
+    align-items: center;
+    padding: 2px 12px;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    background-color: #00a1d6;
+    border: 1px solid var(--color-white);
+    border-radius: 12px;
+    box-shadow: 0 0 1px 1px var(--el-box-shadow-dark);
+
+    &:hover {
+      background-color: #2287e1;
+    }
   }
 }
 </style>
