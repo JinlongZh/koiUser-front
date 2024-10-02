@@ -127,6 +127,9 @@ export const useChatStore = defineStore('$chat', () => {
         },
     })
 
+    /**
+     * 清除新消息数量
+     */
     const clearNewMessageCount = () => {
         if (currentNewMessageCount.value) {
             currentNewMessageCount.value.count = 0;

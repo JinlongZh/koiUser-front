@@ -29,7 +29,7 @@
         :item="MessageItem"
         :size="20"
         @totop="onToTop"
-        @scroll="onScroll"
+        @scroll="onScrollHandler"
         @ok="goToBottom"
     />
   </div>
@@ -45,7 +45,7 @@ import throttle from 'lodash/throttle';
 import MessageItem from "@/views/content/im/components/chat/MessageItem.vue";
 
 const chatStore = useChatStore();
-const virtualListRef = ref()
+const virtualListRef = ref();
 const messageOptions = computed(() => chatStore.currentMessageOptions);
 const chatMessageList = computed(() => chatStore.chatMessageList);
 const currentNewMessageCount = computed(() => chatStore.currentNewMessageCount);
@@ -73,6 +73,16 @@ const onToTop = async () => {
 }
 
 // 滚动时触发函数，主要处理新消息提示
+const onScrollHandler = (eventData: any) => {
+
+  const {offset, clientSize, scrollSize} = eventData;
+
+  if (!offset || !clientSize || !scrollSize) {
+    return;
+  }
+  onScroll(eventData);
+}
+
 const onScroll = throttle((eventData) => {
   const {offset, clientSize, scrollSize} = eventData;
 
@@ -83,10 +93,14 @@ const onScroll = throttle((eventData) => {
   // 是否已滚动到底部最后一个可视范围内
   const isScrollEnd = offset + clientSize >= scrollSize - clientSize;
   if (isScrollEnd) {
-    currentNewMessageCount.value && (currentNewMessageCount.value.isStart = false);
+    if (currentNewMessageCount.value) {
+      currentNewMessageCount.value.isStart = false;
+    }
     chatStore.clearNewMessageCount();
   } else {
-    currentNewMessageCount.value && (currentNewMessageCount.value.isStart = true);
+    if (currentNewMessageCount.value) {
+      currentNewMessageCount.value.isStart = true;
+    }
   }
 }, 100)
 
@@ -94,8 +108,16 @@ const onScroll = throttle((eventData) => {
 const goToBottom = () => {
   if (virtualListRef.value) {
     virtualListRef.value.scrollToBottom();
-    chatStore.clearNewMessageCount();
   }
+}
+
+// 回到最新的消息
+const goToNewMessage = () => {
+  // 未读消息数 = 总数 - 新消息数
+  virtualListRef.value.scrollToIndex(
+      chatMessageList.value.length - (currentNewMessageCount.value?.count || 0),
+  )
+  chatStore.clearNewMessageCount();
 }
 
 </script>

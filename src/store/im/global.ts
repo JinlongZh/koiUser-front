@@ -13,7 +13,7 @@ export const useImGlobalStore = defineStore("$imGlobal", () => {
      */
     const unReadMark = reactive<{ newFriendUnreadCount: number; newMessageUnreadCount: number }>({
         newFriendUnreadCount: 8,
-        newMessageUnreadCount: 99,
+        newMessageUnreadCount: 0,
     })
 
     /**
