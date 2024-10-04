@@ -379,7 +379,7 @@ export const useChatStore = defineStore('$chat', () => {
         }
 
         // 重置当前回复的消息
-        currentMessageReply.value = {}
+        currentMessageReply.value = {};
     })
 
 

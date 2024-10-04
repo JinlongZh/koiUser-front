@@ -24,6 +24,7 @@ declare module 'vue' {
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
+    ElTooltip: typeof import('element-plus/es')['ElTooltip']
     Emoji: typeof import('./src/components/general/emoji/Emoji.vue')['default']
     EmojiInput: typeof import('./src/components/general/input/EmojiInput.vue')['default']
     Footer: typeof import('./src/components/index/Footer.vue')['default']

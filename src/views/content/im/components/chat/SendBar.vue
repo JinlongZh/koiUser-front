@@ -1,7 +1,15 @@
 <template>
   <div class="chat-edit">
-    <div class="reply-message-wrapper">
-      云拼欲下星斗动，天乐一声肌骨寒。
+    <div v-show="Object.keys(currentMessageReply).length" class="reply-message-wrapper">
+      <div class="reply-message-content">
+        <div class="reply-people-name">
+          {{ currentMessageReply.fromUser?.userId }}
+        </div>
+        <div class="reply-message-text">
+          {{currentMessageReply.message?.body }}
+        </div>
+      </div>
+      <svg-icon class="reply-message-close" @click="closeReply" icon-class="close"></svg-icon>
     </div>
     <div class="chat-edit-box">
       <div class="chat-edit-btn">
@@ -42,7 +50,7 @@
 <script setup lang="ts">
 
 import Emoji from "@/components/general/emoji/Emoji.vue";
-import {inject, ref} from "vue";
+import {inject, ref, computed} from "vue";
 import ChatMessageInput from "@/views/content/im/components/input/ChatMessageInput.vue";
 import {IMention} from "@/views/content/im/components/input/type";
 import {MessageEnum} from "@/config/constant";
@@ -51,6 +59,8 @@ import {useImGlobalStore} from "@/store/im/global";
 import {useChatStore} from "@/store/im/chat";
 import type {ProcessInterface} from "@/d.ts/modules/process";
 import {ElInput} from "element-plus";
+import SvgIcon from "@/components/general/icon/SvgIcon.vue";
+import useUserStore from "@/store/user";
 
 const $process = inject<ProcessInterface>("$process")!;
 
@@ -58,11 +68,16 @@ const mentionRef = ref<typeof ElInput>()
 
 const globalStore = useImGlobalStore();
 const chatStore = useChatStore();
+const useStore = useUserStore();
 
 const chooseEmoji = ref(false);
 const mentionList = ref<IMention[]>([])
 const inputMessage = ref("");
 const isSending = ref(false);
+
+const currentMessageReply = computed(() => (
+    useStore.isLoggedIn && chatStore.currentMessageReply) || {}
+);
 
 const addEmoji = (key: number) => {
 
@@ -76,8 +91,13 @@ const onInputChange = (val: string, mentions: IMention[]) => {
 // 消息发送处理器
 const sendMessageHandler = () => {
   // 空消息或正在发送时禁止发送
-  if (!inputMessage.value?.trim().length || isSending.value) {
+  if (!inputMessage.value?.trim().length) {
     $process.tipShow.error("请输入消息内容");
+    return;
+  }
+
+  if (isSending.value) {
+    $process.tipShow.error("消息正在发送");
     return;
   }
 
@@ -128,6 +148,13 @@ const focusMessageInput = () => {
   })
 }
 
+/**
+ * 关闭回复框
+ */
+const closeReply = () => {
+  chatStore.currentMessageReply = {};
+}
+
 
 </script>
 
@@ -143,13 +170,9 @@ const focusMessageInput = () => {
   border-top: 1px solid #d8d8d8;
 
   .reply-message-wrapper {
-    display: flex;
-    align-items: center;
+    width: 100%;
     padding: 4px 12px;
     margin-bottom: 4px;
-    font-size: 12px;
-    color: var(--font-light);
-    white-space: pre-wrap;
     position: relative;
 
     &::before {
@@ -161,6 +184,36 @@ const focusMessageInput = () => {
       height: 90%;
       background: #d8d8d8;
       margin-right: 8px;
+    }
+
+    .reply-message-content {
+      width: 95%;
+      font-size: 12px;
+      color: var(--font-light);
+
+      .reply-people-name {
+        margin-bottom: 5px;
+      }
+
+      .reply-message-text {
+        white-space: pre-wrap;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+    }
+
+
+    .reply-message-close {
+      position: absolute;
+      font-size: 20px;
+      color: #666;
+      top: 10px;
+      right: 1px;
+      cursor: pointer;
     }
   }
 

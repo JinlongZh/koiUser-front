@@ -21,12 +21,25 @@
               {{ formatTime(message.createTime) }}
             </span>
           </div>
-          <div
-              ref="renderMessageRef"
-              :class="['chat-item-content', { uploading: messageData?.loading }]"
+          <el-tooltip
+              effect="light"
+              popper-class="option-tooltip"
+              :trigger="tooltipTrigger"
+              :placement="tooltipPlacement || 'bottom-end'"
+              :offset="2"
+              :show-arrow="false"
+              :teleported="false"
           >
-            <span class="text">{{ message.body }}</span>
-          </div>
+            <div
+                ref="renderMessageRef"
+                :class="['chat-item-content', { uploading: messageData?.loading }]"
+            >
+              <span class="text">{{ message.body }}</span>
+            </div>
+            <template #content>
+              <MessageOption :message="messageData"/>
+            </template>
+          </el-tooltip>
         </div>
       </div>
     </transition>
@@ -35,13 +48,14 @@
 
 <script setup lang="ts">
 
-import {computed, defineOptions, defineProps, ref, withDefaults} from "vue";
+import {computed, defineOptions, defineProps, nextTick, onMounted, ref, withDefaults} from "vue";
 import {MessageType} from "@/d.ts/api/chat/chat";
 import {MessageEnum} from "@/config/constant";
 import useUserStore from "@/store/user";
 import {TooltipTriggerType} from "element-plus";
 import {formatTime} from "@/utils/computedTime";
 import {useUserInfo} from "@/hooks/useCache";
+import MessageOption from "@/views/content/im/components/chat/MessageOption.vue";
 
 const props = withDefaults(
     defineProps<{
@@ -64,6 +78,23 @@ const props = withDefaults(
     },
 )
 
+onMounted(() => {
+  nextTick(() => {
+    if (renderMessageRef.value && boxRef.value) {
+      const renderMessageWidth = renderMessageRef.value.clientWidth;
+      const boxWidth = boxRef.value.clientWidth;
+
+      if (renderMessageWidth + 50 <= boxWidth) {
+        tooltipPlacement.value = 'right-start';
+      } else if (props.messageData.message.body.replyMessageId) {
+        tooltipPlacement.value = 'top-end';
+      } else {
+        tooltipPlacement.value = 'bottom-end';
+      }
+    }
+  })
+})
+
 const userStore = useUserStore();
 
 // 多根元素的时候，不加这个透传属性会报 warning
@@ -71,6 +102,9 @@ defineOptions({inheritAttrs: false});
 
 const messageVisibleEl = ref(null);
 const boxRef = ref<HTMLElement | null>(null);
+const renderMessageRef = ref<HTMLElement | null>(null);
+
+const tooltipPlacement = ref();
 
 // 只能对一级 props 进行 toRefs 结构，否则会丢失响应
 const message = computed(() => props.messageData.message);
