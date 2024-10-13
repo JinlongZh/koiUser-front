@@ -2,7 +2,6 @@ import type {RouteRecordRaw} from "vue-router";
 
 const publicPath = {
     home: "/",
-    message: "/message",
     version: "/version",
     about: "/about",
     errorPath: {
@@ -19,6 +18,7 @@ const publicPath = {
     article: "/article",
     talk: "/talk",
     friend:"/friend",
+    blogBarrage:"/blogBarrage",
     // im
     im: "/im",
     chat: "/chat",
@@ -116,6 +116,15 @@ const content: Array<RouteRecordRaw> = [
             title: "友链",
         },
         component: () => import("@/views/content/friend/Friend.vue"),
+    },
+    //留言
+    {
+        path: publicPath.blogBarrage,
+        name: "blogBarrage",
+        meta: {
+            title: "留言",
+        },
+        component: () => import("@/views/content/blogBarrage/BlogBarrage.vue"),
     },
     // im
     {

@@ -36,7 +36,7 @@
             </div>
           </li>
 
-          <li @click="$router.push({path: '/message'})">
+          <li @click="$router.push({path: '/blogBarrage'})">
             <div class="my-menu">
               📪 <span>留言</span>
             </div>

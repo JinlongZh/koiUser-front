@@ -6,7 +6,7 @@ const icon = {
     info: siteResource + "info.png",
     error: siteResource + "error.png",
     other: siteResource + "other.png",
-    message: siteResource + "message.png",
+    message: siteResource + "blogBarrage.png",
     friend: siteResource + "friend.png",
     version: siteResource + "version.png",
     about: siteResource + "about.png",
