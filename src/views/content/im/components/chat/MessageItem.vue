@@ -5,17 +5,17 @@
     <transition name="remove">
       <div :class="chatClass" v-if="!isRecall">
         <el-avatar
-            :src="userInfo.avatar"
+            :src="fromUser.avatar"
             @contextmenu.prevent.stop="handleUserRightClick($event)"
         />
         <div class="chat-item-box" ref="boxRef">
           <div class="chat-item-user-info">
             <!-- 用户名 -->
             <span class="user-name" @contextmenu.prevent.stop="handleUserRightClick($event)">
-              {{ userInfo.nickname }}
+              {{ fromUser.nickname }}
             </span>
             <!-- 消息归属地 -->
-            <span class="user-ip">({{ userInfo.localPlace || '未知' }})</span>
+            <span class="user-ip">({{ fromUser.ipAddress || '未知' }})</span>
             <!-- 消息发送时间 -->
             <span class="send-time" v-if="isShowTime">
               {{ formatTime(message.createTime) }}
@@ -109,8 +109,7 @@ const tooltipPlacement = ref();
 // 只能对一级 props 进行 toRefs 结构，否则会丢失响应
 const message = computed(() => props.messageData.message);
 const fromUser = computed(() => props.messageData.fromUser);
-// 从缓存中获取用户信息
-const userInfo = useUserInfo(fromUser.value.userId);
+
 const isRecall = computed(() => {
   const type = message.value.type;
   return type === MessageEnum.RECALL || type === MessageEnum.SYSTEM;

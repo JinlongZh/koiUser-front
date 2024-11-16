@@ -25,7 +25,7 @@ export interface CacheUserItem {
     /** 登陆ip */
     loginIp: string;
     /** 归属地 */
-    localPlace: string;
+    ipSource: string;
     /** 头像 */
     avatar: string;
     /** 最后一次上下线时间 */

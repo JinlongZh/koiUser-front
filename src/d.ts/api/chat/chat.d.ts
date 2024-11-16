@@ -36,11 +36,13 @@ export interface MessageUserType {
     /** 用户ID */
     userId: number;
     /** 用户名 */
-    username: string;
+    nickname: string;
     /** 头像 */
     avatar: string;
+    /** IP地址 */
+    ipAddress: string;
     /** 归属地 */
-    localPlace: string;
+    ipSource: string;
 }
 
 export interface MsgType {
