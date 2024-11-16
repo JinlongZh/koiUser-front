@@ -6,7 +6,7 @@
           {{ currentMessageReply.fromUser?.userId }}
         </div>
         <div class="reply-message-text">
-          {{currentMessageReply.message?.body }}
+          {{ currentMessageReply.message?.body }}
         </div>
       </div>
       <svg-icon class="reply-message-close" @click="closeReply" icon-class="close"></svg-icon>
@@ -104,8 +104,8 @@ const sendMessageHandler = () => {
   isSending.value = true;
   send(MessageEnum.TEXT, {
     content: inputMessage.value,
-    // replyMsgId: currentMsgReply.value.message?.id,
-    atUidList: mentionList.value.map((item) => item.userId),
+    replyMessageId: currentMessageReply.value.message?.id,
+    atUserIdList: mentionList.value.map((item) => item.userId),
   })
 }
 

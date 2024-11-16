@@ -34,7 +34,7 @@
                 ref="renderMessageRef"
                 :class="['chat-item-content', { uploading: messageData?.loading }]"
             >
-              <span class="text">{{ message.body }}</span>
+              <span class="text">{{ message.body.content }}</span>
             </div>
             <template #content>
               <MessageOption :message="messageData"/>

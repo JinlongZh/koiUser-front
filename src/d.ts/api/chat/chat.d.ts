@@ -63,7 +63,18 @@ export interface TextBody {
     /** 消息内容 */
     content: string;
     /** 回复 */
-    replyMessageId: number;
+    reply: ReplyType
+    /**
+     * 消息链接映射
+     */
+    urlContentMap: Record<
+        string,
+        {
+            title: string
+            description: string
+            image: string
+        }
+    >
 }
 
 /** 图片消息体 */
@@ -99,3 +110,19 @@ export interface SendMessageReq {
 export interface ReadMessageReqVO {
     roomId: number;
 }
+
+export interface ReplyType {
+    id: number
+    username: string
+    type: MsgEnum
+    /** 根据不同类型回复的消息展示也不同-`过渡版` */
+    body: any
+    /**
+     * 是否可消息跳转
+     * @enum {number}  `0`否 `1`是
+     */
+    canCallback: number
+    /** 跳转间隔的消息条数  */
+    gapCount: number
+}
+
